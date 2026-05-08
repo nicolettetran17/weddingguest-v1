@@ -1,0 +1,2434 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Aria & Marcus · Guest Portal — All-In Weddings</title>
+  <meta name="description" content="The official guest portal for Aria & Marcus's wedding at Nobu Hotel Los Cabos. Book your room block, browse on-property spa, excursions, and dinners." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       Guest Portal — design language mirrors the bride-side Wedding
+       Portal in plan.html (cream paper, Cormorant/Isabella display,
+       Poppins body). Reframed for guests attending Aria & Marcus's
+       wedding at Nobu Hotel Los Cabos — but where the bride portal is
+       anchored in gold/copper, the guest portal is anchored in SAGE.
+       Sage = primary accent (CTAs, eyebrows, hero glow, "added"
+       confirmations). The only remaining warm tone is the very subtle
+       paper-cream background on a few card footers — everything that
+       used to be copper is now eucalyptus / forest green.
+       ============================================================ */
+
+    :root {
+      --ink:            #2b2b27;
+      --ink-soft:       #4c463f;
+      --ink-muted:      #6e695f;
+      --ink-faint:      #8b857d;
+      --paper:          #ffffff;
+      --paper-warm:     #f6f8f3;     /* very faint sage paper (was warm cream #faf8f4) */
+      --paper-cream:    #eef3e8;     /* sage-cream replacement for old #f6efe1 */
+      --canvas:         #e8efe4;     /* the brand "canvas" tone, sage-tinted */
+      --sage-pale:      #cfdec3;     /* very light eucalyptus — replaces copper-soft */
+      --sage-glow:      #c4dab1;     /* brighter sage for hero shine on dark bg */
+      --sage:           #7e8d68;     /* medium sage — primary accent (was copper) */
+      --sage-deep:      #5a7142;     /* deep sage — "yes/added/savings"           */
+      --sage-darker:    #3d4a3a;     /* deepest forest — for strong contrast text */
+      --sage-bg:        rgba(126,141,104,0.12);
+      --rule:           rgba(28,28,28,0.08);
+      --rule-soft:      rgba(28,28,28,0.05);
+      --shadow:         0 14px 32px -22px rgba(0,0,0,0.25);
+      --serif:          "Cormorant Garamond", "Isabella Grand", "Playfair Display", Georgia, serif;
+      --sans:           "Poppins", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    button { font: inherit; cursor: pointer; }
+
+    .app {
+      max-width: 1180px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: var(--paper-warm);
+      box-shadow: 0 0 0 1px var(--rule-soft);
+    }
+
+    /* ============================================================
+       Top bar
+       ============================================================ */
+    .bar {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 22px;
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule);
+      position: sticky; top: 0; z-index: 30;
+    }
+    .bar__crest {
+      display: grid; place-items: center;
+      width: 28px; height: 28px; border-radius: 6px;
+      background: linear-gradient(135deg, var(--sage-darker) 0%, var(--sage-deep) 100%);
+      color: #fff;
+    }
+    .bar__brand {
+      font-family: var(--serif);
+      font-size: 14px; line-height: 1.1; color: var(--ink);
+      letter-spacing: 0.2px;
+    }
+    .bar__divider { color: #b3aea4; font-size: 11px; }
+    .bar__product {
+      font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--sage-deep); font-weight: 600;
+    }
+    .bar__user {
+      margin-left: auto; display: flex; align-items: center; gap: 10px;
+      font-size: 12px; color: var(--ink-soft);
+    }
+    .bar__avatar {
+      width: 28px; height: 28px; border-radius: 9999px;
+      background: linear-gradient(135deg, #8a9a76, #3d4a3a);
+      color: #fff; display: grid; place-items: center;
+      font-size: 11px; font-weight: 600;
+    }
+    .bar__signout {
+      background: none; border: 0; padding: 0;
+      font-size: 11px; color: var(--sage-deep);
+      letter-spacing: 0.06em;
+    }
+
+    /* ============================================================
+       Section nav
+       ============================================================ */
+    .nav {
+      display: flex; gap: 6px;
+      padding: 12px 22px 0;
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule-soft);
+      overflow-x: auto;
+      scrollbar-width: none;
+      position: sticky; top: 57px; z-index: 20;
+    }
+    .nav::-webkit-scrollbar { display: none; }
+    .nav__tab {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 14px 12px;
+      border: 0;
+      background: transparent;
+      color: var(--ink-muted);
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: color 200ms ease, border-color 200ms ease;
+    }
+    .nav__tab:hover { color: var(--ink); }
+    .nav__tab[data-active="true"] {
+      color: var(--ink);
+      border-bottom-color: var(--sage);
+    }
+    .nav__tab svg { width: 14px; height: 14px; }
+
+    /* ============================================================
+       Hero countdown
+       ============================================================ */
+    .hero {
+      position: relative;
+      padding: 38px 28px 32px;
+      background:
+        radial-gradient(900px 420px at 80% 0%, rgba(126,141,104,0.38), transparent 55%),
+        radial-gradient(700px 480px at 10% 100%, rgba(196,218,177,0.14), transparent 60%),
+        linear-gradient(140deg, #1d1d1a 0%, #25281f 55%, #2c3325 100%);
+      color: #f8f3e9;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1.6px),
+        radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1.6px);
+      background-size: 60px 60px, 90px 90px;
+      background-position: 0 0, 30px 45px;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    .hero__bg {
+      position: absolute; inset: 0;
+      background-image: url('https://www.legendaryvacationclub.com/files/6900/23711735_ImageMediumWidth.jpg');
+      background-size: cover; background-position: center;
+      opacity: 0.18;
+      filter: saturate(1.1) blur(0.5px);
+      mix-blend-mode: lighten;
+    }
+    .hero__inner {
+      position: relative;
+      max-width: 760px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .hero__eyebrow {
+      font-size: 10.5px; font-weight: 600;
+      letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--sage-pale);
+      margin: 0;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .hero__eyebrow::before {
+      content: "";
+      width: 6px; height: 6px;
+      border-radius: 9999px;
+      background: var(--sage-pale);
+      box-shadow: 0 0 0 0 rgba(196,218,177,0.55);
+      animation: pulse 2.2s ease-out infinite;
+    }
+    @keyframes pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(196,218,177,0.55); }
+      80%  { box-shadow: 0 0 0 12px rgba(196,218,177,0); }
+      100% { box-shadow: 0 0 0 0 rgba(196,218,177,0); }
+    }
+    .hero__title {
+      margin: 0;
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(30px, 5vw, 52px);
+      line-height: 1.02;
+      letter-spacing: -0.4px;
+      color: #fff;
+    }
+    .hero__title em {
+      font-style: italic;
+      background: linear-gradient(120deg, var(--sage-glow) 0%, #f0f5e9 50%, var(--sage-glow) 100%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shine 5.5s linear infinite;
+    }
+    @keyframes shine {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .hero__sub {
+      margin: 0; font-size: 15px;
+      color: rgba(248,243,233,0.82);
+      max-width: 56ch;
+    }
+    .hero__count {
+      margin-top: 8px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      max-width: 540px;
+    }
+    .hero__cell {
+      position: relative;
+      padding: 14px 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(196,218,177,0.18);
+      backdrop-filter: blur(8px);
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero__cell::after {
+      content: "";
+      position: absolute; left: 0; right: 0; top: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(196,218,177,0.5), transparent);
+    }
+    .hero__num {
+      display: block;
+      font-family: var(--serif);
+      font-size: clamp(28px, 4.6vw, 40px);
+      line-height: 1;
+      color: #fff;
+      letter-spacing: -0.5px;
+      font-feature-settings: "tnum" 1;
+    }
+    .hero__lbl {
+      display: block;
+      margin-top: 6px;
+      font-size: 9.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(196,218,177,0.85);
+      font-weight: 600;
+    }
+    .hero__meta {
+      margin-top: 14px;
+      display: flex; flex-wrap: wrap; gap: 18px;
+      font-size: 12px; color: rgba(248,243,233,0.78);
+    }
+    .hero__meta strong { color: var(--sage-pale); font-weight: 600; }
+
+    /* ============================================================
+       Stat strip
+       ============================================================ */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      padding: 18px 22px 4px;
+      background: var(--paper);
+    }
+    @media (min-width: 720px) {
+      .stats { grid-template-columns: repeat(4, 1fr); }
+    }
+    .stat-pill {
+      padding: 12px 14px;
+      background: var(--paper-warm);
+      border: 1px solid var(--rule-soft);
+      border-radius: 12px;
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .stat-pill__lbl {
+      font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink-faint); font-weight: 600;
+    }
+    .stat-pill__val {
+      font-family: var(--serif);
+      font-size: 17px; line-height: 1.2;
+      color: var(--ink);
+    }
+
+    /* ============================================================
+       Action tiles
+       ============================================================ */
+    .actions {
+      padding: 20px 22px 8px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    @media (min-width: 720px) {
+      .actions { grid-template-columns: 1fr 1fr; }
+    }
+    .action {
+      display: grid;
+      grid-template-columns: 44px 1fr auto;
+      gap: 14px; align-items: center;
+      padding: 18px 18px 18px 16px;
+      background: var(--paper);
+      border: 1px solid rgba(28,28,28,0.07);
+      border-radius: 14px;
+      text-align: left;
+      color: var(--ink);
+      transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 220ms ease,
+                  border-color 220ms ease;
+    }
+    .action:hover, .action:focus-visible {
+      transform: translateY(-2px);
+      border-color: rgba(126,141,104,0.55);
+      box-shadow: 0 14px 32px -22px rgba(126,141,104,0.55), 0 0 0 1px rgba(126,141,104,0.15);
+      outline: none;
+    }
+    .action__icon {
+      width: 44px; height: 44px;
+      border-radius: 11px;
+      background: linear-gradient(140deg, rgba(126,141,104,0.18) 0%, rgba(126,141,104,0.08) 100%);
+      color: var(--sage-deep);
+      display: grid; place-items: center;
+    }
+    .action__icon svg { width: 20px; height: 20px; }
+    .action__body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .action__title {
+      font-family: var(--serif);
+      font-size: 19px; line-height: 1.15; color: var(--ink);
+    }
+    .action__body p {
+      font-size: 12.5px; line-height: 1.45; color: var(--ink-muted);
+      margin: 0;
+    }
+    .action__chev {
+      color: #b3aea4;
+      transition: transform 220ms ease, color 220ms ease;
+    }
+    .action:hover .action__chev {
+      color: var(--sage);
+      transform: translateX(3px);
+    }
+    .action__badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      margin-top: 6px;
+      padding: 2px 8px;
+      font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+      font-weight: 700;
+      border-radius: 9999px;
+      background: rgba(126,141,104,0.15);
+      color: var(--sage-deep);
+      align-self: flex-start;
+    }
+    /* Strong-accent badge variant — solid sage chip for "premium" callouts
+       (e.g. discount %, "wedding rate"). Class name kept as `--copper` only
+       to avoid touching the JS templates that emit it. */
+    .action__badge--copper {
+      background: var(--sage);
+      color: #fbfdf9;
+      box-shadow: 0 1px 2px rgba(61,74,58,0.18);
+    }
+
+    /* ============================================================
+       Generic section
+       ============================================================ */
+    .section {
+      padding: 22px 26px 100px;
+      min-height: 100%;
+    }
+    .section__head {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+    .section__back {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 10px 6px 8px;
+      border-radius: 9999px;
+      background: var(--paper);
+      border: 1px solid rgba(28,28,28,0.08);
+      font-size: 11.5px; letter-spacing: 0.06em; font-weight: 600;
+      color: var(--ink-soft);
+    }
+    .section__back:hover { background: var(--paper-warm); border-color: rgba(28,28,28,0.18); }
+    .section__eyebrow {
+      font-size: 10.5px; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--sage-deep); margin: 8px 0 2px;
+    }
+    .section__title {
+      margin: 0;
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.05; letter-spacing: -0.4px;
+      color: var(--ink);
+    }
+    .section__title em { font-style: italic; color: var(--sage-deep); }
+    .section__sub {
+      margin: 6px 0 22px;
+      font-size: 14px; line-height: 1.55;
+      color: var(--ink-soft);
+      max-width: 64ch;
+    }
+
+    /* ============================================================
+       Schedule timeline (Home + Schedule section)
+       ============================================================ */
+    .schedule {
+      display: grid; grid-template-columns: 1fr; gap: 12px;
+      padding: 4px 22px 24px;
+    }
+    @media (min-width: 720px) {
+      .schedule { grid-template-columns: repeat(3, 1fr); }
+    }
+    .schedule__day {
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 14px;
+      padding: 18px 20px;
+    }
+    .schedule__date {
+      font-size: 10.5px; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--sage-deep);
+      margin: 0 0 4px;
+    }
+    .schedule__title {
+      font-family: var(--serif);
+      font-size: 20px; line-height: 1.1;
+      color: var(--ink);
+      margin: 0 0 12px;
+      font-weight: 500;
+    }
+    .schedule__events { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+    .schedule__event {
+      display: grid; grid-template-columns: 60px 1fr; gap: 12px; align-items: baseline;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed var(--rule);
+    }
+    .schedule__event:last-child { border-bottom: 0; }
+    .schedule__time {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 14px;
+      color: var(--sage-deep);
+    }
+    .schedule__what { font-size: 13px; color: var(--ink); }
+    .schedule__what em {
+      display: block;
+      font-size: 11.5px;
+      color: var(--ink-muted);
+      font-style: normal;
+      margin-top: 2px;
+      letter-spacing: 0.02em;
+    }
+
+    /* ============================================================
+       Wedding-weekend TIMELINE — anchor of the home + schedule pages.
+       Vertical sage rail running through three day banners; each day
+       merges fixed wedding events with Allie's recommended upsells in
+       chronological order so guests see the whole weekend at once.
+       ============================================================ */
+    .tl {
+      position: relative;
+      padding: 8px 22px 32px;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+    /* Day banner */
+    .tl-day {
+      display: flex; align-items: baseline; gap: 14px;
+      padding: 28px 0 14px 0;
+      position: relative;
+    }
+    .tl-day:first-child { padding-top: 8px; }
+    .tl-day__eyebrow {
+      font-size: 10.5px; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--sage-deep);
+      margin: 0;
+      flex-shrink: 0;
+    }
+    .tl-day__title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(22px, 3vw, 30px);
+      line-height: 1.05;
+      color: var(--ink);
+      margin: 0;
+      letter-spacing: -0.3px;
+      font-style: italic;
+    }
+    .tl-day__rule {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--rule) 0%, transparent 100%);
+      margin-left: 4px;
+    }
+
+    /* Each row: time | marker (with rail) | content */
+    .tl-row {
+      position: relative;
+      display: grid;
+      grid-template-columns: clamp(54px, 12vw, 78px) 28px 1fr;
+      gap: 14px;
+      padding: 6px 0;
+      align-items: stretch;
+    }
+    .tl-row__time {
+      padding-top: 18px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 14px;
+      color: var(--sage-deep);
+      text-align: right;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+    /* Marker column carries the vertical sage rail and the dot. */
+    .tl-row__rail {
+      position: relative;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    /* The vertical line is drawn by an absolute pseudo behind the dot
+       so it connects through every row in the column. */
+    .tl-row__rail::before {
+      content: "";
+      position: absolute;
+      top: 0; bottom: 0; left: 50%;
+      width: 1.5px;
+      background: linear-gradient(180deg,
+                  rgba(126,141,104,0.0) 0%,
+                  rgba(126,141,104,0.45) 12%,
+                  rgba(126,141,104,0.45) 88%,
+                  rgba(126,141,104,0.0) 100%);
+      transform: translateX(-50%);
+    }
+    /* First/last row in a day clip the rail so it doesn't bleed out. */
+    .tl-day + .tl-row .tl-row__rail::before { top: 6px; }
+    .tl-row__dot {
+      position: relative;
+      margin-top: 22px;
+      width: 14px; height: 14px;
+      border-radius: 9999px;
+      background: var(--paper);
+      box-shadow: inset 0 0 0 2px var(--sage);
+      flex-shrink: 0;
+    }
+    .tl-row[data-key="ceremony"] .tl-row__dot {
+      width: 18px; height: 18px;
+      margin-top: 20px;
+      background: var(--sage-deep);
+      box-shadow: inset 0 0 0 2px var(--sage-deep),
+                  0 0 0 4px rgba(126,141,104,0.18);
+    }
+    .tl-row--pick .tl-row__dot {
+      width: 18px; height: 18px;
+      margin-top: 20px;
+      background: var(--sage-darker);
+      box-shadow: inset 0 0 0 2px var(--sage-darker),
+                  0 0 0 4px rgba(196,218,177,0.32);
+    }
+    /* Use a small sparkle inside the pick dot. Drawn via background SVG
+       so the dot stays a clean circle visually. */
+    .tl-row--pick .tl-row__dot::after {
+      content: "✦";
+      position: absolute;
+      inset: 0;
+      display: grid; place-items: center;
+      color: var(--sage-pale);
+      font-size: 11px;
+      line-height: 1;
+    }
+
+    /* Fixed wedding event card */
+    .tl-event {
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      padding: 14px 18px 14px 18px;
+      transition: border-color 200ms ease, box-shadow 200ms ease;
+    }
+    .tl-event:hover { border-color: rgba(126,141,104,0.30); }
+    .tl-event__title {
+      font-family: var(--serif);
+      font-size: 17px; line-height: 1.2;
+      color: var(--ink);
+      margin: 0 0 4px;
+      font-weight: 500;
+    }
+    .tl-event__sub {
+      font-size: 12.5px;
+      color: var(--ink-muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+    /* The ceremony tile gets a subtle sage left bar + slightly heavier card */
+    .tl-row[data-key="ceremony"] .tl-event {
+      border-color: rgba(126,141,104,0.45);
+      background: linear-gradient(135deg, var(--paper) 0%, var(--paper-warm) 100%);
+      box-shadow: 0 4px 12px -8px rgba(126,141,104,0.35);
+      border-left: 3px solid var(--sage-deep);
+      padding-left: 16px;
+    }
+    .tl-row[data-key="ceremony"] .tl-event__title {
+      font-size: 19px;
+    }
+    .tl-row[data-key="ceremony"] .tl-event__title::before {
+      content: "✿";
+      color: var(--sage-deep);
+      margin-right: 7px;
+      font-size: 14px;
+      vertical-align: 1px;
+    }
+
+    /* Allie pick card — the upsell */
+    .tl-pick {
+      display: grid;
+      grid-template-columns: 1fr;
+      background:
+        linear-gradient(135deg, var(--paper) 0%, var(--paper-warm) 100%);
+      border: 1px solid rgba(126,141,104,0.30);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px -16px rgba(61,74,58,0.30);
+      transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 240ms ease, border-color 240ms ease;
+    }
+    @media (min-width: 640px) {
+      .tl-pick { grid-template-columns: 168px 1fr; }
+    }
+    .tl-pick:hover {
+      transform: translateY(-2px);
+      border-color: rgba(126,141,104,0.55);
+      box-shadow: 0 16px 32px -18px rgba(61,74,58,0.35);
+    }
+    .tl-pick__photo {
+      position: relative;
+      min-height: 120px;
+      background-size: cover; background-position: center;
+    }
+    .tl-pick__photo::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg,
+                  rgba(45,55,40,0.0) 0%,
+                  rgba(45,55,40,0.35) 100%);
+    }
+    .tl-pick__body {
+      padding: 16px 20px 18px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .tl-pick__head {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+    }
+    .tl-pick__badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      background: var(--sage-darker);
+      color: var(--sage-glow);
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+    }
+    .tl-pick__badge svg { width: 12px; height: 12px; }
+    .tl-pick__save {
+      display: inline-flex; align-items: center;
+      padding: 3px 9px;
+      background: rgba(126,141,104,0.15);
+      color: var(--sage-deep);
+      border-radius: 9999px;
+      font-size: 10.5px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .tl-pick__title {
+      font-family: var(--serif);
+      font-size: 22px; line-height: 1.1;
+      color: var(--ink);
+      margin: 0;
+      font-weight: 500;
+      letter-spacing: -0.2px;
+    }
+    .tl-pick__why {
+      position: relative;
+      margin: 4px 0 2px;
+      padding: 8px 10px 8px 14px;
+      background: rgba(126,141,104,0.07);
+      border-left: 2px solid var(--sage);
+      border-radius: 4px;
+      font-size: 12.5px; line-height: 1.5;
+      color: var(--ink-soft);
+      font-style: italic;
+    }
+    .tl-pick__why strong {
+      display: block;
+      font-style: normal; font-weight: 700;
+      font-size: 9.5px; letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sage-deep);
+      margin-bottom: 2px;
+    }
+    .tl-pick__desc {
+      font-size: 12.5px; line-height: 1.55;
+      color: var(--ink-muted);
+      margin: 0;
+    }
+    .tl-pick__bullets {
+      list-style: none; padding: 0; margin: 2px 0 0;
+      display: flex; flex-wrap: wrap; gap: 10px;
+    }
+    .tl-pick__bullets li {
+      font-size: 11.5px; color: var(--ink-muted);
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .tl-pick__bullets li::before {
+      content: "";
+      width: 4px; height: 4px;
+      border-radius: 9999px;
+      background: var(--sage);
+    }
+    .tl-pick__foot {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; flex-wrap: wrap;
+      margin-top: 8px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(126,141,104,0.25);
+    }
+    .tl-pick__price {
+      display: flex; flex-direction: column; gap: 2px;
+      font-size: 10.5px; letter-spacing: 0.06em;
+      color: var(--ink-faint);
+    }
+    .tl-pick__price-row {
+      display: flex; align-items: baseline; gap: 8px;
+    }
+    .tl-pick__price-row s {
+      color: var(--ink-faint); font-size: 13px; font-weight: 500;
+    }
+    .tl-pick__price-row strong {
+      font-family: var(--serif);
+      font-size: 26px; line-height: 1;
+      color: var(--sage-deep);
+      letter-spacing: -0.4px;
+      font-weight: 500;
+    }
+    .tl-pick__price-row em {
+      font-style: normal; font-size: 11px;
+      color: var(--ink-muted);
+      font-weight: 400;
+    }
+    .tl-pick__cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 18px;
+      background: var(--sage);
+      color: #fff;
+      border: 0; border-radius: 9999px;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      transition: background-color 180ms ease, transform 180ms ease;
+      flex-shrink: 0;
+    }
+    .tl-pick__cta:hover { background: var(--sage-deep); transform: translateY(-1px); }
+    .tl-pick--added {
+      border-color: rgba(126,141,104,0.55);
+      background: linear-gradient(135deg, var(--paper) 0%, rgba(196,218,177,0.20) 100%);
+    }
+    .tl-pick--added .tl-pick__cta {
+      background: var(--sage-deep);
+      pointer-events: none;
+    }
+    .tl-pick--added .tl-pick__cta::before {
+      content: "✓";
+      margin-right: 4px;
+    }
+
+    @media (max-width: 540px) {
+      .tl-row__time { font-size: 12.5px; padding-top: 16px; }
+      .tl-pick__title { font-size: 19px; }
+      .tl-pick__price-row strong { font-size: 22px; }
+    }
+
+    /* ============================================================
+       Cards: Room block / Spa / Excursions / Dining
+       ============================================================ */
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 18px;
+    }
+    @media (min-width: 720px) {
+      .card-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1040px) {
+      .card-grid--3 { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 220ms ease, border-color 220ms ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(126,141,104,0.30);
+      box-shadow: var(--shadow);
+    }
+    .card__photo {
+      aspect-ratio: 16 / 9;
+      background-size: cover; background-position: center;
+      position: relative;
+    }
+    .card__photo::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.45) 100%);
+    }
+    .card__pricetag {
+      position: absolute; right: 12px; top: 12px;
+      padding: 6px 10px;
+      border-radius: 9999px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(8px);
+      font-size: 11px; font-weight: 700;
+      color: var(--ink);
+      letter-spacing: 0.04em;
+    }
+    .card__pricetag s { color: var(--ink-faint); margin-right: 4px; font-weight: 500; }
+    .card__pricetag em { color: var(--sage-deep); font-style: normal; }
+    .card__body {
+      padding: 18px 20px 20px;
+      display: flex; flex-direction: column; gap: 8px; flex: 1;
+    }
+    .card__eyebrow {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--sage-deep);
+    }
+    .card__title {
+      font-family: var(--serif);
+      font-size: 22px; line-height: 1.1;
+      color: var(--ink);
+      margin: 0;
+      font-weight: 500;
+    }
+    .card__loc {
+      font-size: 12px; color: var(--ink-muted);
+      letter-spacing: 0.02em;
+      margin: -2px 0 4px;
+    }
+    .card__desc {
+      font-size: 13px; line-height: 1.55;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+    .card__bullets {
+      list-style: none; padding: 0; margin: 4px 0 0;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .card__bullets li {
+      font-size: 12px; color: var(--ink-muted);
+      display: flex; align-items: baseline; gap: 8px;
+    }
+    .card__bullets li::before {
+      content: ""; flex: 0 0 4px;
+      width: 4px; height: 4px;
+      border-radius: 9999px;
+      background: var(--sage);
+      align-self: center;
+    }
+    .card__foot {
+      margin-top: auto;
+      padding: 14px 20px;
+      background: var(--paper-warm);
+      border-top: 1px solid var(--rule-soft);
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .card__price {
+      display: flex; flex-direction: column; gap: 0;
+      font-size: 11px; color: var(--ink-faint); letter-spacing: 0.04em;
+    }
+    .card__price strong {
+      font-family: var(--serif);
+      font-size: 22px; font-weight: 500;
+      color: var(--ink);
+      line-height: 1;
+      letter-spacing: -0.2px;
+    }
+    .card__price s { color: var(--ink-faint); margin-right: 6px; font-weight: 400; }
+    .card__price .save {
+      display: inline-block;
+      font-size: 10.5px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--sage-deep);
+      margin-top: 4px;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 16px;
+      border: 0; border-radius: 9999px;
+      background: var(--ink); color: #fff;
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      transition: background-color 200ms ease, transform 200ms ease;
+    }
+    .btn:hover { background: var(--ink-soft); transform: translateY(-1px); }
+    .btn--copper { background: var(--sage); }
+    .btn--copper:hover { background: var(--sage-deep); }
+    .btn--ghost {
+      background: var(--paper);
+      color: var(--ink);
+      border: 1px solid var(--rule);
+    }
+    .btn--ghost:hover { background: var(--paper-warm); }
+    .btn--block { width: 100%; justify-content: center; }
+    .btn--added {
+      background: var(--sage-deep);
+      pointer-events: none;
+    }
+    .btn--added::before {
+      content: "✓";
+      margin-right: 4px;
+    }
+
+    /* ============================================================
+       Stay (room block) screen
+       ============================================================ */
+    .stay-form {
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 16px;
+      padding: 22px 24px;
+      margin: 18px 0 6px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    @media (min-width: 640px) {
+      .stay-form { grid-template-columns: repeat(3, 1fr); }
+    }
+    .field {
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .field label {
+      font-size: 10.5px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+    .field input, .field select {
+      font: inherit; font-size: 14px;
+      padding: 11px 14px;
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      background: var(--paper-warm);
+      color: var(--ink);
+      transition: border-color 200ms ease, box-shadow 200ms ease;
+    }
+    .field input:focus-visible, .field select:focus-visible {
+      outline: none;
+      border-color: var(--sage);
+      box-shadow: 0 0 0 3px rgba(126,141,104,0.18);
+      background: var(--paper);
+    }
+    .stay-banner {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 22px;
+      background: linear-gradient(135deg, rgba(126,141,104,0.12) 0%, rgba(126,141,104,0.10) 100%);
+      border: 1px solid rgba(126,141,104,0.25);
+      border-radius: 14px;
+      margin-top: 18px;
+    }
+    .stay-banner__icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--sage); color: #fff;
+      display: grid; place-items: center;
+      flex-shrink: 0;
+    }
+    .stay-banner__title {
+      font-family: var(--serif);
+      font-size: 18px; line-height: 1.1;
+      color: var(--ink);
+      margin: 0;
+    }
+    .stay-banner__sub {
+      font-size: 12px; color: var(--ink-muted);
+      margin: 2px 0 0;
+    }
+    .stay-banner__code {
+      margin-left: auto;
+      padding: 8px 12px;
+      background: var(--paper);
+      border: 1px dashed var(--sage);
+      border-radius: 8px;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 13px; font-weight: 600; color: var(--sage-deep);
+      letter-spacing: 0.1em;
+    }
+
+    /* ============================================================
+       Itinerary drawer (sticky bottom)
+       ============================================================ */
+    .cart {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 16px;
+      width: min(960px, calc(100% - 32px));
+      background: var(--ink);
+      color: #fff;
+      border-radius: 16px;
+      box-shadow: 0 24px 60px -24px rgba(0,0,0,0.45);
+      z-index: 40;
+      transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 280ms ease;
+    }
+    .cart[data-empty="true"] {
+      transform: translateX(-50%) translateY(140%);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .cart__head {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 20px;
+      cursor: pointer;
+    }
+    .cart__icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--sage);
+      display: grid; place-items: center; color: #fff;
+      flex-shrink: 0;
+    }
+    .cart__title {
+      font-family: var(--serif);
+      font-size: 18px; line-height: 1.1;
+      color: #fff;
+      margin: 0;
+    }
+    .cart__sub {
+      font-size: 11.5px;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.04em;
+      margin: 2px 0 0;
+    }
+    .cart__total {
+      margin-left: auto;
+      display: flex; flex-direction: column; align-items: flex-end;
+      gap: 0;
+    }
+    .cart__total-lbl {
+      font-size: 9.5px; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+    .cart__total-val {
+      font-family: var(--serif);
+      font-size: 22px; line-height: 1;
+      color: var(--sage-pale);
+      font-weight: 500;
+    }
+    .cart__chev {
+      color: rgba(255,255,255,0.55);
+      transition: transform 220ms ease;
+    }
+    .cart[data-open="true"] .cart__chev {
+      transform: rotate(180deg);
+    }
+    .cart__body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 320ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .cart[data-open="true"] .cart__body {
+      max-height: 540px;
+    }
+    .cart__list {
+      list-style: none; padding: 0; margin: 0;
+      border-top: 1px solid rgba(255,255,255,0.10);
+    }
+    .cart__line {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 16px; align-items: center;
+      padding: 14px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-size: 13px;
+    }
+    .cart__line:last-child { border-bottom: 0; }
+    .cart__line strong {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 15px;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .cart__line em {
+      font-style: normal;
+      color: rgba(255,255,255,0.65);
+      font-size: 11.5px;
+    }
+    .cart__line-price {
+      font-variant-numeric: tabular-nums;
+      color: var(--sage-pale);
+      font-weight: 600;
+    }
+    .cart__remove {
+      background: none; border: 0;
+      color: rgba(255,255,255,0.55);
+      font-size: 18px;
+      padding: 0; line-height: 1;
+    }
+    .cart__remove:hover { color: var(--sage-pale); }
+    .cart__foot {
+      padding: 14px 20px 16px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      display: flex; gap: 10px; align-items: center;
+    }
+    .cart__msg {
+      font-size: 11.5px;
+      color: rgba(255,255,255,0.65);
+      flex: 1;
+    }
+    .cart__checkout {
+      padding: 11px 18px;
+      background: var(--sage);
+      color: #fff;
+      border: 0; border-radius: 9999px;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .cart__checkout:hover { background: var(--sage-deep); }
+
+    /* ============================================================
+       Toast
+       ============================================================ */
+    .toast {
+      position: fixed; top: 76px; right: 18px;
+      padding: 12px 16px;
+      background: var(--ink);
+      color: #fff;
+      border-radius: 12px;
+      font-size: 13px;
+      box-shadow: 0 14px 32px -12px rgba(0,0,0,0.4);
+      z-index: 60;
+      transform: translateX(120%);
+      transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .toast[data-show="true"] {
+      transform: translateX(0);
+    }
+    .toast__check {
+      width: 22px; height: 22px;
+      border-radius: 9999px;
+      background: var(--sage-deep);
+      display: grid; place-items: center;
+      font-size: 12px;
+    }
+
+    /* ============================================================
+       RSVP / Schedule sub-section
+       ============================================================ */
+    .rsvp {
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 16px;
+      padding: 24px 26px;
+      margin-top: 18px;
+    }
+    .rsvp__row {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      margin-top: 14px;
+    }
+    .pill {
+      padding: 10px 18px;
+      border-radius: 9999px;
+      border: 1px solid var(--rule);
+      background: var(--paper);
+      color: var(--ink-soft);
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .pill[data-selected="true"] {
+      background: var(--ink); color: #fff;
+      border-color: var(--ink);
+    }
+    .pill--copper[data-selected="true"] {
+      background: var(--sage); color: #fff;
+      border-color: var(--sage);
+    }
+    .pill--sage[data-selected="true"] {
+      background: var(--sage-deep); color: #fff;
+      border-color: var(--sage-deep);
+    }
+
+    /* Login screen */
+    .login__hero {
+      padding: 36px 28px 8px;
+      max-width: 520px;
+    }
+    .login__eyebrow {
+      font-size: 10.5px; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--sage-deep); margin: 0 0 12px;
+    }
+    .login__title {
+      margin: 0 0 8px;
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 40px; line-height: 1.05;
+      color: var(--ink); letter-spacing: -0.4px;
+    }
+    .login__title em { font-style: italic; color: var(--sage-deep); }
+    .login__sub {
+      font-size: 14px; line-height: 1.55; color: var(--ink-soft);
+      margin: 0 0 6px;
+    }
+    .login__form {
+      max-width: 460px;
+      padding: 22px 28px 28px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+
+    @media (max-width: 640px) {
+      .hero__title { font-size: 30px !important; }
+      .hero__num { font-size: 30px !important; }
+      .stats { grid-template-columns: 1fr 1fr !important; }
+      .actions { grid-template-columns: 1fr !important; }
+      .nav__tab { padding: 10px 10px 12px !important; font-size: 11px !important; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero__title em { animation: none; -webkit-background-clip: initial; background-clip: initial; color: var(--sage-pale); }
+      .hero__eyebrow::before { animation: none; }
+      .action, .card { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Toast -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <span class="toast__check">✓</span>
+  <span id="toast-msg">Added to your itinerary</span>
+</div>
+
+<!-- App shell -->
+<div class="app" id="app"></div>
+
+<!-- Itinerary drawer (rendered globally) -->
+<aside class="cart" id="cart" data-empty="true" data-open="false" aria-label="Your itinerary">
+  <div class="cart__head" id="cart-head" tabindex="0" role="button" aria-expanded="false">
+    <span class="cart__icon" aria-hidden="true">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <path d="M5 8h14l-1.4 12H6.4L5 8z M9 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+    </span>
+    <div>
+      <h3 class="cart__title">Your trip itinerary</h3>
+      <p class="cart__sub" id="cart-sub">Tap to expand · 0 items added</p>
+    </div>
+    <span class="cart__total">
+      <span class="cart__total-lbl">Trip total</span>
+      <span class="cart__total-val" id="cart-total">$0</span>
+    </span>
+    <span class="cart__chev" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+  </div>
+  <div class="cart__body" id="cart-body">
+    <ul class="cart__list" id="cart-list"></ul>
+    <div class="cart__foot">
+      <span class="cart__msg">Aria & Marcus's group code is auto-applied. You'll get a confirmation email after submitting.</span>
+      <button type="button" class="cart__checkout" id="cart-checkout">Confirm everything</button>
+    </div>
+  </div>
+</aside>
+
+<script>
+/* ============================================================
+   DATA — wedding details + add-on inventory
+   ============================================================ */
+
+/* Wedding date is fixed for the demo. Saturday, March 14, 2026. */
+const WEDDING = {
+  couple:  "Aria & Marcus",
+  hostFirst: "Aria",
+  hostLast:  "Patel",
+  partner: "Marcus Patel",
+  dateISO: "2026-03-14T16:00:00-07:00",
+  dateLong:"Saturday, March 14, 2026",
+  arriveLong: "March 13–15, 2026",
+  venue:   "Nobu Hotel Los Cabos",
+  city:    "Cabo San Lucas, México",
+  hashtag: "#AriaMarcusInCabo",
+  groupCode: "ARIAMARCUS-26",
+  ceremonySpace: "Stone Garden",
+  receptionSpace: "Onsen Pool Deck",
+  dressCode: "Black-tie optional, beachy permitted",
+  weather: "78°F · sunny",
+  heroImg: "https://www.legendaryvacationclub.com/files/6900/23711735_ImageMediumWidth.jpg",
+};
+
+/* Demo: the guest is already "logged in" as Sofía Vargas — bridesmaid
+   per Aria's existing guest list. They can change name on the login
+   card if they want. */
+const DEFAULT_GUEST = { name: "Sofía Vargas", email: "sofia@vargas.co", party: "Bridesmaid" };
+
+/* Schedule of fixed wedding-weekend events (the parts the bride locked in).
+   Each day uses a stable `day` key so we can splice in Allie's recommended
+   upsells from `ALLIE_PICKS` further down. The ceremony row is flagged so
+   the timeline can render it as the visual anchor of Saturday. */
+const SCHEDULE = [
+  { day: "fri", date: "FRI · MAR 13", title: "Welcome", events: [
+    { time: "5:00 PM", what: "Airport transfers", em: "Complimentary shuttle from SJD · scheduled by hotel" },
+    { time: "7:00 PM", what: "Welcome cocktails — Onsen Pool Deck", em: "Open bar, hand-rolls, sake flights · attire: resort chic" },
+  ]},
+  { day: "sat", date: "SAT · MAR 14", title: "Wedding day", events: [
+    { time: "11:00 AM", what: "Pre-ceremony spa hours", em: "Esencia Spa open early for the wedding party" },
+    { time: "4:00 PM",  what: "Ceremony — Stone Garden", em: "Seating opens 3:30 PM · linen aisle, bare feet welcome", key: "ceremony" },
+    { time: "5:30 PM",  what: "Cocktail hour — Sand Bar", em: "Mezcal flights, ocean-view passed bites" },
+    { time: "7:00 PM",  what: "Reception — Onsen Pool Deck", em: "Long-table dinner, first dance under the stars" },
+    { time: "10:30 PM", what: "After-party — Cocina Nobu lounge", em: "DJ Haru on the decks until 2 AM" },
+  ]},
+  { day: "sun", date: "SUN · MAR 15", title: "Farewell", events: [
+    { time: "10:30 AM", what: "Farewell brunch — Esencia Garden", em: "Mezcal mimosas, omakase station, casual" },
+    { time: "1:00 PM",  what: "Last group photo — Sea of Cortez deck", em: "Optional · plan your departure transfer after" },
+  ]},
+];
+
+/* Room block — block rates vs. published rates, all for 2 nights min */
+const ROOMS = [
+  { id: "rm-king",   name: "Garden King",      desc: "Quiet ground-floor room facing the meditation garden — the room block bestseller.",
+    bullets: ["1 King · sleeps 2", "350 sq ft", "Walk-in shower + soaking tub"],
+    photo: "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=900&q=72",
+    blockUSD: 540, listUSD: 745, occ: "2" },
+  { id: "rm-ocean",  name: "Ocean View Suite", desc: "Sea of Cortez balcony, deep-soaking onsen tub, the view that ends up in everyone's stories.",
+    bullets: ["1 King · sleeps 2", "640 sq ft", "Onsen tub + ocean balcony"],
+    photo: "https://images.unsplash.com/photo-1566073771259-2a04524b2bcb?auto=format&fit=crop&w=900&q=72", blockUSD: 820, listUSD: 1145, occ: "2", popular: true },
+  { id: "rm-double", name: "Double Garden",    desc: "Two queens, garden-side. Made for two friends sharing — split it and the math gets fun.",
+    bullets: ["2 Queens · sleeps 4", "420 sq ft", "Adjoining option available"],
+    photo: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=900&q=72", blockUSD: 580, listUSD: 825, occ: "4" },
+  { id: "rm-casita", name: "Pool Casita",      desc: "Step out, swim. Private terrace plunges into the lagoon pool — wedding-party splurge.",
+    bullets: ["1 King · sleeps 2", "780 sq ft", "Direct pool access · daybed"],
+    photo: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=900&q=72", blockUSD: 1190, listUSD: 1690, occ: "2" },
+  { id: "rm-twosuite", name: "Two-Bed Suite",  desc: "Two-bedroom suite for families coming together. Living room, kitchenette, big terrace.",
+    bullets: ["2 Bedrooms · sleeps 4–5", "1,180 sq ft", "Living + dining + kitchenette"],
+    photo: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=900&q=72", blockUSD: 1480, listUSD: 2080, occ: "5" },
+];
+
+/* Spa add-ons (Esencia at Nobu Cabos) */
+const SPA = [
+  { id: "spa-couples",  name: "Couples Sunset Ritual",
+    loc: "Esencia Spa · Treatment Suite 4", priceUSD: 720,
+    desc: "Side-by-side massage, sea-salt scrub, and a private jacuzzi terrace at golden hour. Aria's pre-wedding pick.",
+    bullets: ["For 2 · 90 min", "Champagne & ceviche after", "Ocean-view treatment suite"],
+    photo: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=72" },
+  { id: "spa-glow",     name: "Wedding Glow Facial",
+    loc: "Esencia Spa", priceUSD: 285,
+    desc: "Chef-Matsuhisa-approved 75-minute brightening facial — schedule it 24 hrs before the ceremony.",
+    bullets: ["For 1 · 75 min", "Vitamin-C + lymphatic", "Photo-ready finish"],
+    photo: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=900&q=72" },
+  { id: "spa-onsen",    name: "Hot-Stone Onsen",
+    loc: "Esencia Spa · Hydrotherapy", priceUSD: 240,
+    desc: "60-minute hot-stone massage, then a soak in the basalt onsen pool. A reset between the ceremony and the after-party.",
+    bullets: ["For 1 · 60 min", "Onsen pool access", "Robe + sandals to take home"],
+    photo: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=900&q=72" },
+  { id: "spa-bridal",   name: "Bridesmaid Hair & Makeup",
+    loc: "Suite 1208 · in-room", priceUSD: 380,
+    desc: "Aria's hair & makeup team is on property all morning. Slot in for the ceremony — discounted rate for guests in the block.",
+    bullets: ["For 1 · 90 min", "Trial included", "Touch-up kit to take with you"],
+    photo: "https://images.unsplash.com/photo-1522335789203-aaa11d4f4d7d?auto=format&fit=crop&w=900&q=72", popular: true },
+  { id: "spa-stargaze", name: "Rooftop Stargazing Soak",
+    loc: "The North Tower rooftop", priceUSD: 380,
+    desc: "Private rooftop hot tub with a personal mixologist and small-bites tasting plate. Weddings make people romantic.",
+    bullets: ["For 2 · 2 hrs", "Mezcal flight", "Telescope on deck"],
+    photo: "https://images.unsplash.com/photo-1531112405267-d2c1546f4d2e?auto=format&fit=crop&w=900&q=72" },
+  { id: "spa-mezcal",   name: "Mezcal & Massage",
+    loc: "Esencia Spa", priceUSD: 320,
+    desc: "Late-afternoon couples massage paired with a 4-bottle mezcal flight. For the friends who arrived too early to nap.",
+    bullets: ["For 2 · 60 min", "4-bottle mezcal flight", "Light bites + agua de jamaica"],
+    photo: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=900&q=72" },
+
+  /* Allie's hand-picked pre-wedding spa morning. Shown in the home-page
+     timeline AND in the Spa tab — `publishedUSD` triggers the discount
+     strikethrough; `allieRec` flags the upgraded card treatment. */
+  { id: "spa-allie-day", name: "Pre-Wedding Spa Morning",
+    loc: "Esencia Spa · 4-hour ritual", priceUSD: 480, publishedUSD: 720, allieRec: true,
+    desc: "Aria's pre-wedding glow ritual: 90-min couples massage, sea-salt scrub, onsen + steam, and a champagne lunch on the cliffside terrace before tonight's welcome dinner.",
+    bullets: ["For 2 · 4 hrs", "Onsen + steam included", "Champagne lunch after"],
+    photo: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=72" },
+];
+
+/* Excursions (off-property, hotel-arranged) */
+const EXC = [
+  { id: "exc-arch",     name: "Cabo Arch & Lover's Beach",
+    loc: "Marina · 9 AM departure", priceUSD: 95,
+    desc: "Two-hour glass-bottom boat to El Arco, the iconic rock arch where the Pacific meets the Sea of Cortez.",
+    bullets: ["For 1 · 2 hrs", "Snacks + bottled water", "Drop-off at hotel beach"],
+    photo: "https://images.unsplash.com/photo-1582719471384-894fbb16e074?auto=format&fit=crop&w=900&q=72", popular: true },
+  { id: "exc-whale",    name: "Whale Watching at Sunrise",
+    loc: "Sea of Cortez · 6 AM departure", priceUSD: 280,
+    desc: "Small-boat charter to where the gray whales calve. Coffee, blankets, and the captain who's logged 1,200 pods.",
+    bullets: ["For 1 · 4 hrs", "Charter sailboat", "Continental breakfast aboard"],
+    photo: "https://images.unsplash.com/photo-1570481662006-a3a1374699e8?auto=format&fit=crop&w=900&q=72" },
+  { id: "exc-todos",    name: "Todos Santos Day Trip",
+    loc: "Magic town · full day", priceUSD: 165,
+    desc: "Drive up the coast for galleries, surf shops, and the best fish tacos in Baja. Easy day for early arrivals.",
+    bullets: ["For 1 · 7 hrs", "Private guide", "Lunch at Hotel California"],
+    photo: "https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=900&q=72" },
+  { id: "exc-snorkel",  name: "Santa María Snorkel",
+    loc: "Boutique catamaran · half day", priceUSD: 130,
+    desc: "Protected cove, parrotfish in 12 feet of water, an open bar after. The wedding party's day-before pick.",
+    bullets: ["For 1 · 4 hrs", "All gear included", "Open bar + light lunch"],
+    photo: "https://images.unsplash.com/photo-1583122321203-ff8d70d6c75c?auto=format&fit=crop&w=900&q=72" },
+  { id: "exc-atv",      name: "ATV Desert + Beach",
+    loc: "Migriño dunes · half day", priceUSD: 175,
+    desc: "Two hours in the cactus desert, two hours barreling down the Pacific beach. Closed-toe shoes required.",
+    bullets: ["For 1 · 4 hrs", "Single or tandem ATV", "Tequila tasting at the end"],
+    photo: "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=900&q=72" },
+  { id: "exc-yacht",    name: "Sunset Catamaran Charter",
+    loc: "Marina · 5 PM", priceUSD: 215,
+    desc: "Three-hour sunset sail with open bar and a tapas dinner. Group rate from Aria's wedding block.",
+    bullets: ["For 1 · 3 hrs", "Open bar", "Tapas dinner aboard"],
+    photo: "https://images.unsplash.com/photo-1543721090-3170be3ad8a9?auto=format&fit=crop&w=900&q=72" },
+
+  /* Allie's curated wedding-weekend upsells — surfaced in the timeline. */
+  { id: "exc-golf",     name: "Sunrise Tee Time · Cabo Real",
+    loc: "Cabo Real Golf Club · 7:00 AM", priceUSD: 195, publishedUSD: 340, allieRec: true,
+    desc: "Beat the heat — tee off pre-ceremony with the groomsmen on the Robert Trent Jones II oceanfront 18. Cart, caddy, breakfast burrito at the turn, and round-trip resort transfer included.",
+    bullets: ["For 1 · 4 hrs", "Cart + caddy", "Resort transfers"],
+    photo: "https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?auto=format&fit=crop&w=900&q=72" },
+  { id: "exc-dolphin",  name: "Dolphin Encounter · Cabo Dolphins",
+    loc: "Cabo San Lucas Marina · 9:00 AM", priceUSD: 135, publishedUSD: 185, allieRec: true,
+    desc: "60-minute swim with bottlenose dolphins in the natural marina lagoon. Round-trip transfer + GoPro photo package included — a sweet last-day moment with the friends still around.",
+    bullets: ["For 1 · 90 min total", "Photo package included", "Round-trip transfer"],
+    photo: "https://images.unsplash.com/photo-1564550974352-712c7eb6dbb6?auto=format&fit=crop&w=900&q=72" },
+];
+
+/* ============================================================
+   ALLIE_PICKS — Allie's hand-curated upsells inside the wedding
+   itinerary timeline. Each entry references an item in SPA or EXC
+   (so the cart code is unchanged), plus three pieces of timeline
+   metadata: which day, which time slot, and the rationale Allie
+   would give the guest in plain English.
+   ============================================================ */
+const ALLIE_PICKS = [
+  { id: "spa-allie-day", cartKey: "spa", day: "fri", time: "11:00 AM", sortMin: 11*60,
+    why: "I picked this because it's the only spa block long enough to actually unwind before tonight's 7 PM welcome cocktails — and Aria's already booked the same suite for her crew." },
+  { id: "exc-golf",      cartKey: "exc", day: "sat", time: "7:00 AM",  sortMin: 7*60,
+    why: "Tee off before the morning haze burns off — ocean views the whole back nine. You'll be back, showered, and dressed well before the 4 PM ceremony." },
+  { id: "exc-dolphin",   cartKey: "exc", day: "sun", time: "9:00 AM",  sortMin: 9*60,
+    why: "Last-day sweetness. Wraps with 30 minutes to spare before the 10:30 farewell brunch — and the photos make the album." },
+];
+
+/* On-property dinner reservations */
+const DINING = [
+  { id: "din-cocina-fri", name: "Cocina Nobu — Welcome eve",
+    loc: "Friday · 8:00 PM", priceUSD: 145,
+    desc: "Chef Matsuhisa's signature menu. Tables of 4 — let us know who you'd like to sit with at checkout.",
+    bullets: ["Per person · 5 courses", "Sake pairing optional (+$80)", "Vegetarian menu available"],
+    photo: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=72", popular: true },
+  { id: "din-malta",     name: "Malta — Private cellar table",
+    loc: "Friday or Sunday · 7:30 PM", priceUSD: 195,
+    desc: "Eight-seat private cellar at Malta steakhouse. Premium cuts, magnums, low lighting, late dessert.",
+    bullets: ["Per person · 4 courses", "Sommelier-led wine flight (+$95)", "Capped at 8 guests per night"],
+    photo: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=72" },
+  { id: "din-esencia-sun", name: "Esencia Garden — Farewell brunch",
+    loc: "Sunday · 10:30 AM", priceUSD: 85,
+    desc: "Mezcal mimosas, omakase station, casual. Set up so you can drift in and out before your transfer.",
+    bullets: ["Per person · 2 hrs", "Open chef's stations", "Mezcal & espresso bar included"],
+    photo: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=900&q=72" },
+  { id: "din-omakase",  name: "Omakase counter — Cocina Nobu",
+    loc: "Sat post-wedding · midnight", priceUSD: 240,
+    desc: "Reserved for night-owls. Six-seat counter at the chef's pass — late, quiet, perfect after the dance floor.",
+    bullets: ["Per person · 60 min", "12-course chef's choice", "Sake flight included"],
+    photo: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=900&q=72" },
+  { id: "din-pool",     name: "Sand Bar — Daytime cabana",
+    loc: "Friday or Saturday afternoon", priceUSD: 60,
+    desc: "Pre-paid cabana at the Sand Bar pool: shade, towel service, ceviche, two cocktails per person.",
+    bullets: ["Per person · 4 hrs", "Two cocktails included", "Light bites menu"],
+    photo: "https://images.unsplash.com/photo-1604147495798-57beb5d6af73?auto=format&fit=crop&w=900&q=72" },
+  { id: "din-rehearsal", name: "Stone Garden rehearsal dinner",
+    loc: "Friday · 6:30 PM (invite only)", priceUSD: 0, soldOut: true,
+    desc: "Family + bridal party only — invite required. We'll let you know if a seat opens up.",
+    bullets: ["By invitation", "Family + bridal party", "Auto-added if invited"],
+    photo: "https://images.unsplash.com/photo-1467810563316-b5476525c0f9?auto=format&fit=crop&w=900&q=72" },
+];
+
+/* ============================================================
+   STATE — held in localStorage so reloads keep itinerary
+   ============================================================ */
+
+const STORE_KEY = "aiw_guest_portal_v1";
+
+const defaultState = {
+  guest: { name: "", email: "" },
+  loggedIn: false,
+  section: "home",
+  rsvp: null,                 // "yes" | "maybe" | "no"
+  attending: null,            // "couple" | "solo" | null
+  plusOne: "",
+  cartOpen: false,
+  /* Booked items */
+  room: null,                 // { roomId, checkIn, checkOut, guests }
+  spa: [],                    // [ id, ... ]
+  exc: [],
+  dining: [],
+};
+
+let state = loadState();
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (!raw) return { ...defaultState };
+    return { ...defaultState, ...JSON.parse(raw) };
+  } catch (_) { return { ...defaultState }; }
+}
+function saveState() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (_) {}
+}
+
+/* ============================================================
+   RENDER UTIL
+   ============================================================ */
+
+const $app = document.getElementById("app");
+
+function escapeHtml(s) {
+  return String(s ?? "").replace(/[&<>"']/g, m => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  }[m]));
+}
+
+function usd(n) {
+  if (typeof n !== "number") return "—";
+  return "$" + n.toLocaleString("en-US", { maximumFractionDigits: 0 });
+}
+
+function setApp(html) { $app.innerHTML = html; }
+
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  document.getElementById("toast-msg").textContent = msg;
+  t.dataset.show = "true";
+  clearTimeout(showToast._h);
+  showToast._h = setTimeout(() => { t.dataset.show = "false"; }, 2400);
+}
+
+function initials(name) {
+  if (!name) return "G";
+  return name.trim().split(/\s+/).map(p => p[0] || "").join("").slice(0, 2).toUpperCase() || "G";
+}
+
+/* ============================================================
+   COUNTDOWN
+   ============================================================ */
+
+let _countHandle = null;
+function stopCountdown() {
+  if (_countHandle) { clearInterval(_countHandle); _countHandle = null; }
+}
+function tickCountdown() {
+  const root = document.getElementById("count-cells");
+  if (!root) { stopCountdown(); return; }
+  const target = new Date(WEDDING.dateISO).getTime();
+  const ms = Math.max(0, target - Date.now());
+  const total = Math.floor(ms / 1000);
+  const days  = Math.floor(total / 86400);
+  const hours = Math.floor((total % 86400) / 3600);
+  const mins  = Math.floor((total %  3600) / 60);
+  const secs  = total % 60;
+  const map = { days, hours, mins, secs };
+  Object.entries(map).forEach(([k, v]) => {
+    const el = root.querySelector(`[data-cd="${k}"]`);
+    if (!el) return;
+    const next = String(v).padStart(k === "days" ? 3 : 2, "0");
+    if (el.textContent !== next) el.textContent = next;
+  });
+}
+
+/* ============================================================
+   ITINERARY / CART
+   ============================================================ */
+
+function cartLines() {
+  const lines = [];
+  if (state.room) {
+    const r = ROOMS.find(x => x.id === state.room.roomId);
+    if (r) {
+      const nights = countNights(state.room.checkIn, state.room.checkOut) || 2;
+      lines.push({
+        kind: "Stay",
+        title: `${r.name} · ${nights} ${nights === 1 ? "night" : "nights"}`,
+        sub: `${state.room.checkIn} → ${state.room.checkOut} · ${state.room.guests} guest${state.room.guests > 1 ? "s" : ""}`,
+        price: r.blockUSD * nights,
+        remove: () => { state.room = null; saveState(); renderCart(); rerenderActive(); },
+      });
+    }
+  }
+  state.spa.forEach(id => {
+    const s = SPA.find(x => x.id === id);
+    if (s) lines.push({ kind: "Spa", title: s.name, sub: s.loc, price: s.priceUSD,
+      remove: () => { state.spa = state.spa.filter(x => x !== id); saveState(); renderCart(); rerenderActive(); }});
+  });
+  state.exc.forEach(id => {
+    const s = EXC.find(x => x.id === id);
+    if (s) lines.push({ kind: "Excursion", title: s.name, sub: s.loc, price: s.priceUSD,
+      remove: () => { state.exc = state.exc.filter(x => x !== id); saveState(); renderCart(); rerenderActive(); }});
+  });
+  state.dining.forEach(id => {
+    const s = DINING.find(x => x.id === id);
+    if (s) lines.push({ kind: "Dining", title: s.name, sub: s.loc, price: s.priceUSD,
+      remove: () => { state.dining = state.dining.filter(x => x !== id); saveState(); renderCart(); rerenderActive(); }});
+  });
+  return lines;
+}
+
+function countNights(checkInISO, checkOutISO) {
+  if (!checkInISO || !checkOutISO) return 0;
+  const a = new Date(checkInISO).getTime();
+  const b = new Date(checkOutISO).getTime();
+  if (isNaN(a) || isNaN(b) || b <= a) return 0;
+  return Math.round((b - a) / 86400000);
+}
+
+function renderCart() {
+  const cart = document.getElementById("cart");
+  const lines = cartLines();
+  cart.dataset.empty = lines.length === 0 ? "true" : "false";
+  cart.dataset.open  = (state.cartOpen && lines.length > 0) ? "true" : "false";
+  document.getElementById("cart-head").setAttribute("aria-expanded", String(state.cartOpen && lines.length > 0));
+  const total = lines.reduce((s, l) => s + (l.price || 0), 0);
+  document.getElementById("cart-total").textContent = usd(total);
+  document.getElementById("cart-sub").textContent =
+    lines.length === 0
+      ? "Tap to expand · 0 items added"
+      : `Tap to ${state.cartOpen ? "collapse" : "expand"} · ${lines.length} item${lines.length === 1 ? "" : "s"} · group code applied`;
+
+  const list = document.getElementById("cart-list");
+  list.innerHTML = lines.map((l, idx) => `
+    <li class="cart__line">
+      <span>
+        <strong>${escapeHtml(l.title)}</strong>
+        <em>${escapeHtml(l.kind)} · ${escapeHtml(l.sub)}</em>
+      </span>
+      <span class="cart__line-price">${usd(l.price)}</span>
+      <button type="button" class="cart__remove" data-cart-remove="${idx}" aria-label="Remove ${escapeHtml(l.title)}">×</button>
+    </li>
+  `).join("");
+
+  list.querySelectorAll("[data-cart-remove]").forEach(btn => {
+    btn.addEventListener("click", e => {
+      e.stopPropagation();
+      const idx = +btn.getAttribute("data-cart-remove");
+      const ln = lines[idx];
+      if (ln && typeof ln.remove === "function") ln.remove();
+    });
+  });
+}
+
+document.getElementById("cart-head").addEventListener("click", () => {
+  state.cartOpen = !state.cartOpen;
+  saveState();
+  renderCart();
+});
+
+document.getElementById("cart-checkout").addEventListener("click", () => {
+  const lines = cartLines();
+  if (!lines.length) return;
+  const total = lines.reduce((s, l) => s + (l.price || 0), 0);
+  showToast(`Confirmed · ${lines.length} item${lines.length === 1 ? "" : "s"} · ${usd(total)} on hold`);
+  state.cartOpen = false;
+  saveState();
+  renderCart();
+});
+
+/* ============================================================
+   HEADERS / NAV (shared chrome)
+   ============================================================ */
+
+function renderBar() {
+  const name = state.guest.name || "Guest";
+  return `
+    <header class="bar">
+      <span class="bar__crest" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2l4 8h-8l4-8zM4 10h16l-8 12L4 10z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" fill="currentColor"/>
+        </svg>
+      </span>
+      <span class="bar__brand">All-In Weddings</span>
+      <span class="bar__divider">·</span>
+      <span class="bar__product">Guest Portal · Aria & Marcus</span>
+      <span class="bar__user">
+        <span class="bar__avatar" aria-hidden="true">${escapeHtml(initials(name))}</span>
+        <span>${escapeHtml(name)}</span>
+        <button type="button" class="bar__signout" id="signout">Sign out</button>
+      </span>
+    </header>
+  `;
+}
+
+function renderNav(active) {
+  const items = [
+    { id: "home",       label: "Home",
+      icon: `<path d="M3 11l9-8 9 8M5 10v10h14V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
+    { id: "stay",       label: "Stay",
+      icon: `<path d="M3 12h18v8H3v-8z M5 12V8a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v4 M9 12V8h6v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
+    { id: "spa",        label: "Spa",
+      icon: `<path d="M12 22c-4.5-3-8-7-8-12a4 4 0 0 1 8-2 4 4 0 0 1 8 2c0 5-3.5 9-8 12z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
+    { id: "excursions", label: "Excursions",
+      icon: `<path d="M3 19l4-9 5 5 4-7 5 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
+    { id: "dining",     label: "Dining",
+      icon: `<path d="M6 3v18 M9 3v8a3 3 0 0 1-3 3 M18 3c-2 0-3 2-3 5s1 5 3 5v8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
+    { id: "schedule",   label: "Schedule",
+      icon: `<rect x="3.5" y="5" width="17" height="15" rx="2" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M3.5 9h17 M8 3v4 M16 3v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>` },
+  ];
+  return `
+    <nav class="nav" role="tablist" aria-label="Guest portal sections">
+      ${items.map(it => `
+        <button type="button" class="nav__tab" role="tab"
+                data-section="${it.id}"
+                data-active="${it.id === active ? "true" : "false"}">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">${it.icon}</svg>
+          <span>${escapeHtml(it.label)}</span>
+        </button>
+      `).join("")}
+    </nav>`;
+}
+
+function attachChrome() {
+  document.querySelectorAll("[data-section]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const section = btn.getAttribute("data-section");
+      if (!section || section === state.section) return;
+      state.section = section;
+      saveState();
+      route();
+    });
+  });
+  document.getElementById("signout")?.addEventListener("click", () => {
+    state.loggedIn = false;
+    saveState();
+    route();
+  });
+}
+
+/* ============================================================
+   ROUTING
+   ============================================================ */
+
+function route() {
+  stopCountdown();
+  if (!state.loggedIn) return renderLogin();
+  switch (state.section) {
+    case "stay":       return renderStay();
+    case "spa":        return renderSpa();
+    case "excursions": return renderExc();
+    case "dining":     return renderDining();
+    case "schedule":   return renderSchedule();
+    case "home":
+    default:           return renderHome();
+  }
+}
+
+function rerenderActive() { route(); }
+
+/* ============================================================
+   LOGIN
+   ============================================================ */
+
+function renderLogin() {
+  setApp(`
+    <div style="margin:0;">
+      ${renderBar()}
+      <div class="login__hero">
+        <p class="login__eyebrow">Guest Portal · Sign in</p>
+        <h1 class="login__title">You're invited to <em>Aria &amp; Marcus</em>'s wedding.</h1>
+        <p class="login__sub">
+          March 14, 2026 at Nobu Hotel Los Cabos. Use this portal to book your room block, browse on-property spa, excursions, and dinners — every line item carries the wedding-block discount.
+        </p>
+      </div>
+      <form class="login__form" id="login-form">
+        <div class="field">
+          <label for="g-email">Your email</label>
+          <input id="g-email" type="email" autocomplete="email" required
+                 placeholder="you@example.com"
+                 value="${escapeHtml(state.guest.email || DEFAULT_GUEST.email)}"/>
+        </div>
+        <div class="field">
+          <label for="g-name">Your name (as on the invite)</label>
+          <input id="g-name" type="text" autocomplete="name" required
+                 placeholder="First Last"
+                 value="${escapeHtml(state.guest.name || DEFAULT_GUEST.name)}"/>
+        </div>
+        <button type="submit" class="btn btn--block" style="height:46px;border-radius:10px;letter-spacing:0.1em;">Continue → Guest Portal</button>
+        <p style="font-size:11px;line-height:1.5;color:var(--ink-faint);margin:4px 0 0;">
+          We'd normally send a one-time sign-in link to your inbox. For this prototype, hit Continue.
+        </p>
+      </form>
+    </div>
+  `);
+  document.getElementById("login-form").addEventListener("submit", e => {
+    e.preventDefault();
+    const email = document.getElementById("g-email").value.trim();
+    const name  = document.getElementById("g-name").value.trim();
+    state.guest = {
+      email: email || DEFAULT_GUEST.email,
+      name:  name  || DEFAULT_GUEST.name,
+    };
+    state.loggedIn = true;
+    state.section = "home";
+    saveState();
+    route();
+  });
+  renderCart();
+}
+
+/* ============================================================
+   TIMELINE — anchor of the home + schedule pages
+   Merges fixed wedding events (SCHEDULE) with Allie's recommended
+   upsells (ALLIE_PICKS) day-by-day in chronological order.
+   ============================================================ */
+
+function parseTimeToMin(t) {
+  const m = /^(\d{1,2}):(\d{2})\s*(AM|PM)$/i.exec(String(t || "").trim());
+  if (!m) return 0;
+  let h = +m[1];
+  const min = +m[2];
+  const ampm = m[3].toUpperCase();
+  if (ampm === "PM" && h !== 12) h += 12;
+  if (ampm === "AM" && h === 12) h = 0;
+  return h * 60 + min;
+}
+
+function renderTimeline() {
+  const html = SCHEDULE.map(day => {
+    const fixedRows = day.events.map(e => ({
+      type:    "fixed",
+      time:    e.time,
+      sortMin: parseTimeToMin(e.time),
+      what:    e.what,
+      em:      e.em,
+      key:     e.key || null,
+    }));
+    const pickRows = ALLIE_PICKS.filter(p => p.day === day.day).map(p => {
+      const inv  = p.cartKey === "spa" ? SPA : EXC;
+      const item = inv.find(x => x.id === p.id);
+      return {
+        type:    "pick",
+        time:    p.time,
+        sortMin: p.sortMin || parseTimeToMin(p.time),
+        pick:    p,
+        item,
+      };
+    });
+    const rows = [...fixedRows, ...pickRows].sort((a, b) => a.sortMin - b.sortMin);
+    const rowsHtml = rows.map(r => r.type === "pick" ? renderPickRow(r) : renderFixedRow(r)).join("");
+
+    return `
+      <div class="tl-day">
+        <p class="tl-day__eyebrow">${escapeHtml(day.date)}</p>
+        <h3 class="tl-day__title">${escapeHtml(day.title)}</h3>
+        <span class="tl-day__rule" aria-hidden="true"></span>
+      </div>
+      ${rowsHtml}
+    `;
+  }).join("");
+  return `<div class="tl">${html}</div>`;
+}
+
+function renderFixedRow(r) {
+  const dataKey = r.key ? ` data-key="${escapeHtml(r.key)}"` : "";
+  return `
+    <div class="tl-row"${dataKey}>
+      <div class="tl-row__time">${escapeHtml(r.time)}</div>
+      <div class="tl-row__rail" aria-hidden="true"><span class="tl-row__dot"></span></div>
+      <div class="tl-event">
+        <h4 class="tl-event__title">${escapeHtml(r.what)}</h4>
+        <p class="tl-event__sub">${escapeHtml(r.em)}</p>
+      </div>
+    </div>
+  `;
+}
+
+function renderPickRow(r) {
+  const { pick, item, time } = r;
+  if (!item) return "";
+  const added   = state[pick.cartKey].includes(pick.id);
+  const savings = (item.publishedUSD || 0) - (item.priceUSD || 0);
+  return `
+    <div class="tl-row tl-row--pick">
+      <div class="tl-row__time">${escapeHtml(time)}</div>
+      <div class="tl-row__rail" aria-hidden="true"><span class="tl-row__dot"></span></div>
+      <article class="tl-pick ${added ? "tl-pick--added" : ""}">
+        <div class="tl-pick__photo" style="background-image:url('${item.photo}')" aria-hidden="true"></div>
+        <div class="tl-pick__body">
+          <div class="tl-pick__head">
+            <span class="tl-pick__badge">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3l1.6 4.5 4.5 1.6-4.5 1.6L12 15l-1.6-4.3-4.5-1.6 4.5-1.6L12 3z M19 16l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7L19 16z" fill="currentColor"/>
+              </svg>
+              Allie's pick
+            </span>
+            ${savings > 0 ? `<span class="tl-pick__save">Save ${usd(savings)} with All-In</span>` : ""}
+          </div>
+          <h4 class="tl-pick__title">${escapeHtml(item.name)}</h4>
+          <div class="tl-pick__why">
+            <strong>Why I picked this</strong>
+            ${escapeHtml(pick.why)}
+          </div>
+          <p class="tl-pick__desc">${escapeHtml(item.desc)}</p>
+          <ul class="tl-pick__bullets">
+            ${item.bullets.map(b => `<li>${escapeHtml(b)}</li>`).join("")}
+          </ul>
+          <div class="tl-pick__foot">
+            <div class="tl-pick__price">
+              <span class="tl-pick__price-row">
+                ${item.publishedUSD ? `<s>${usd(item.publishedUSD)}</s>` : ""}
+                <strong>${usd(item.priceUSD)}</strong>
+                <em>All-In rate</em>
+              </span>
+              <span style="font-size:10.5px;letter-spacing:0.06em;color:var(--ink-faint);">${escapeHtml(item.loc)}</span>
+            </div>
+            <button type="button" class="tl-pick__cta" data-toggle-pick="${escapeHtml(pick.id)}:${escapeHtml(pick.cartKey)}">
+              ${added ? "Added to itinerary" : "Add to itinerary"}
+            </button>
+          </div>
+        </div>
+      </article>
+    </div>
+  `;
+}
+
+function attachTimeline() {
+  document.querySelectorAll("[data-toggle-pick]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const [id, key] = btn.getAttribute("data-toggle-pick").split(":");
+      const inv  = key === "spa" ? SPA : EXC;
+      const item = inv.find(x => x.id === id);
+      if (state[key].includes(id)) {
+        state[key] = state[key].filter(x => x !== id);
+        showToast(`Removed · ${item?.name || "item"}`);
+      } else {
+        state[key] = [...state[key], id];
+        state.cartOpen = true;
+        showToast(`Added · ${item?.name || "item"}`);
+      }
+      saveState();
+      route();
+    });
+  });
+}
+
+/* ============================================================
+   HOME
+   ============================================================ */
+
+function renderHome() {
+  const target = new Date(WEDDING.dateISO).getTime();
+  const ms = Math.max(0, target - Date.now());
+  const days = Math.floor(ms / 86400000);
+  const heroTitle = days > 0
+    ? `<em>${days}</em> days until Aria & Marcus say "I do"`
+    : `Today's the day`;
+
+  const hasRoom = !!state.room;
+  const spaCount = state.spa.length;
+  const excCount = state.exc.length;
+  const dinCount = state.dining.length;
+  const totalAdd = spaCount + excCount + dinCount;
+
+  const actions = [
+    { id: "stay", title: hasRoom ? "Your room is held" : "Book your room block",
+      desc: hasRoom
+        ? `${ROOMS.find(r => r.id === state.room.roomId)?.name} — ${state.room.checkIn} → ${state.room.checkOut}. Manage or change anytime.`
+        : `Group rates from $540/night, locked through Feb 13. Two-night minimum, three-night recommended for the full wedding weekend.`,
+      badge: hasRoom ? "Held ✓" : "−27% off published",
+      badgeStyle: hasRoom ? "" : "copper",
+      icon: `<path d="M3 12h18v8H3v-8z M5 12V8a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v4 M9 12V8h6v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
+    { id: "spa", title: "Esencia Spa — wedding rates",
+      desc: spaCount > 0 ? `${spaCount} treatment${spaCount > 1 ? "s" : ""} added.` : `Massages, facials, and the rooftop soak — every treatment 15% off for guests in the block.`,
+      badge: "−15% wedding rate", badgeStyle: "copper",
+      icon: `<path d="M12 22c-4.5-3-8-7-8-12a4 4 0 0 1 8-2 4 4 0 0 1 8 2c0 5-3.5 9-8 12z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
+    { id: "excursions", title: "Excursions",
+      desc: excCount > 0 ? `${excCount} excursion${excCount > 1 ? "s" : ""} on your itinerary.` : `Whale watching, the Cabo Arch, ATV in the dunes — all bookable on the block.`,
+      badge: `${EXC.length} options`, badgeStyle: "",
+      icon: `<path d="M3 19l4-9 5 5 4-7 5 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
+    { id: "dining", title: "Dining on property",
+      desc: dinCount > 0 ? `${dinCount} reservation${dinCount > 1 ? "s" : ""} confirmed.` : `Cocina Nobu, Malta, late-night omakase — pre-pay your seat now and skip the wait list.`,
+      badge: `Reservations open`, badgeStyle: "",
+      icon: `<path d="M6 3v18 M9 3v8a3 3 0 0 1-3 3 M18 3c-2 0-3 2-3 5s1 5 3 5v8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
+  ];
+
+  const actionsHtml = actions.map(a => `
+    <button type="button" class="action" data-section="${a.id}">
+      <span class="action__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">${a.icon}</svg>
+      </span>
+      <span class="action__body">
+        <span class="action__title">${escapeHtml(a.title)}</span>
+        <p>${escapeHtml(a.desc)}</p>
+        ${a.badge ? `<span class="action__badge${a.badgeStyle === "copper" ? " action__badge--copper" : ""}">${escapeHtml(a.badge)}</span>` : ""}
+      </span>
+      <span class="action__chev" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </button>
+  `).join("");
+
+  /* Quick stats above the timeline — Allie's pick count uses ALLIE_PICKS
+     so the strip can read "1 of 3 picks added" as a soft progress meter. */
+  const allieAdded = ALLIE_PICKS.filter(p => state[p.cartKey].includes(p.id)).length;
+  const allieTotal = ALLIE_PICKS.length;
+
+  setApp(`
+    ${renderBar()}
+    ${renderNav("home")}
+    <section class="hero">
+      <div class="hero__bg"></div>
+      <div class="hero__inner">
+        <p class="hero__eyebrow">Welcome, ${escapeHtml(state.guest.name.split(" ")[0] || "Guest")}</p>
+        <h1 class="hero__title">${heroTitle}</h1>
+        <p class="hero__sub">
+          ${escapeHtml(WEDDING.venue)} · ${escapeHtml(WEDDING.city)} · ${escapeHtml(WEDDING.dateLong)}.
+          Below is the wedding-weekend itinerary Allie built for you — fixed events from Aria, plus three hand-picked upsells with All-In discounts you can add with one tap.
+        </p>
+        <div class="hero__count" id="count-cells">
+          <div class="hero__cell"><span class="hero__num" data-cd="days">000</span><span class="hero__lbl">Days</span></div>
+          <div class="hero__cell"><span class="hero__num" data-cd="hours">00</span><span class="hero__lbl">Hours</span></div>
+          <div class="hero__cell"><span class="hero__num" data-cd="mins">00</span><span class="hero__lbl">Mins</span></div>
+          <div class="hero__cell"><span class="hero__num" data-cd="secs">00</span><span class="hero__lbl">Secs</span></div>
+        </div>
+        <p class="hero__meta">
+          <span><strong>Hashtag:</strong> ${escapeHtml(WEDDING.hashtag)}</span>
+          <span><strong>Dress code:</strong> ${escapeHtml(WEDDING.dressCode)}</span>
+          <span><strong>Group code:</strong> ${escapeHtml(WEDDING.groupCode)}</span>
+        </p>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="stat-pill"><span class="stat-pill__lbl">Wedding date</span><span class="stat-pill__val">${escapeHtml(WEDDING.dateLong.replace(", 2026", ""))}</span></div>
+      <div class="stat-pill"><span class="stat-pill__lbl">Venue</span><span class="stat-pill__val">${escapeHtml(WEDDING.venue.replace("Nobu Hotel ", "Nobu · "))}</span></div>
+      <div class="stat-pill"><span class="stat-pill__lbl">Forecast</span><span class="stat-pill__val">${escapeHtml(WEDDING.weather)}</span></div>
+      <div class="stat-pill"><span class="stat-pill__lbl">Allie's picks</span><span class="stat-pill__val">${allieAdded} of ${allieTotal} added</span></div>
+    </section>
+
+    <div style="padding:18px 22px 2px; max-width:880px; margin:0 auto;">
+      <p class="section__eyebrow" style="margin-top:8px;">Your wedding-weekend itinerary</p>
+      <h2 class="section__title" style="font-size:30px;">A three-day rhythm — with <em>Allie's picks</em> built in.</h2>
+      <p class="section__sub" style="margin-bottom:0;">
+        The plain rows are what Aria & Marcus locked in. The card rows are Allie's recommended add-ons — handpicked to slot perfectly into the timeline, with All-In wedding-block discounts you won't find at the front desk.
+      </p>
+    </div>
+
+    ${renderTimeline()}
+
+    ${renderRsvpCard()}
+
+    <div style="padding:8px 22px 2px;">
+      <p class="section__eyebrow" style="margin-top:18px;">Want more options?</p>
+      <h2 class="section__title" style="font-size:24px;">Browse the full wedding-block menu.</h2>
+    </div>
+    <section class="actions">${actionsHtml}</section>
+  `);
+  attachChrome();
+  attachRsvp();
+  attachTimeline();
+  renderCart();
+  tickCountdown();
+  _countHandle = setInterval(tickCountdown, 1000);
+}
+
+function renderRsvpCard() {
+  const r = state.rsvp;
+  const a = state.attending;
+  return `
+    <section class="rsvp" style="margin: 0 22px 32px;">
+      <p class="section__eyebrow">RSVP</p>
+      <h2 class="section__title" style="font-size:30px;">Will we see you in <em>Cabo</em>?</h2>
+      <p class="section__sub">We need a final headcount by January 14, 2026 — but Aria says the sooner the better.</p>
+      <div class="rsvp__row">
+        <button class="pill pill--sage"   data-rsvp="yes"   data-selected="${r === "yes"   ? "true" : "false"}">Yes — wouldn't miss it</button>
+        <button class="pill pill--copper" data-rsvp="maybe" data-selected="${r === "maybe" ? "true" : "false"}">Maybe — let me check work</button>
+        <button class="pill"              data-rsvp="no"    data-selected="${r === "no"    ? "true" : "false"}">Can't make it · sending love</button>
+      </div>
+      ${r === "yes" ? `
+        <div class="rsvp__row" style="margin-top:18px;">
+          <button class="pill pill--copper" data-attending="couple" data-selected="${a === "couple" ? "true" : "false"}">Bringing my +1</button>
+          <button class="pill pill--copper" data-attending="solo"   data-selected="${a === "solo"   ? "true" : "false"}">Coming solo</button>
+        </div>
+      ` : ""}
+    </section>
+  `;
+}
+
+function attachRsvp() {
+  document.querySelectorAll("[data-rsvp]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      state.rsvp = btn.getAttribute("data-rsvp");
+      saveState();
+      renderHome();
+      showToast(state.rsvp === "yes" ? "Aria is so happy you're coming!" :
+                state.rsvp === "maybe" ? "Penciled in — we'll check back soon" :
+                "We'll miss you in Cabo");
+    });
+  });
+  document.querySelectorAll("[data-attending]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      state.attending = btn.getAttribute("data-attending");
+      saveState();
+      renderHome();
+    });
+  });
+}
+
+/* ============================================================
+   STAY (room block)
+   ============================================================ */
+
+function renderStay() {
+  const checkIn  = state.room?.checkIn  || "2026-03-13";
+  const checkOut = state.room?.checkOut || "2026-03-15";
+  const guests   = state.room?.guests   || 2;
+
+  const cardsHtml = ROOMS.map(r => {
+    const isBooked = state.room?.roomId === r.id;
+    const nights = countNights(checkIn, checkOut) || 2;
+    const stayTotal = r.blockUSD * nights;
+    const savings = (r.listUSD - r.blockUSD) * nights;
+    const popular = r.popular;
+    return `
+      <article class="card">
+        <div class="card__photo" style="background-image:url('${r.photo}')">
+          <span class="card__pricetag"><s>${usd(r.listUSD)}</s><em>${usd(r.blockUSD)}</em>/nt</span>
+          ${popular ? `<span class="card__pricetag" style="left:12px;right:auto;top:12px;background:var(--sage);color:#fff;">Most booked</span>` : ""}
+        </div>
+        <div class="card__body">
+          <span class="card__eyebrow">${escapeHtml(r.name)} · sleeps ${escapeHtml(r.occ)}</span>
+          <h3 class="card__title">${escapeHtml(r.name)}</h3>
+          <p class="card__desc">${escapeHtml(r.desc)}</p>
+          <ul class="card__bullets">
+            ${r.bullets.map(b => `<li>${escapeHtml(b)}</li>`).join("")}
+          </ul>
+        </div>
+        <div class="card__foot">
+          <div class="card__price">
+            <span><s>${usd(r.listUSD * nights)}</s></span>
+            <strong>${usd(stayTotal)}</strong>
+            <span>${nights} night${nights === 1 ? "" : "s"} · save ${usd(savings)}</span>
+          </div>
+          <button class="btn ${isBooked ? "btn--added" : "btn--copper"}" data-book-room="${r.id}">
+            ${isBooked ? "Held" : "Hold this room"}
+          </button>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  setApp(`
+    ${renderBar()}
+    ${renderNav("stay")}
+    <main class="section">
+      <div class="section__head">
+        <button type="button" class="section__back" data-section="home">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Back
+        </button>
+      </div>
+      <p class="section__eyebrow">Stay · Room block</p>
+      <h1 class="section__title">Where you'll <em>sleep</em>.</h1>
+      <p class="section__sub">
+        Aria and Marcus held a room block at Nobu Hotel Los Cabos through <strong>Feb 13, 2026</strong>. Block rates are <strong>up to 27% off</strong> Nobu's published nightly rate, with the resort fee waived. Two-night minimum.
+      </p>
+
+      <div class="stay-banner">
+        <span class="stay-banner__icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </span>
+        <div>
+          <h3 class="stay-banner__title">Group code applied automatically</h3>
+          <p class="stay-banner__sub">No promo to enter — your link is keyed to the wedding block.</p>
+        </div>
+        <span class="stay-banner__code">${escapeHtml(WEDDING.groupCode)}</span>
+      </div>
+
+      <div class="stay-form">
+        <div class="field">
+          <label for="check-in">Check-in</label>
+          <input id="check-in" type="date" value="${checkIn}" min="2026-03-12" max="2026-03-17"/>
+        </div>
+        <div class="field">
+          <label for="check-out">Check-out</label>
+          <input id="check-out" type="date" value="${checkOut}" min="2026-03-13" max="2026-03-18"/>
+        </div>
+        <div class="field">
+          <label for="guests">Guests</label>
+          <select id="guests">
+            ${[1,2,3,4,5].map(n => `<option value="${n}" ${n === +guests ? "selected" : ""}>${n} ${n === 1 ? "guest" : "guests"}</option>`).join("")}
+          </select>
+        </div>
+      </div>
+
+      <div class="card-grid">${cardsHtml}</div>
+    </main>
+  `);
+  attachChrome();
+
+  /* Book buttons */
+  document.querySelectorAll("[data-book-room]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const roomId = btn.getAttribute("data-book-room");
+      const ci = document.getElementById("check-in").value;
+      const co = document.getElementById("check-out").value;
+      const g  = +document.getElementById("guests").value || 2;
+      if (countNights(ci, co) < 2) {
+        showToast("Two-night minimum — extend your check-out");
+        return;
+      }
+      state.room = { roomId, checkIn: ci, checkOut: co, guests: g };
+      state.cartOpen = true;
+      saveState();
+      const r = ROOMS.find(x => x.id === roomId);
+      showToast(`${r.name} held · ${countNights(ci, co)} nights`);
+      renderStay();
+      renderCart();
+    });
+  });
+
+  /* Re-render footer prices live as dates / occupancy change */
+  ["check-in", "check-out", "guests"].forEach(id => {
+    document.getElementById(id).addEventListener("change", () => {
+      const ci = document.getElementById("check-in").value;
+      const co = document.getElementById("check-out").value;
+      const g  = +document.getElementById("guests").value || 2;
+      if (state.room) {
+        state.room = { ...state.room, checkIn: ci, checkOut: co, guests: g };
+        saveState();
+      }
+      renderStay();
+      renderCart();
+    });
+  });
+  renderCart();
+}
+
+/* ============================================================
+   ADD-ON BROWSE (spa / excursions / dining)
+   ============================================================ */
+
+function renderAddons({ section, eyebrow, title, sub, items, stateKey }) {
+  const cardsHtml = items.map(it => {
+    const inItin  = state[stateKey].includes(it.id);
+    const savings = (it.publishedUSD || 0) - (it.priceUSD || 0);
+    return `
+      <article class="card">
+        <div class="card__photo" style="background-image:url('${it.photo}')">
+          ${it.allieRec ? `<span class="card__pricetag" style="left:12px;right:auto;top:12px;background:var(--sage-darker);color:var(--sage-glow);letter-spacing:0.16em;">★ Allie's pick</span>` : ""}
+          ${it.popular  && !it.allieRec ? `<span class="card__pricetag" style="background:var(--sage);color:#fff;">Most booked</span>` : ""}
+          ${it.soldOut  ? `<span class="card__pricetag" style="background:rgba(43,43,39,0.92);color:#fff;">Invite only</span>` : ""}
+        </div>
+        <div class="card__body">
+          <span class="card__eyebrow">${escapeHtml(it.loc)}</span>
+          <h3 class="card__title">${escapeHtml(it.name)}</h3>
+          <p class="card__desc">${escapeHtml(it.desc)}</p>
+          <ul class="card__bullets">
+            ${it.bullets.map(b => `<li>${escapeHtml(b)}</li>`).join("")}
+          </ul>
+        </div>
+        <div class="card__foot">
+          <div class="card__price">
+            ${it.publishedUSD && savings > 0 ? `<span><s>${usd(it.publishedUSD)}</s></span>` : ""}
+            <strong>${it.priceUSD ? usd(it.priceUSD) : "—"}</strong>
+            <span>${
+              it.priceUSD
+                ? (savings > 0 ? `All-In rate · save ${usd(savings)}` : "wedding rate · per booking")
+                : "by invitation"
+            }</span>
+          </div>
+          ${it.soldOut
+            ? `<button class="btn btn--ghost" disabled style="opacity:0.6;cursor:not-allowed;">Invite only</button>`
+            : inItin
+              ? `<button class="btn btn--added" data-toggle-addon="${stateKey}:${it.id}">Added</button>`
+              : `<button class="btn" data-toggle-addon="${stateKey}:${it.id}">Add to itinerary</button>`}
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  setApp(`
+    ${renderBar()}
+    ${renderNav(section)}
+    <main class="section">
+      <div class="section__head">
+        <button type="button" class="section__back" data-section="home">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Back
+        </button>
+      </div>
+      <p class="section__eyebrow">${escapeHtml(eyebrow)}</p>
+      <h1 class="section__title">${title}</h1>
+      <p class="section__sub">${sub}</p>
+      <div class="card-grid card-grid--3">${cardsHtml}</div>
+    </main>
+  `);
+  attachChrome();
+  document.querySelectorAll("[data-toggle-addon]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const [key, id] = btn.getAttribute("data-toggle-addon").split(":");
+      const list = state[key];
+      const item = items.find(x => x.id === id);
+      if (list.includes(id)) {
+        state[key] = list.filter(x => x !== id);
+        showToast(`Removed · ${item?.name || "item"}`);
+      } else {
+        state[key] = [...list, id];
+        state.cartOpen = true;
+        showToast(`Added · ${item?.name || "item"}`);
+      }
+      saveState();
+      route();
+    });
+  });
+  renderCart();
+}
+
+function renderSpa() {
+  return renderAddons({
+    section: "spa",
+    eyebrow: "Spa · Esencia at Nobu",
+    title: `Make the days <em>feel</em> long.`,
+    sub: `Esencia spa is built into Nobu Cabos — basalt onsen pools, ocean-view treatment suites, the same therapists Aria booked for the wedding party. Every booking carries a 15% wedding-rate.`,
+    items: SPA,
+    stateKey: "spa",
+  });
+}
+
+function renderExc() {
+  return renderAddons({
+    section: "excursions",
+    eyebrow: "Excursions · Off property",
+    title: `What you'll <em>do</em> when you're not eating.`,
+    sub: `Hotel-arranged transfers, group-block pricing. Most are bookable up to 24 hours before — but the boat trips fill first.`,
+    items: EXC,
+    stateKey: "exc",
+  });
+}
+
+function renderDining() {
+  return renderAddons({
+    section: "dining",
+    eyebrow: "Dining · On property",
+    title: `Reserve your <em>dinners</em>.`,
+    sub: `Cocina Nobu, Malta, Esencia Garden. Pre-pay your seat and skip the wait list — the wedding-block desk handles the seating chart with the wedding planner.`,
+    items: DINING,
+    stateKey: "dining",
+  });
+}
+
+/* ============================================================
+   SCHEDULE (full)
+   ============================================================ */
+
+function renderSchedule() {
+  setApp(`
+    ${renderBar()}
+    ${renderNav("schedule")}
+    <main class="section">
+      <div class="section__head">
+        <button type="button" class="section__back" data-section="home">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Back
+        </button>
+      </div>
+      <p class="section__eyebrow">Schedule · Mar 13–15, 2026</p>
+      <h1 class="section__title">The whole <em>weekend</em>, on one page.</h1>
+      <p class="section__sub">All times in Mountain Standard (MST · UTC-7). The plain rows below are Aria's locked events; the card rows are Allie's recommended add-ons with All-In wedding-block pricing — tap to add or remove anytime.</p>
+    </main>
+
+    ${renderTimeline()}
+
+    <main class="section" style="padding-top:0;">
+      <section class="rsvp" style="margin-top:8px;">
+        <p class="section__eyebrow">Logistics</p>
+        <h2 class="section__title" style="font-size:26px;">Need-to-know.</h2>
+        <ul style="margin:14px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; font-size:13px; color:var(--ink-soft); line-height:1.55;">
+          <li><strong style="color:var(--ink);">Airport:</strong> San José del Cabo (SJD), 35 minutes from the resort. Hotel shuttle included with the room block — book through the Stay tab.</li>
+          <li><strong style="color:var(--ink);">Currency:</strong> US dollars accepted everywhere on property. Tip in either USD or pesos — both happily.</li>
+          <li><strong style="color:var(--ink);">Weather:</strong> mid-70s, low humidity. Pack a light layer for the 7 PM reception.</li>
+          <li><strong style="color:var(--ink);">Hashtag:</strong> ${escapeHtml(WEDDING.hashtag)} — Aria is collecting everyone's photos here for the wedding album.</li>
+          <li><strong style="color:var(--ink);">Questions:</strong> reply to the email this portal came from and your concierge (Allie) will jump in within 24 hrs.</li>
+        </ul>
+      </section>
+    </main>
+  `);
+  attachChrome();
+  attachTimeline();
+  renderCart();
+}
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+
+route();
+</script>
+</body>
+</html>
