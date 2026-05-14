@@ -1031,6 +1031,95 @@
     }
 
     /* ============================================================
+       Extend-stay promo banner (Schedule page)
+       — Magenta-tinted CTA box that sits above the itinerary timeline
+       and invites guests to add an extra night at 10% off block rate.
+       ============================================================ */
+    .extend-banner {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 18px;
+      padding: 18px 22px;
+      margin: 0 22px 18px;
+      background:
+        radial-gradient(420px 180px at 100% 0%, rgba(255,126,182,0.22), transparent 65%),
+        linear-gradient(135deg, rgba(200,48,122,0.14) 0%, rgba(231,111,81,0.10) 100%);
+      border: 1px solid rgba(200,48,122,0.30);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .extend-banner::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, var(--brand) 0%, var(--coral) 100%);
+    }
+    .extend-banner__chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      align-self: flex-start;
+      padding: 4px 9px;
+      background: var(--brand);
+      color: #fff;
+      border-radius: 9999px;
+      font-size: 10.5px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .extend-banner__body { min-width: 0; }
+    .extend-banner__title {
+      font-family: var(--serif);
+      font-size: 22px; line-height: 1.15;
+      color: var(--ink);
+      margin: 0;
+      letter-spacing: -0.2px;
+    }
+    .extend-banner__title em {
+      font-style: italic;
+      color: var(--brand-deep);
+    }
+    .extend-banner__sub {
+      margin: 6px 0 0;
+      font-size: 12.5px; line-height: 1.5;
+      color: var(--ink-soft);
+      max-width: 56ch;
+    }
+    .extend-banner__cta {
+      align-self: center;
+      white-space: nowrap;
+      padding: 11px 18px;
+      font-size: 12.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+      background: var(--brand);
+      color: #fff;
+      border: 0;
+      border-radius: 9999px;
+      box-shadow: 0 6px 16px -10px rgba(200,48,122,0.55);
+      transition: background 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+    }
+    .extend-banner__cta:hover {
+      background: var(--brand-deep);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px -12px rgba(200,48,122,0.65);
+    }
+    .extend-banner__cta[disabled] {
+      background: var(--ink-faint);
+      color: var(--paper);
+      cursor: default;
+      box-shadow: none;
+    }
+    @media (max-width: 640px) {
+      .extend-banner {
+        grid-template-columns: 1fr;
+      }
+      .extend-banner__cta { justify-self: stretch; text-align: center; }
+    }
+
+    /* ============================================================
        Itinerary drawer (sticky bottom)
        ============================================================ */
     .cart {
@@ -2177,7 +2266,7 @@ function renderStay() {
         </div>
         <div class="field">
           <label for="check-out">Check-out</label>
-          <input id="check-out" type="date" value="${checkOut}" min="2026-03-13" max="2026-03-18"/>
+          <input id="check-out" type="date" value="${checkOut}" min="2026-03-13" max="2026-03-22"/>
         </div>
         <div class="field">
           <label for="guests">Guests</label>
@@ -2337,6 +2426,8 @@ function renderExc() {
    ============================================================ */
 
 function renderSchedule() {
+  const extend = extendStayState();
+
   setApp(`
     ${renderBar()}
     ${renderNav("schedule")}
@@ -2351,6 +2442,17 @@ function renderSchedule() {
       <h1 class="section__title">The whole <em>weekend</em>, on one page.</h1>
       <p class="section__sub">All times in Eastern Standard (EST · UTC-5 · Cancún time, no DST). The plain rows below are Aria's locked events; the card rows are Allie's recommended add-ons with All-In wedding-block pricing — tap to add or remove anytime.</p>
     </main>
+
+    <section class="extend-banner" aria-label="Extend your stay promotion">
+      <div class="extend-banner__body">
+        <span class="extend-banner__chip">−10% off block rate</span>
+        <h3 class="extend-banner__title">Extend your stay for <em>10% off</em></h3>
+        <p class="extend-banner__sub">${extend.sub}</p>
+      </div>
+      <button type="button" class="extend-banner__cta" data-extend-night ${extend.disabled ? "disabled" : ""}>
+        ${extend.ctaLabel}
+      </button>
+    </section>
 
     ${renderTimeline()}
 
@@ -2370,7 +2472,73 @@ function renderSchedule() {
   `);
   attachChrome();
   attachTimeline();
+  attachExtendStay();
   renderCart();
+}
+
+/* ============================================================
+   Extend-stay promo helpers
+   — On Schedule, guests can extend their room block by one night
+   at a 10% discount on the block rate. Hooked to the room booking
+   if present; otherwise routes to Stay to pick a room first.
+   ============================================================ */
+const EXTEND_MAX_CHECKOUT = "2026-03-22"; // matches the Stay form max
+
+function extendStayState() {
+  if (!state.room) {
+    return {
+      ctaLabel: "Add an additional night →",
+      sub: "Stay an extra night at AVA — recover by the pool, snorkel one more day, fly home rested. Wedding-block guests get an extra 10% off the block rate on nights before or after the wedding weekend. Pick your room first, then tap to extend.",
+      disabled: false,
+    };
+  }
+  const co = state.room.checkOut;
+  const atMax = co >= EXTEND_MAX_CHECKOUT;
+  const r = ROOMS.find(x => x.id === state.room.roomId);
+  const nights = countNights(state.room.checkIn, co) || 2;
+  const extraNightUSD = r ? Math.round(r.blockUSD * 0.9) : null;
+  if (atMax) {
+    return {
+      ctaLabel: "Maxed out — call concierge",
+      sub: `You're booked through ${co}, the longest extension on the block. Reply to Allie to add nights past Sun Mar 22 — she'll quote the published rate directly.`,
+      disabled: true,
+    };
+  }
+  return {
+    ctaLabel: "Add an additional night →",
+    sub: `You're currently booked for ${nights} ${nights === 1 ? "night" : "nights"} (${state.room.checkIn} → ${co}). Add a Sunday-night recovery day at the wedding block rate${extraNightUSD ? ` — about ${usd(extraNightUSD)} for the extra night after the 10% discount` : ""}. Most ${WEDDING.couple.split(" ")[0]} & ${WEDDING.partner.split(" ")[0]} guests are staying through Monday brunch.`,
+    disabled: false,
+  };
+}
+
+function addOneNight(iso) {
+  const d = new Date(iso + "T12:00:00Z");
+  d.setUTCDate(d.getUTCDate() + 1);
+  return d.toISOString().slice(0, 10);
+}
+
+function attachExtendStay() {
+  document.querySelectorAll("[data-extend-night]").forEach(btn => {
+    if (btn.hasAttribute("disabled")) return;
+    btn.addEventListener("click", () => {
+      if (!state.room) {
+        state.section = "stay";
+        saveState();
+        route();
+        showToast("Pick your room — we'll apply the extra night with the 10% extension after.");
+        return;
+      }
+      const next = addOneNight(state.room.checkOut);
+      if (next > EXTEND_MAX_CHECKOUT) {
+        showToast("Already at the max extension — reply to Allie for longer stays");
+        return;
+      }
+      state.room = { ...state.room, checkOut: next };
+      saveState();
+      renderSchedule();
+      showToast(`Extra night added — checking out ${next}`);
+    });
+  });
 }
 
 /* ============================================================
