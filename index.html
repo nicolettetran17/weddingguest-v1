@@ -810,6 +810,133 @@
     }
 
     /* ============================================================
+       Allie concierge callout (Schedule timeline, top)
+       — Dark ink + magenta-glow card pinned above the day banners.
+       Reads as Allie's broadcast offer (vs. tl-pick which is a
+       per-time-slot upsell). One-click to book/unbook transportation.
+       ============================================================ */
+    .tl-callout {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 18px;
+      align-items: center;
+      padding: 20px 22px;
+      margin: 0 0 22px;
+      background:
+        radial-gradient(420px 200px at 100% 0%, rgba(255,126,182,0.22), transparent 60%),
+        linear-gradient(135deg, #1a1a1a 0%, #2b1820 100%);
+      color: #fbf3ec;
+      border: 1px solid rgba(255,126,182,0.30);
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .tl-callout::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, var(--brand-glow) 0%, var(--coral) 100%);
+    }
+    .tl-callout__avatar {
+      width: 44px; height: 44px;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-deep) 100%);
+      display: grid; place-items: center;
+      color: #fff;
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 500;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 3px rgba(255,126,182,0.18);
+    }
+    .tl-callout__body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+    .tl-callout__eyebrow {
+      font-size: 9.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--brand-glow);
+      font-weight: 700;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .tl-callout__eyebrow svg { width: 12px; height: 12px; }
+    .tl-callout__title {
+      font-family: var(--serif);
+      font-size: 22px; line-height: 1.15;
+      margin: 4px 0 0;
+      color: #fff;
+      font-weight: 500;
+      letter-spacing: -0.2px;
+    }
+    .tl-callout__sub {
+      margin: 6px 0 0;
+      font-size: 12.5px; line-height: 1.55;
+      color: rgba(251,243,236,0.78);
+      max-width: 60ch;
+    }
+    .tl-callout__meta {
+      display: inline-flex; align-items: center; gap: 12px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .tl-callout__chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 9px;
+      background: rgba(255,126,182,0.18);
+      color: var(--brand-glow);
+      border-radius: 9999px;
+      font-size: 10.5px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .tl-callout__price {
+      font-family: var(--serif);
+      color: #fff;
+      font-size: 20px;
+      font-weight: 500;
+    }
+    .tl-callout__price em {
+      font-style: normal;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: rgba(251,243,236,0.6);
+      margin-left: 6px;
+    }
+    .tl-callout__cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 12px 20px;
+      background: var(--brand);
+      color: #fff;
+      border: 0;
+      border-radius: 9999px;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      white-space: nowrap;
+      transition: background 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+      flex-shrink: 0;
+      box-shadow: 0 10px 22px -14px rgba(255,126,182,0.55);
+    }
+    .tl-callout__cta:hover {
+      background: var(--brand-deep);
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px -14px rgba(255,126,182,0.65);
+    }
+    .tl-callout--booked { border-color: rgba(255,126,182,0.55); }
+    .tl-callout--booked .tl-callout__cta { background: var(--brand-deep); }
+    .tl-callout--booked .tl-callout__cta::before {
+      content: "✓";
+      margin-right: 4px;
+      font-size: 13px;
+    }
+    @media (max-width: 640px) {
+      .tl-callout {
+        grid-template-columns: 1fr;
+        text-align: left;
+      }
+      .tl-callout__avatar { display: none; }
+      .tl-callout__cta { justify-self: stretch; justify-content: center; }
+    }
+
+    /* ============================================================
        Cards: Room block / Spa / Excursions
        ============================================================ */
     .card-grid {
@@ -1592,6 +1719,7 @@ const defaultState = {
   room: null,                 // { roomId, checkIn, checkOut, guests }
   spa: [],                    // [ id, ... ]
   exc: [],
+  transport: null,            // { booked: true, priceUSD, kind } | null
 };
 
 let state = loadState();
@@ -1695,6 +1823,15 @@ function cartLines() {
     if (s) lines.push({ kind: "Excursion", title: s.name, sub: s.loc, price: s.priceUSD,
       remove: () => { state.exc = state.exc.filter(x => x !== id); saveState(); renderCart(); rerenderActive(); }});
   });
+  if (state.transport?.booked) {
+    lines.push({
+      kind: "Transport",
+      title: "Private car service · Diego",
+      sub: "Round-trip CUN + on-call weekend rides",
+      price: state.transport.priceUSD,
+      remove: () => { state.transport = null; saveState(); renderCart(); rerenderActive(); },
+    });
+  }
   return lines;
 }
 
@@ -1912,7 +2049,8 @@ function parseTimeToMin(t) {
   return h * 60 + min;
 }
 
-function renderTimeline() {
+function renderTimeline(opts = {}) {
+  const calloutHtml = opts.showTransport ? renderTransportCallout() : "";
   const html = SCHEDULE.map(day => {
     const fixedRows = day.events.map(e => ({
       type:    "fixed",
@@ -1945,7 +2083,38 @@ function renderTimeline() {
       ${rowsHtml}
     `;
   }).join("");
-  return `<div class="tl">${html}</div>`;
+  return `<div class="tl">${calloutHtml}${html}</div>`;
+}
+
+/* Allie's broadcast callout at the top of the Schedule timeline.
+   One-click toggle: book/unbook a private weekend car service. */
+function renderTransportCallout() {
+  const booked   = !!state.transport?.booked;
+  const priceUSD = 245;
+  return `
+    <div class="tl-callout ${booked ? "tl-callout--booked" : ""}" data-transport-callout>
+      <div class="tl-callout__avatar" aria-hidden="true">A</div>
+      <div class="tl-callout__body">
+        <span class="tl-callout__eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 13l2-5a2 2 0 0 1 2-1h10a2 2 0 0 1 2 1l2 5v6h-3v-2H6v2H3v-6z M6.5 16a1 1 0 1 0 0-2 1 1 0 0 0 0 2z M17.5 16a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+          Allie's concierge note
+        </span>
+        <h3 class="tl-callout__title">${booked ? "Diego is your driver all weekend" : "Book transportation with Allie"}</h3>
+        <p class="tl-callout__sub">${booked
+          ? "Round-trip CUN airport transfer locked in, plus on-call rides between every weekend event. Diego will text you 24 hrs before pickup — message Allie any time to add or change a ride."
+          : "Private car service for the full weekend: round-trip from Cancún International (CUN), plus on-call rides between every event Friday through Sunday. One driver assigned to you start-to-finish — no apps, no surge pricing, no surprises."}</p>
+        <div class="tl-callout__meta">
+          <span class="tl-callout__price">${usd(priceUSD)}<em>per guest · all-weekend</em></span>
+          <span class="tl-callout__chip">−20% block rate</span>
+        </div>
+      </div>
+      <button type="button" class="tl-callout__cta" data-book-transport>
+        ${booked ? "Booked — manage" : "Book with Allie →"}
+      </button>
+    </div>
+  `;
 }
 
 function renderFixedRow(r) {
@@ -2024,6 +2193,20 @@ function attachTimeline() {
         state[key] = [...state[key], id];
         state.cartOpen = true;
         showToast(`Added · ${item?.name || "item"}`);
+      }
+      saveState();
+      route();
+    });
+  });
+  document.querySelectorAll("[data-book-transport]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (state.transport?.booked) {
+        state.transport = null;
+        showToast("Transport removed · Diego freed up");
+      } else {
+        state.transport = { booked: true, priceUSD: 245, kind: "round" };
+        state.cartOpen = true;
+        showToast("Transport booked · Diego is your driver");
       }
       saveState();
       route();
@@ -2454,7 +2637,7 @@ function renderSchedule() {
       </button>
     </section>
 
-    ${renderTimeline()}
+    ${renderTimeline({ showTransport: true })}
 
     <main class="section" style="padding-top:0;">
       <section class="rsvp" style="margin-top:8px;">
