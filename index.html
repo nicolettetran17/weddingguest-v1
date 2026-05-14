@@ -4,45 +4,53 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Aria & Marcus · Guest Portal — All-In Weddings</title>
-  <meta name="description" content="The official guest portal for Aria & Marcus's wedding at Nobu Hotel Los Cabos. Book your room block, browse on-property spa, excursions, and dinners." />
+  <meta name="description" content="The official guest portal for Aria & Marcus's wedding at AVA Resort Cancún. Book your room block, browse on-property spa, excursions, and dinners." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     /* ============================================================
-       Guest Portal — design language mirrors the bride-side Wedding
-       Portal in plan.html (cream paper, Cormorant/Isabella display,
-       Poppins body). Reframed for guests attending Aria & Marcus's
-       wedding at Nobu Hotel Los Cabos — but where the bride portal is
-       anchored in gold/copper, the guest portal is anchored in SAGE.
-       Sage = primary accent (CTAs, eyebrows, hero glow, "added"
-       confirmations). The only remaining warm tone is the very subtle
-       paper-cream background on a few card footers — everything that
-       used to be copper is now eucalyptus / forest green.
+       Guest Portal — AVA Resort Cancún edition.
+       Re-skinned to AVA's brand language: magenta primary, sunset
+       coral secondary, sandy-cream neutrals, near-black ink, and the
+       editorial Cormorant + Montserrat typography pairing that signals
+       coastal modern luxury. The "Oceanfront Promise" backdrop runs
+       through hero, timeline rail, and accents.
        ============================================================ */
 
     :root {
-      --ink:            #2b2b27;
-      --ink-soft:       #4c463f;
-      --ink-muted:      #6e695f;
-      --ink-faint:      #8b857d;
+      /* Neutrals — warm, sandy, editorial near-black */
+      --ink:            #1a1a1a;     /* AVA editorial near-black */
+      --ink-soft:       #3b3633;
+      --ink-muted:      #6a655f;
+      --ink-faint:      #9a948b;
       --paper:          #ffffff;
-      --paper-warm:     #f6f8f3;     /* very faint sage paper (was warm cream #faf8f4) */
-      --paper-cream:    #eef3e8;     /* sage-cream replacement for old #f6efe1 */
-      --canvas:         #e8efe4;     /* the brand "canvas" tone, sage-tinted */
-      --sage-pale:      #cfdec3;     /* very light eucalyptus — replaces copper-soft */
-      --sage-glow:      #c4dab1;     /* brighter sage for hero shine on dark bg */
-      --sage:           #7e8d68;     /* medium sage — primary accent (was copper) */
-      --sage-deep:      #5a7142;     /* deep sage — "yes/added/savings"           */
-      --sage-darker:    #3d4a3a;     /* deepest forest — for strong contrast text */
-      --sage-bg:        rgba(126,141,104,0.12);
-      --rule:           rgba(28,28,28,0.08);
-      --rule-soft:      rgba(28,28,28,0.05);
-      --shadow:         0 14px 32px -22px rgba(0,0,0,0.25);
-      --serif:          "Cormorant Garamond", "Isabella Grand", "Playfair Display", Georgia, serif;
-      --sans:           "Poppins", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --paper-warm:     #faf6ee;     /* warm sand cream */
+      --paper-cream:    #f3ead9;     /* sandy stone */
+      --canvas:         #f5efe2;     /* page background — Caribbean sand */
+
+      /* AVA brand magenta (primary accent) — replaces sage everywhere */
+      --brand-pale:     #fce6f0;     /* very soft blush */
+      --brand-glow:     #ff7eb6;     /* bright pink for hero shine on dark */
+      --brand:          #c8307a;     /* AVA magenta (primary CTA, eyebrows) */
+      --brand-deep:     #9c1f5d;     /* deeper magenta — "added/savings" */
+      --brand-darker:   #5f1138;     /* deepest plum — strong contrast text */
+      --brand-bg:       rgba(200,48,122,0.10);
+
+      /* Sunset coral (secondary accent — used sparingly) */
+      --coral:          #e76f51;
+      --coral-soft:     #f4b1a4;
+
+      /* Caribbean turquoise (tertiary accent — water cue) */
+      --turquoise:      #3fa9b5;
+
+      --rule:           rgba(26,26,26,0.10);
+      --rule-soft:      rgba(26,26,26,0.06);
+      --shadow:         0 14px 32px -22px rgba(0,0,0,0.30);
+      --serif:          "Cormorant Garamond", "Playfair Display", Georgia, serif;
+      --sans:           "Montserrat", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
     }
 
     * { box-sizing: border-box; }
@@ -82,7 +90,7 @@
     .bar__crest {
       display: grid; place-items: center;
       width: 28px; height: 28px; border-radius: 6px;
-      background: linear-gradient(135deg, var(--sage-darker) 0%, var(--sage-deep) 100%);
+      background: linear-gradient(135deg, var(--brand-darker) 0%, var(--brand-deep) 100%);
       color: #fff;
     }
     .bar__brand {
@@ -93,7 +101,7 @@
     .bar__divider { color: #b3aea4; font-size: 11px; }
     .bar__product {
       font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--sage-deep); font-weight: 600;
+      color: var(--brand-deep); font-weight: 600;
     }
     .bar__user {
       margin-left: auto; display: flex; align-items: center; gap: 10px;
@@ -101,13 +109,13 @@
     }
     .bar__avatar {
       width: 28px; height: 28px; border-radius: 9999px;
-      background: linear-gradient(135deg, #8a9a76, #3d4a3a);
+      background: linear-gradient(135deg, #d94d92, #5f1138);
       color: #fff; display: grid; place-items: center;
       font-size: 11px; font-weight: 600;
     }
     .bar__signout {
       background: none; border: 0; padding: 0;
-      font-size: 11px; color: var(--sage-deep);
+      font-size: 11px; color: var(--brand-deep);
       letter-spacing: 0.06em;
     }
 
@@ -139,7 +147,7 @@
     .nav__tab:hover { color: var(--ink); }
     .nav__tab[data-active="true"] {
       color: var(--ink);
-      border-bottom-color: var(--sage);
+      border-bottom-color: var(--brand);
     }
     .nav__tab svg { width: 14px; height: 14px; }
 
@@ -150,10 +158,10 @@
       position: relative;
       padding: 38px 28px 32px;
       background:
-        radial-gradient(900px 420px at 80% 0%, rgba(126,141,104,0.38), transparent 55%),
-        radial-gradient(700px 480px at 10% 100%, rgba(196,218,177,0.14), transparent 60%),
-        linear-gradient(140deg, #1d1d1a 0%, #25281f 55%, #2c3325 100%);
-      color: #f8f3e9;
+        radial-gradient(900px 420px at 80% 0%, rgba(200,48,122,0.42), transparent 55%),
+        radial-gradient(700px 480px at 10% 100%, rgba(231,111,81,0.22), transparent 60%),
+        linear-gradient(140deg, #131113 0%, #1f1518 55%, #2b1820 100%);
+      color: #fbf3ec;
       overflow: hidden;
     }
     .hero::before {
@@ -169,10 +177,10 @@
     }
     .hero__bg {
       position: absolute; inset: 0;
-      background-image: url('https://www.legendaryvacationclub.com/files/6900/23711735_ImageMediumWidth.jpg');
+      background-image: url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1600&q=80');
       background-size: cover; background-position: center;
-      opacity: 0.18;
-      filter: saturate(1.1) blur(0.5px);
+      opacity: 0.22;
+      filter: saturate(1.15) blur(0.5px);
       mix-blend-mode: lighten;
     }
     .hero__inner {
@@ -183,7 +191,7 @@
     .hero__eyebrow {
       font-size: 10.5px; font-weight: 600;
       letter-spacing: 0.24em; text-transform: uppercase;
-      color: var(--sage-pale);
+      color: var(--brand-pale);
       margin: 0;
       display: inline-flex; align-items: center; gap: 8px;
     }
@@ -191,14 +199,14 @@
       content: "";
       width: 6px; height: 6px;
       border-radius: 9999px;
-      background: var(--sage-pale);
-      box-shadow: 0 0 0 0 rgba(196,218,177,0.55);
+      background: var(--brand-pale);
+      box-shadow: 0 0 0 0 rgba(255,126,182,0.55);
       animation: pulse 2.2s ease-out infinite;
     }
     @keyframes pulse {
-      0%   { box-shadow: 0 0 0 0 rgba(196,218,177,0.55); }
-      80%  { box-shadow: 0 0 0 12px rgba(196,218,177,0); }
-      100% { box-shadow: 0 0 0 0 rgba(196,218,177,0); }
+      0%   { box-shadow: 0 0 0 0 rgba(255,126,182,0.55); }
+      80%  { box-shadow: 0 0 0 12px rgba(255,126,182,0); }
+      100% { box-shadow: 0 0 0 0 rgba(255,126,182,0); }
     }
     .hero__title {
       margin: 0;
@@ -211,7 +219,7 @@
     }
     .hero__title em {
       font-style: italic;
-      background: linear-gradient(120deg, var(--sage-glow) 0%, #f0f5e9 50%, var(--sage-glow) 100%);
+      background: linear-gradient(120deg, var(--brand-glow) 0%, #fff0f6 50%, var(--brand-glow) 100%);
       background-size: 200% 100%;
       -webkit-background-clip: text;
       background-clip: text;
@@ -239,7 +247,7 @@
       padding: 14px 10px 12px;
       border-radius: 14px;
       background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(196,218,177,0.18);
+      border: 1px solid rgba(255,126,182,0.18);
       backdrop-filter: blur(8px);
       text-align: center;
       overflow: hidden;
@@ -247,7 +255,7 @@
     .hero__cell::after {
       content: "";
       position: absolute; left: 0; right: 0; top: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(196,218,177,0.5), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,126,182,0.5), transparent);
     }
     .hero__num {
       display: block;
@@ -264,7 +272,7 @@
       font-size: 9.5px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: rgba(196,218,177,0.85);
+      color: rgba(255,126,182,0.85);
       font-weight: 600;
     }
     .hero__meta {
@@ -272,7 +280,7 @@
       display: flex; flex-wrap: wrap; gap: 18px;
       font-size: 12px; color: rgba(248,243,233,0.78);
     }
-    .hero__meta strong { color: var(--sage-pale); font-weight: 600; }
+    .hero__meta strong { color: var(--brand-pale); font-weight: 600; }
 
     /* ============================================================
        Stat strip
@@ -332,15 +340,15 @@
     }
     .action:hover, .action:focus-visible {
       transform: translateY(-2px);
-      border-color: rgba(126,141,104,0.55);
-      box-shadow: 0 14px 32px -22px rgba(126,141,104,0.55), 0 0 0 1px rgba(126,141,104,0.15);
+      border-color: rgba(200,48,122,0.55);
+      box-shadow: 0 14px 32px -22px rgba(200,48,122,0.55), 0 0 0 1px rgba(200,48,122,0.15);
       outline: none;
     }
     .action__icon {
       width: 44px; height: 44px;
       border-radius: 11px;
-      background: linear-gradient(140deg, rgba(126,141,104,0.18) 0%, rgba(126,141,104,0.08) 100%);
-      color: var(--sage-deep);
+      background: linear-gradient(140deg, rgba(200,48,122,0.18) 0%, rgba(200,48,122,0.08) 100%);
+      color: var(--brand-deep);
       display: grid; place-items: center;
     }
     .action__icon svg { width: 20px; height: 20px; }
@@ -358,7 +366,7 @@
       transition: transform 220ms ease, color 220ms ease;
     }
     .action:hover .action__chev {
-      color: var(--sage);
+      color: var(--brand);
       transform: translateX(3px);
     }
     .action__badge {
@@ -368,17 +376,17 @@
       font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
       font-weight: 700;
       border-radius: 9999px;
-      background: rgba(126,141,104,0.15);
-      color: var(--sage-deep);
+      background: rgba(200,48,122,0.15);
+      color: var(--brand-deep);
       align-self: flex-start;
     }
-    /* Strong-accent badge variant — solid sage chip for "premium" callouts
+    /* Strong-accent badge variant — solid magenta chip for "premium" callouts
        (e.g. discount %, "wedding rate"). Class name kept as `--copper` only
        to avoid touching the JS templates that emit it. */
     .action__badge--copper {
-      background: var(--sage);
+      background: var(--brand);
       color: #fbfdf9;
-      box-shadow: 0 1px 2px rgba(61,74,58,0.18);
+      box-shadow: 0 1px 2px rgba(95,17,56,0.18);
     }
 
     /* ============================================================
@@ -406,7 +414,7 @@
     .section__eyebrow {
       font-size: 10.5px; font-weight: 600;
       letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--sage-deep); margin: 8px 0 2px;
+      color: var(--brand-deep); margin: 8px 0 2px;
     }
     .section__title {
       margin: 0;
@@ -416,7 +424,7 @@
       line-height: 1.05; letter-spacing: -0.4px;
       color: var(--ink);
     }
-    .section__title em { font-style: italic; color: var(--sage-deep); }
+    .section__title em { font-style: italic; color: var(--brand-deep); }
     .section__sub {
       margin: 6px 0 22px;
       font-size: 14px; line-height: 1.55;
@@ -443,7 +451,7 @@
     .schedule__date {
       font-size: 10.5px; font-weight: 700;
       letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--sage-deep);
+      color: var(--brand-deep);
       margin: 0 0 4px;
     }
     .schedule__title {
@@ -464,7 +472,7 @@
       font-family: var(--serif);
       font-style: italic;
       font-size: 14px;
-      color: var(--sage-deep);
+      color: var(--brand-deep);
     }
     .schedule__what { font-size: 13px; color: var(--ink); }
     .schedule__what em {
@@ -478,7 +486,7 @@
 
     /* ============================================================
        Wedding-weekend TIMELINE — anchor of the home + schedule pages.
-       Vertical sage rail running through three day banners; each day
+       Vertical magenta rail running through three day banners; each day
        merges fixed wedding events with Allie's recommended upsells in
        chronological order so guests see the whole weekend at once.
        ============================================================ */
@@ -498,7 +506,7 @@
     .tl-day__eyebrow {
       font-size: 10.5px; font-weight: 700;
       letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--sage-deep);
+      color: var(--brand-deep);
       margin: 0;
       flex-shrink: 0;
     }
@@ -533,12 +541,12 @@
       font-family: var(--serif);
       font-style: italic;
       font-size: 14px;
-      color: var(--sage-deep);
+      color: var(--brand-deep);
       text-align: right;
       letter-spacing: 0.02em;
       white-space: nowrap;
     }
-    /* Marker column carries the vertical sage rail and the dot. */
+    /* Marker column carries the vertical magenta rail and the dot. */
     .tl-row__rail {
       position: relative;
       display: flex; flex-direction: column; align-items: center;
@@ -551,10 +559,10 @@
       top: 0; bottom: 0; left: 50%;
       width: 1.5px;
       background: linear-gradient(180deg,
-                  rgba(126,141,104,0.0) 0%,
-                  rgba(126,141,104,0.45) 12%,
-                  rgba(126,141,104,0.45) 88%,
-                  rgba(126,141,104,0.0) 100%);
+                  rgba(200,48,122,0.0) 0%,
+                  rgba(200,48,122,0.45) 12%,
+                  rgba(200,48,122,0.45) 88%,
+                  rgba(200,48,122,0.0) 100%);
       transform: translateX(-50%);
     }
     /* First/last row in a day clip the rail so it doesn't bleed out. */
@@ -565,22 +573,22 @@
       width: 14px; height: 14px;
       border-radius: 9999px;
       background: var(--paper);
-      box-shadow: inset 0 0 0 2px var(--sage);
+      box-shadow: inset 0 0 0 2px var(--brand);
       flex-shrink: 0;
     }
     .tl-row[data-key="ceremony"] .tl-row__dot {
       width: 18px; height: 18px;
       margin-top: 20px;
-      background: var(--sage-deep);
-      box-shadow: inset 0 0 0 2px var(--sage-deep),
-                  0 0 0 4px rgba(126,141,104,0.18);
+      background: var(--brand-deep);
+      box-shadow: inset 0 0 0 2px var(--brand-deep),
+                  0 0 0 4px rgba(200,48,122,0.18);
     }
     .tl-row--pick .tl-row__dot {
       width: 18px; height: 18px;
       margin-top: 20px;
-      background: var(--sage-darker);
-      box-shadow: inset 0 0 0 2px var(--sage-darker),
-                  0 0 0 4px rgba(196,218,177,0.32);
+      background: var(--brand-darker);
+      box-shadow: inset 0 0 0 2px var(--brand-darker),
+                  0 0 0 4px rgba(255,126,182,0.32);
     }
     /* Use a small sparkle inside the pick dot. Drawn via background SVG
        so the dot stays a clean circle visually. */
@@ -589,7 +597,7 @@
       position: absolute;
       inset: 0;
       display: grid; place-items: center;
-      color: var(--sage-pale);
+      color: var(--brand-pale);
       font-size: 11px;
       line-height: 1;
     }
@@ -602,7 +610,7 @@
       padding: 14px 18px 14px 18px;
       transition: border-color 200ms ease, box-shadow 200ms ease;
     }
-    .tl-event:hover { border-color: rgba(126,141,104,0.30); }
+    .tl-event:hover { border-color: rgba(200,48,122,0.30); }
     .tl-event__title {
       font-family: var(--serif);
       font-size: 17px; line-height: 1.2;
@@ -616,12 +624,12 @@
       margin: 0;
       line-height: 1.5;
     }
-    /* The ceremony tile gets a subtle sage left bar + slightly heavier card */
+    /* The ceremony tile gets a subtle magenta left bar + slightly heavier card */
     .tl-row[data-key="ceremony"] .tl-event {
-      border-color: rgba(126,141,104,0.45);
+      border-color: rgba(200,48,122,0.45);
       background: linear-gradient(135deg, var(--paper) 0%, var(--paper-warm) 100%);
-      box-shadow: 0 4px 12px -8px rgba(126,141,104,0.35);
-      border-left: 3px solid var(--sage-deep);
+      box-shadow: 0 4px 12px -8px rgba(200,48,122,0.35);
+      border-left: 3px solid var(--brand-deep);
       padding-left: 16px;
     }
     .tl-row[data-key="ceremony"] .tl-event__title {
@@ -629,7 +637,7 @@
     }
     .tl-row[data-key="ceremony"] .tl-event__title::before {
       content: "✿";
-      color: var(--sage-deep);
+      color: var(--brand-deep);
       margin-right: 7px;
       font-size: 14px;
       vertical-align: 1px;
@@ -641,10 +649,10 @@
       grid-template-columns: 1fr;
       background:
         linear-gradient(135deg, var(--paper) 0%, var(--paper-warm) 100%);
-      border: 1px solid rgba(126,141,104,0.30);
+      border: 1px solid rgba(200,48,122,0.30);
       border-radius: 14px;
       overflow: hidden;
-      box-shadow: 0 8px 24px -16px rgba(61,74,58,0.30);
+      box-shadow: 0 8px 24px -16px rgba(95,17,56,0.30);
       transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1),
                   box-shadow 240ms ease, border-color 240ms ease;
     }
@@ -653,8 +661,8 @@
     }
     .tl-pick:hover {
       transform: translateY(-2px);
-      border-color: rgba(126,141,104,0.55);
-      box-shadow: 0 16px 32px -18px rgba(61,74,58,0.35);
+      border-color: rgba(200,48,122,0.55);
+      box-shadow: 0 16px 32px -18px rgba(95,17,56,0.35);
     }
     .tl-pick__photo {
       position: relative;
@@ -665,8 +673,8 @@
       content: "";
       position: absolute; inset: 0;
       background: linear-gradient(135deg,
-                  rgba(45,55,40,0.0) 0%,
-                  rgba(45,55,40,0.35) 100%);
+                  rgba(26,26,26,0.0) 0%,
+                  rgba(26,26,26,0.35) 100%);
     }
     .tl-pick__body {
       padding: 16px 20px 18px;
@@ -679,8 +687,8 @@
       display: inline-flex; align-items: center; gap: 6px;
       padding: 4px 10px;
       border-radius: 9999px;
-      background: var(--sage-darker);
-      color: var(--sage-glow);
+      background: var(--brand-darker);
+      color: var(--brand-glow);
       font-size: 10px; font-weight: 700;
       letter-spacing: 0.16em; text-transform: uppercase;
     }
@@ -688,8 +696,8 @@
     .tl-pick__save {
       display: inline-flex; align-items: center;
       padding: 3px 9px;
-      background: rgba(126,141,104,0.15);
-      color: var(--sage-deep);
+      background: rgba(200,48,122,0.15);
+      color: var(--brand-deep);
       border-radius: 9999px;
       font-size: 10.5px; font-weight: 700;
       letter-spacing: 0.1em; text-transform: uppercase;
@@ -706,8 +714,8 @@
       position: relative;
       margin: 4px 0 2px;
       padding: 8px 10px 8px 14px;
-      background: rgba(126,141,104,0.07);
-      border-left: 2px solid var(--sage);
+      background: rgba(200,48,122,0.07);
+      border-left: 2px solid var(--brand);
       border-radius: 4px;
       font-size: 12.5px; line-height: 1.5;
       color: var(--ink-soft);
@@ -718,7 +726,7 @@
       font-style: normal; font-weight: 700;
       font-size: 9.5px; letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--sage-deep);
+      color: var(--brand-deep);
       margin-bottom: 2px;
     }
     .tl-pick__desc {
@@ -738,14 +746,14 @@
       content: "";
       width: 4px; height: 4px;
       border-radius: 9999px;
-      background: var(--sage);
+      background: var(--brand);
     }
     .tl-pick__foot {
       display: flex; align-items: center; justify-content: space-between;
       gap: 12px; flex-wrap: wrap;
       margin-top: 8px;
       padding-top: 12px;
-      border-top: 1px dashed rgba(126,141,104,0.25);
+      border-top: 1px dashed rgba(200,48,122,0.25);
     }
     .tl-pick__price {
       display: flex; flex-direction: column; gap: 2px;
@@ -761,7 +769,7 @@
     .tl-pick__price-row strong {
       font-family: var(--serif);
       font-size: 26px; line-height: 1;
-      color: var(--sage-deep);
+      color: var(--brand-deep);
       letter-spacing: -0.4px;
       font-weight: 500;
     }
@@ -773,7 +781,7 @@
     .tl-pick__cta {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 10px 18px;
-      background: var(--sage);
+      background: var(--brand);
       color: #fff;
       border: 0; border-radius: 9999px;
       font-size: 12px; font-weight: 700;
@@ -781,13 +789,13 @@
       transition: background-color 180ms ease, transform 180ms ease;
       flex-shrink: 0;
     }
-    .tl-pick__cta:hover { background: var(--sage-deep); transform: translateY(-1px); }
+    .tl-pick__cta:hover { background: var(--brand-deep); transform: translateY(-1px); }
     .tl-pick--added {
-      border-color: rgba(126,141,104,0.55);
-      background: linear-gradient(135deg, var(--paper) 0%, rgba(196,218,177,0.20) 100%);
+      border-color: rgba(200,48,122,0.55);
+      background: linear-gradient(135deg, var(--paper) 0%, rgba(255,126,182,0.20) 100%);
     }
     .tl-pick--added .tl-pick__cta {
-      background: var(--sage-deep);
+      background: var(--brand-deep);
       pointer-events: none;
     }
     .tl-pick--added .tl-pick__cta::before {
@@ -828,7 +836,7 @@
     }
     .card:hover {
       transform: translateY(-2px);
-      border-color: rgba(126,141,104,0.30);
+      border-color: rgba(200,48,122,0.30);
       box-shadow: var(--shadow);
     }
     .card__photo {
@@ -852,7 +860,7 @@
       letter-spacing: 0.04em;
     }
     .card__pricetag s { color: var(--ink-faint); margin-right: 4px; font-weight: 500; }
-    .card__pricetag em { color: var(--sage-deep); font-style: normal; }
+    .card__pricetag em { color: var(--brand-deep); font-style: normal; }
     .card__body {
       padding: 18px 20px 20px;
       display: flex; flex-direction: column; gap: 8px; flex: 1;
@@ -860,7 +868,7 @@
     .card__eyebrow {
       font-size: 10px; font-weight: 700;
       letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--sage-deep);
+      color: var(--brand-deep);
     }
     .card__title {
       font-family: var(--serif);
@@ -891,7 +899,7 @@
       content: ""; flex: 0 0 4px;
       width: 4px; height: 4px;
       border-radius: 9999px;
-      background: var(--sage);
+      background: var(--brand);
       align-self: center;
     }
     .card__foot {
@@ -917,7 +925,7 @@
       display: inline-block;
       font-size: 10.5px; font-weight: 700;
       letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--sage-deep);
+      color: var(--brand-deep);
       margin-top: 4px;
     }
     .btn {
@@ -930,8 +938,8 @@
       transition: background-color 200ms ease, transform 200ms ease;
     }
     .btn:hover { background: var(--ink-soft); transform: translateY(-1px); }
-    .btn--copper { background: var(--sage); }
-    .btn--copper:hover { background: var(--sage-deep); }
+    .btn--copper { background: var(--brand); }
+    .btn--copper:hover { background: var(--brand-deep); }
     .btn--ghost {
       background: var(--paper);
       color: var(--ink);
@@ -940,7 +948,7 @@
     .btn--ghost:hover { background: var(--paper-warm); }
     .btn--block { width: 100%; justify-content: center; }
     .btn--added {
-      background: var(--sage-deep);
+      background: var(--brand-deep);
       pointer-events: none;
     }
     .btn--added::before {
@@ -983,21 +991,21 @@
     }
     .field input:focus-visible, .field select:focus-visible {
       outline: none;
-      border-color: var(--sage);
-      box-shadow: 0 0 0 3px rgba(126,141,104,0.18);
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(200,48,122,0.18);
       background: var(--paper);
     }
     .stay-banner {
       display: flex; align-items: center; gap: 14px;
       padding: 16px 22px;
-      background: linear-gradient(135deg, rgba(126,141,104,0.12) 0%, rgba(126,141,104,0.10) 100%);
-      border: 1px solid rgba(126,141,104,0.25);
+      background: linear-gradient(135deg, rgba(200,48,122,0.12) 0%, rgba(200,48,122,0.10) 100%);
+      border: 1px solid rgba(200,48,122,0.25);
       border-radius: 14px;
       margin-top: 18px;
     }
     .stay-banner__icon {
       width: 36px; height: 36px; border-radius: 10px;
-      background: var(--sage); color: #fff;
+      background: var(--brand); color: #fff;
       display: grid; place-items: center;
       flex-shrink: 0;
     }
@@ -1015,10 +1023,10 @@
       margin-left: auto;
       padding: 8px 12px;
       background: var(--paper);
-      border: 1px dashed var(--sage);
+      border: 1px dashed var(--brand);
       border-radius: 8px;
       font-family: ui-monospace, "SF Mono", Menlo, monospace;
-      font-size: 13px; font-weight: 600; color: var(--sage-deep);
+      font-size: 13px; font-weight: 600; color: var(--brand-deep);
       letter-spacing: 0.1em;
     }
 
@@ -1051,7 +1059,7 @@
     }
     .cart__icon {
       width: 36px; height: 36px; border-radius: 10px;
-      background: var(--sage);
+      background: var(--brand);
       display: grid; place-items: center; color: #fff;
       flex-shrink: 0;
     }
@@ -1080,7 +1088,7 @@
     .cart__total-val {
       font-family: var(--serif);
       font-size: 22px; line-height: 1;
-      color: var(--sage-pale);
+      color: var(--brand-pale);
       font-weight: 500;
     }
     .cart__chev {
@@ -1124,7 +1132,7 @@
     }
     .cart__line-price {
       font-variant-numeric: tabular-nums;
-      color: var(--sage-pale);
+      color: var(--brand-pale);
       font-weight: 600;
     }
     .cart__remove {
@@ -1133,7 +1141,7 @@
       font-size: 18px;
       padding: 0; line-height: 1;
     }
-    .cart__remove:hover { color: var(--sage-pale); }
+    .cart__remove:hover { color: var(--brand-pale); }
     .cart__foot {
       padding: 14px 20px 16px;
       border-top: 1px solid rgba(255,255,255,0.10);
@@ -1146,13 +1154,13 @@
     }
     .cart__checkout {
       padding: 11px 18px;
-      background: var(--sage);
+      background: var(--brand);
       color: #fff;
       border: 0; border-radius: 9999px;
       font-size: 12px; font-weight: 700;
       letter-spacing: 0.08em; text-transform: uppercase;
     }
-    .cart__checkout:hover { background: var(--sage-deep); }
+    .cart__checkout:hover { background: var(--brand-deep); }
 
     /* ============================================================
        Toast
@@ -1176,7 +1184,7 @@
     .toast__check {
       width: 22px; height: 22px;
       border-radius: 9999px;
-      background: var(--sage-deep);
+      background: var(--brand-deep);
       display: grid; place-items: center;
       font-size: 12px;
     }
@@ -1209,12 +1217,12 @@
       border-color: var(--ink);
     }
     .pill--copper[data-selected="true"] {
-      background: var(--sage); color: #fff;
-      border-color: var(--sage);
+      background: var(--brand); color: #fff;
+      border-color: var(--brand);
     }
     .pill--sage[data-selected="true"] {
-      background: var(--sage-deep); color: #fff;
-      border-color: var(--sage-deep);
+      background: var(--brand-deep); color: #fff;
+      border-color: var(--brand-deep);
     }
 
     /* Login screen */
@@ -1225,7 +1233,7 @@
     .login__eyebrow {
       font-size: 10.5px; font-weight: 600;
       letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--sage-deep); margin: 0 0 12px;
+      color: var(--brand-deep); margin: 0 0 12px;
     }
     .login__title {
       margin: 0 0 8px;
@@ -1234,7 +1242,7 @@
       font-size: 40px; line-height: 1.05;
       color: var(--ink); letter-spacing: -0.4px;
     }
-    .login__title em { font-style: italic; color: var(--sage-deep); }
+    .login__title em { font-style: italic; color: var(--brand-deep); }
     .login__sub {
       font-size: 14px; line-height: 1.55; color: var(--ink-soft);
       margin: 0 0 6px;
@@ -1254,7 +1262,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .hero__title em { animation: none; -webkit-background-clip: initial; background-clip: initial; color: var(--sage-pale); }
+      .hero__title em { animation: none; -webkit-background-clip: initial; background-clip: initial; color: var(--brand-pale); }
       .hero__eyebrow::before { animation: none; }
       .action, .card { transition: none; }
     }
@@ -1311,18 +1319,18 @@ const WEDDING = {
   hostFirst: "Aria",
   hostLast:  "Patel",
   partner: "Marcus Patel",
-  dateISO: "2026-03-14T16:00:00-07:00",
+  dateISO: "2026-03-14T16:00:00-05:00",
   dateLong:"Saturday, March 14, 2026",
   arriveLong: "March 13–15, 2026",
-  venue:   "Nobu Hotel Los Cabos",
-  city:    "Cabo San Lucas, México",
-  hashtag: "#AriaMarcusInCabo",
-  groupCode: "ARIAMARCUS-26",
-  ceremonySpace: "Stone Garden",
-  receptionSpace: "Onsen Pool Deck",
-  dressCode: "Black-tie optional, beachy permitted",
-  weather: "78°F · sunny",
-  heroImg: "https://www.legendaryvacationclub.com/files/6900/23711735_ImageMediumWidth.jpg",
+  venue:   "AVA Resort Cancún",
+  city:    "Cancún, Quintana Roo",
+  hashtag: "#AriaMarcusAtAVA",
+  groupCode: "ARIAMARCUS-AVA-26",
+  ceremonySpace: "Oceanfront Terrace",
+  receptionSpace: "AVA Salon Ballroom",
+  dressCode: "Black-tie optional · beach-formal welcome",
+  weather: "82°F · sunny · Caribbean breeze",
+  heroImg: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1600&q=80",
 };
 
 /* Demo: the guest is already "logged in" as Sofía Vargas — bridesmaid
@@ -1336,58 +1344,58 @@ const DEFAULT_GUEST = { name: "Sofía Vargas", email: "sofia@vargas.co", party: 
    the timeline can render it as the visual anchor of Saturday. */
 const SCHEDULE = [
   { day: "fri", date: "FRI · MAR 13", title: "Welcome", events: [
-    { time: "5:00 PM", what: "Airport transfers", em: "Complimentary shuttle from SJD · scheduled by hotel" },
-    { time: "7:00 PM", what: "Welcome cocktails — Onsen Pool Deck", em: "Open bar, hand-rolls, sake flights · attire: resort chic" },
+    { time: "5:00 PM", what: "Airport transfers", em: "Complimentary shuttle from CUN · 25 min to the resort" },
+    { time: "7:00 PM", what: "Welcome cocktails — Oceanfront Terrace", em: "Open bar, mezcal flights, passed Yucatecan bites · attire: resort chic" },
   ]},
   { day: "sat", date: "SAT · MAR 14", title: "Wedding day", events: [
-    { time: "11:00 AM", what: "Pre-ceremony spa hours", em: "Esencia Spa open early for the wedding party" },
-    { time: "4:00 PM",  what: "Ceremony — Stone Garden", em: "Seating opens 3:30 PM · linen aisle, bare feet welcome", key: "ceremony" },
-    { time: "5:30 PM",  what: "Cocktail hour — Sand Bar", em: "Mezcal flights, ocean-view passed bites" },
-    { time: "7:00 PM",  what: "Reception — Onsen Pool Deck", em: "Long-table dinner, first dance under the stars" },
-    { time: "10:30 PM", what: "After-party — Cocina Nobu lounge", em: "DJ Haru on the decks until 2 AM" },
+    { time: "11:00 AM", what: "Pre-ceremony spa hours", em: "The Spa at AVA open early for the wedding party" },
+    { time: "4:00 PM",  what: "Ceremony — Oceanfront Terrace", em: "Seating opens 3:30 PM · linen aisle, bare feet welcome", key: "ceremony" },
+    { time: "5:30 PM",  what: "Cocktail hour — Sunset Cove", em: "Coral palomas, oceanfront passed bites" },
+    { time: "7:00 PM",  what: "Reception — AVA Salon Ballroom", em: "Long-table dinner, first dance, the Caribbean as backdrop" },
+    { time: "10:30 PM", what: "After-party — Coral Lounge", em: "DJ Mariposa on the decks until 2 AM" },
   ]},
   { day: "sun", date: "SUN · MAR 15", title: "Farewell", events: [
-    { time: "10:30 AM", what: "Farewell brunch — Esencia Garden", em: "Mezcal mimosas, omakase station, casual" },
-    { time: "1:00 PM",  what: "Last group photo — Sea of Cortez deck", em: "Optional · plan your departure transfer after" },
+    { time: "10:30 AM", what: "Farewell brunch — Coral Garden", em: "Mezcal mimosas, taquería bar, casual" },
+    { time: "1:00 PM",  what: "Last group photo — Oceanfront Promenade", em: "Optional · plan your departure transfer after" },
   ]},
 ];
 
 /* Room block — block rates vs. published rates, all for 2 nights min */
 const ROOMS = [
-  { id: "rm-king",   name: "Garden King",      desc: "Quiet ground-floor room facing the meditation garden — the room block bestseller.",
-    bullets: ["1 King · sleeps 2", "350 sq ft", "Walk-in shower + soaking tub"],
+  { id: "rm-king",   name: "Ocean View King",      desc: "Every room at AVA has an ocean view — the wedding-block bestseller, with a private terrace facing the Caribbean.",
+    bullets: ["1 King · sleeps 2", "380 sq ft", "Ocean-view terrace + rainfall shower"],
     photo: "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=900&q=72",
     blockUSD: 540, listUSD: 745, occ: "2" },
-  { id: "rm-ocean",  name: "Ocean View Suite", desc: "Sea of Cortez balcony, deep-soaking onsen tub, the view that ends up in everyone's stories.",
-    bullets: ["1 King · sleeps 2", "640 sq ft", "Onsen tub + ocean balcony"],
+  { id: "rm-ocean",  name: "Premier Ocean Suite", desc: "Wraparound oceanfront terrace, soaking tub, and the unbroken Caribbean horizon — the view that ends up in everyone's stories.",
+    bullets: ["1 King · sleeps 2", "680 sq ft", "Soaking tub + wraparound terrace"],
     photo: "https://images.unsplash.com/photo-1566073771259-2a04524b2bcb?auto=format&fit=crop&w=900&q=72", blockUSD: 820, listUSD: 1145, occ: "2", popular: true },
-  { id: "rm-double", name: "Double Garden",    desc: "Two queens, garden-side. Made for two friends sharing — split it and the math gets fun.",
-    bullets: ["2 Queens · sleeps 4", "420 sq ft", "Adjoining option available"],
+  { id: "rm-double", name: "Ocean View Double",   desc: "Two queens, terrace facing the sea. Made for two friends sharing — split it and the math gets fun.",
+    bullets: ["2 Queens · sleeps 4", "440 sq ft", "Adjoining option available"],
     photo: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=900&q=72", blockUSD: 580, listUSD: 825, occ: "4" },
-  { id: "rm-casita", name: "Pool Casita",      desc: "Step out, swim. Private terrace plunges into the lagoon pool — wedding-party splurge.",
-    bullets: ["1 King · sleeps 2", "780 sq ft", "Direct pool access · daybed"],
+  { id: "rm-casita", name: "Pool Cabana Suite",   desc: "Walk-out access to the adults-only infinity pool, with a private daybed and outdoor shower — the wedding-party splurge.",
+    bullets: ["1 King · sleeps 2", "780 sq ft", "Direct pool access · private daybed"],
     photo: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=900&q=72", blockUSD: 1190, listUSD: 1690, occ: "2" },
-  { id: "rm-twosuite", name: "Two-Bed Suite",  desc: "Two-bedroom suite for families coming together. Living room, kitchenette, big terrace.",
+  { id: "rm-twosuite", name: "Two-Bedroom Ocean Suite",  desc: "Two-bedroom suite for families coming together. Living room, kitchenette, oversized terrace facing the sea.",
     bullets: ["2 Bedrooms · sleeps 4–5", "1,180 sq ft", "Living + dining + kitchenette"],
     photo: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=900&q=72", blockUSD: 1480, listUSD: 2080, occ: "5" },
 ];
 
-/* Spa add-ons (Esencia at Nobu Cabos) */
+/* Spa add-ons (The Spa at AVA — AVA Resort Cancún) */
 const SPA = [
   { id: "spa-couples",  name: "Couples Sunset Ritual",
-    loc: "Esencia Spa · Treatment Suite 4", priceUSD: 720,
-    desc: "Side-by-side massage, sea-salt scrub, and a private jacuzzi terrace at golden hour. Aria's pre-wedding pick.",
+    loc: "The Spa at AVA · Treatment Suite 4", priceUSD: 720,
+    desc: "Side-by-side massage, sea-salt scrub, and a private jacuzzi terrace as the Caribbean sun drops. Aria's pre-wedding pick.",
     bullets: ["For 2 · 90 min", "Champagne & ceviche after", "Ocean-view treatment suite"],
     photo: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=72" },
   { id: "spa-glow",     name: "Wedding Glow Facial",
-    loc: "Esencia Spa", priceUSD: 285,
-    desc: "Chef-Matsuhisa-approved 75-minute brightening facial — schedule it 24 hrs before the ceremony.",
+    loc: "The Spa at AVA", priceUSD: 285,
+    desc: "AVA's signature 75-minute brightening facial — schedule it 24 hrs before the ceremony for camera-ready skin.",
     bullets: ["For 1 · 75 min", "Vitamin-C + lymphatic", "Photo-ready finish"],
     photo: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=900&q=72" },
-  { id: "spa-onsen",    name: "Hot-Stone Onsen",
-    loc: "Esencia Spa · Hydrotherapy", priceUSD: 240,
-    desc: "60-minute hot-stone massage, then a soak in the basalt onsen pool. A reset between the ceremony and the after-party.",
-    bullets: ["For 1 · 60 min", "Onsen pool access", "Robe + sandals to take home"],
+  { id: "spa-onsen",    name: "Hot Stones & Hydrotherapy",
+    loc: "The Spa at AVA · Hydrotherapy circuit", priceUSD: 240,
+    desc: "60-minute hot-stone massage, then a soak through the thermal hydrotherapy circuit. A reset between the ceremony and the after-party.",
+    bullets: ["For 1 · 60 min", "Hydrotherapy circuit access", "Robe + sandals to take home"],
     photo: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=900&q=72" },
   { id: "spa-bridal",   name: "Bridesmaid Hair & Makeup",
     loc: "Suite 1208 · in-room", priceUSD: 380,
@@ -1395,13 +1403,13 @@ const SPA = [
     bullets: ["For 1 · 90 min", "Trial included", "Touch-up kit to take with you"],
     photo: "https://images.unsplash.com/photo-1522335789203-aaa11d4f4d7d?auto=format&fit=crop&w=900&q=72", popular: true },
   { id: "spa-stargaze", name: "Rooftop Stargazing Soak",
-    loc: "The North Tower rooftop", priceUSD: 380,
+    loc: "AVA North Tower rooftop", priceUSD: 380,
     desc: "Private rooftop hot tub with a personal mixologist and small-bites tasting plate. Weddings make people romantic.",
     bullets: ["For 2 · 2 hrs", "Mezcal flight", "Telescope on deck"],
     photo: "https://images.unsplash.com/photo-1531112405267-d2c1546f4d2e?auto=format&fit=crop&w=900&q=72" },
   { id: "spa-mezcal",   name: "Mezcal & Massage",
-    loc: "Esencia Spa", priceUSD: 320,
-    desc: "Late-afternoon couples massage paired with a 4-bottle mezcal flight. For the friends who arrived too early to nap.",
+    loc: "The Spa at AVA", priceUSD: 320,
+    desc: "Late-afternoon couples massage paired with a 4-bottle Oaxacan mezcal flight. For the friends who arrived too early to nap.",
     bullets: ["For 2 · 60 min", "4-bottle mezcal flight", "Light bites + agua de jamaica"],
     photo: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=900&q=72" },
 
@@ -1409,55 +1417,55 @@ const SPA = [
      timeline AND in the Spa tab — `publishedUSD` triggers the discount
      strikethrough; `allieRec` flags the upgraded card treatment. */
   { id: "spa-allie-day", name: "Pre-Wedding Spa Morning",
-    loc: "Esencia Spa · 4-hour ritual", priceUSD: 480, publishedUSD: 720, allieRec: true,
-    desc: "Aria's pre-wedding glow ritual: 90-min couples massage, sea-salt scrub, onsen + steam, and a champagne lunch on the cliffside terrace before tonight's welcome dinner.",
-    bullets: ["For 2 · 4 hrs", "Onsen + steam included", "Champagne lunch after"],
+    loc: "The Spa at AVA · 4-hour ritual", priceUSD: 480, publishedUSD: 720, allieRec: true,
+    desc: "Aria's pre-wedding glow ritual: 90-min couples massage, sea-salt scrub, hydrotherapy circuit + steam, and a champagne lunch on the oceanfront terrace before tonight's welcome cocktails.",
+    bullets: ["For 2 · 4 hrs", "Hydrotherapy + steam included", "Champagne lunch after"],
     photo: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=72" },
 ];
 
-/* Excursions (off-property, hotel-arranged) */
+/* Excursions (off-property, hotel-arranged — Cancún & Riviera Maya) */
 const EXC = [
-  { id: "exc-arch",     name: "Cabo Arch & Lover's Beach",
-    loc: "Marina · 9 AM departure", priceUSD: 95,
-    desc: "Two-hour glass-bottom boat to El Arco, the iconic rock arch where the Pacific meets the Sea of Cortez.",
-    bullets: ["For 1 · 2 hrs", "Snacks + bottled water", "Drop-off at hotel beach"],
+  { id: "exc-arch",     name: "Isla Mujeres Catamaran & Snorkel",
+    loc: "Cancún Marina · 9 AM departure", priceUSD: 95,
+    desc: "Half-day catamaran to Isla Mujeres — snorkel Punta Sur reef, lunch at Playa Norte, return by golf cart to the dock.",
+    bullets: ["For 1 · 5 hrs", "Snorkel gear included", "Open bar + buffet lunch"],
     photo: "https://images.unsplash.com/photo-1582719471384-894fbb16e074?auto=format&fit=crop&w=900&q=72", popular: true },
-  { id: "exc-whale",    name: "Whale Watching at Sunrise",
-    loc: "Sea of Cortez · 6 AM departure", priceUSD: 280,
-    desc: "Small-boat charter to where the gray whales calve. Coffee, blankets, and the captain who's logged 1,200 pods.",
-    bullets: ["For 1 · 4 hrs", "Charter sailboat", "Continental breakfast aboard"],
+  { id: "exc-whale",    name: "Whale Shark Snorkel",
+    loc: "Holbox / Isla Mujeres · 6 AM departure", priceUSD: 280,
+    desc: "Small-boat charter to where the whale sharks migrate (May–Sept). Captain who's been guiding these waters for 20 years. Pre-dawn coffee and full breakfast included.",
+    bullets: ["For 1 · 8 hrs", "Seasonal · May–Sept", "Wetsuit + breakfast aboard"],
     photo: "https://images.unsplash.com/photo-1570481662006-a3a1374699e8?auto=format&fit=crop&w=900&q=72" },
-  { id: "exc-todos",    name: "Todos Santos Day Trip",
-    loc: "Magic town · full day", priceUSD: 165,
-    desc: "Drive up the coast for galleries, surf shops, and the best fish tacos in Baja. Easy day for early arrivals.",
-    bullets: ["For 1 · 7 hrs", "Private guide", "Lunch at Hotel California"],
+  { id: "exc-todos",    name: "Tulum Ruins & Cenote",
+    loc: "Riviera Maya · full day", priceUSD: 165,
+    desc: "Drive south to walk the cliffside Mayan ruins at Tulum, then swim a freshwater cenote on the way back. Easy day for early arrivals.",
+    bullets: ["For 1 · 8 hrs", "Private guide", "Cenote swim included"],
     photo: "https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=900&q=72" },
-  { id: "exc-snorkel",  name: "Santa María Snorkel",
-    loc: "Boutique catamaran · half day", priceUSD: 130,
-    desc: "Protected cove, parrotfish in 12 feet of water, an open bar after. The wedding party's day-before pick.",
+  { id: "exc-snorkel",  name: "MUSA Underwater Museum",
+    loc: "Punta Nizuc · half day", priceUSD: 130,
+    desc: "Snorkel the world's largest underwater sculpture park — 500 statues in 15 feet of turquoise water. The wedding party's day-before pick.",
     bullets: ["For 1 · 4 hrs", "All gear included", "Open bar + light lunch"],
     photo: "https://images.unsplash.com/photo-1583122321203-ff8d70d6c75c?auto=format&fit=crop&w=900&q=72" },
-  { id: "exc-atv",      name: "ATV Desert + Beach",
-    loc: "Migriño dunes · half day", priceUSD: 175,
-    desc: "Two hours in the cactus desert, two hours barreling down the Pacific beach. Closed-toe shoes required.",
-    bullets: ["For 1 · 4 hrs", "Single or tandem ATV", "Tequila tasting at the end"],
+  { id: "exc-atv",      name: "Selvática ATV + Zipline",
+    loc: "Riviera Maya jungle · half day", priceUSD: 175,
+    desc: "ATV through the jungle, then ten ziplines across the canopy and a swim in a hidden cenote. Closed-toe shoes required.",
+    bullets: ["For 1 · 5 hrs", "Single or tandem ATV", "Tequila tasting at the end"],
     photo: "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=900&q=72" },
   { id: "exc-yacht",    name: "Sunset Catamaran Charter",
-    loc: "Marina · 5 PM", priceUSD: 215,
-    desc: "Three-hour sunset sail with open bar and a tapas dinner. Group rate from Aria's wedding block.",
+    loc: "Cancún Marina · 5 PM", priceUSD: 215,
+    desc: "Three-hour sunset sail along the hotel zone with open bar and a tapas dinner. Group rate from Aria's wedding block.",
     bullets: ["For 1 · 3 hrs", "Open bar", "Tapas dinner aboard"],
     photo: "https://images.unsplash.com/photo-1543721090-3170be3ad8a9?auto=format&fit=crop&w=900&q=72" },
 
   /* Allie's curated wedding-weekend upsells — surfaced in the timeline. */
-  { id: "exc-golf",     name: "Sunrise Tee Time · Cabo Real",
-    loc: "Cabo Real Golf Club · 7:00 AM", priceUSD: 195, publishedUSD: 340, allieRec: true,
-    desc: "Beat the heat — tee off pre-ceremony with the groomsmen on the Robert Trent Jones II oceanfront 18. Cart, caddy, breakfast burrito at the turn, and round-trip resort transfer included.",
+  { id: "exc-golf",     name: "Sunrise Tee Time · Riviera Maya Golf",
+    loc: "Riviera Maya Golf Club · 7:00 AM", priceUSD: 195, publishedUSD: 340, allieRec: true,
+    desc: "Beat the heat — tee off pre-ceremony with the groomsmen on the Robert Trent Jones II jungle-and-Caribbean 18. Cart, caddy, breakfast at the turn, and round-trip resort transfer included.",
     bullets: ["For 1 · 4 hrs", "Cart + caddy", "Resort transfers"],
     photo: "https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?auto=format&fit=crop&w=900&q=72" },
-  { id: "exc-dolphin",  name: "Dolphin Encounter · Cabo Dolphins",
-    loc: "Cabo San Lucas Marina · 9:00 AM", priceUSD: 135, publishedUSD: 185, allieRec: true,
-    desc: "60-minute swim with bottlenose dolphins in the natural marina lagoon. Round-trip transfer + GoPro photo package included — a sweet last-day moment with the friends still around.",
-    bullets: ["For 1 · 90 min total", "Photo package included", "Round-trip transfer"],
+  { id: "exc-dolphin",  name: "Dolphin Encounter · Isla Mujeres",
+    loc: "Dolphin Discovery, Isla Mujeres · 9:00 AM", priceUSD: 135, publishedUSD: 185, allieRec: true,
+    desc: "60-minute swim with bottlenose dolphins in the natural Isla Mujeres lagoon. Round-trip ferry + GoPro photo package included — a sweet last-day moment with the friends still around.",
+    bullets: ["For 1 · 90 min in-water", "Photo package included", "Ferry transfer included"],
     photo: "https://images.unsplash.com/photo-1564550974352-712c7eb6dbb6?auto=format&fit=crop&w=900&q=72" },
 ];
 
@@ -1470,41 +1478,41 @@ const EXC = [
    ============================================================ */
 const ALLIE_PICKS = [
   { id: "spa-allie-day", cartKey: "spa", day: "fri", time: "11:00 AM", sortMin: 11*60,
-    why: "I picked this because it's the only spa block long enough to actually unwind before tonight's 7 PM welcome cocktails — and Aria's already booked the same suite for her crew." },
+    why: "I picked this because it's the only spa block long enough to actually unwind before tonight's 7 PM welcome cocktails on the Oceanfront Terrace — and Aria's already booked the same suite for her crew." },
   { id: "exc-golf",      cartKey: "exc", day: "sat", time: "7:00 AM",  sortMin: 7*60,
-    why: "Tee off before the morning haze burns off — ocean views the whole back nine. You'll be back, showered, and dressed well before the 4 PM ceremony." },
+    why: "Tee off before the Caribbean humidity sets in — ocean views the whole back nine. You'll be back, showered, and dressed well before the 4 PM Oceanfront Terrace ceremony." },
   { id: "exc-dolphin",   cartKey: "exc", day: "sun", time: "9:00 AM",  sortMin: 9*60,
-    why: "Last-day sweetness. Wraps with 30 minutes to spare before the 10:30 farewell brunch — and the photos make the album." },
+    why: "Last-day sweetness — ferry across to Isla Mujeres at sunrise. Wraps with 30 minutes to spare before the 10:30 farewell brunch — and the photos make the album." },
 ];
 
-/* On-property dinner reservations */
+/* On-property dinner reservations (AVA Resort Cancún signature venues) */
 const DINING = [
-  { id: "din-cocina-fri", name: "Cocina Nobu — Welcome eve",
+  { id: "din-cocina-fri", name: "Cocina del Mar — Welcome eve",
     loc: "Friday · 8:00 PM", priceUSD: 145,
-    desc: "Chef Matsuhisa's signature menu. Tables of 4 — let us know who you'd like to sit with at checkout.",
-    bullets: ["Per person · 5 courses", "Sake pairing optional (+$80)", "Vegetarian menu available"],
+    desc: "AVA's oceanfront signature seafood tasting menu. Tables of 4 — let us know who you'd like to sit with at checkout.",
+    bullets: ["Per person · 5 courses", "Wine pairing optional (+$80)", "Vegetarian menu available"],
     photo: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=72", popular: true },
-  { id: "din-malta",     name: "Malta — Private cellar table",
+  { id: "din-malta",     name: "Brava Steakhouse — Private cellar",
     loc: "Friday or Sunday · 7:30 PM", priceUSD: 195,
-    desc: "Eight-seat private cellar at Malta steakhouse. Premium cuts, magnums, low lighting, late dessert.",
+    desc: "Eight-seat private cellar at Brava steakhouse. Premium cuts, magnums, low lighting, late dessert.",
     bullets: ["Per person · 4 courses", "Sommelier-led wine flight (+$95)", "Capped at 8 guests per night"],
     photo: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=72" },
-  { id: "din-esencia-sun", name: "Esencia Garden — Farewell brunch",
+  { id: "din-esencia-sun", name: "Coral Garden — Farewell brunch",
     loc: "Sunday · 10:30 AM", priceUSD: 85,
-    desc: "Mezcal mimosas, omakase station, casual. Set up so you can drift in and out before your transfer.",
+    desc: "Mezcal mimosas, taquería bar, casual. Set up so you can drift in and out before your transfer.",
     bullets: ["Per person · 2 hrs", "Open chef's stations", "Mezcal & espresso bar included"],
     photo: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=900&q=72" },
-  { id: "din-omakase",  name: "Omakase counter — Cocina Nobu",
+  { id: "din-omakase",  name: "Atrium Counter — Late tasting",
     loc: "Sat post-wedding · midnight", priceUSD: 240,
     desc: "Reserved for night-owls. Six-seat counter at the chef's pass — late, quiet, perfect after the dance floor.",
-    bullets: ["Per person · 60 min", "12-course chef's choice", "Sake flight included"],
+    bullets: ["Per person · 60 min", "12-course chef's choice", "Wine flight included"],
     photo: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=900&q=72" },
   { id: "din-pool",     name: "Sand Bar — Daytime cabana",
     loc: "Friday or Saturday afternoon", priceUSD: 60,
     desc: "Pre-paid cabana at the Sand Bar pool: shade, towel service, ceviche, two cocktails per person.",
     bullets: ["Per person · 4 hrs", "Two cocktails included", "Light bites menu"],
     photo: "https://images.unsplash.com/photo-1604147495798-57beb5d6af73?auto=format&fit=crop&w=900&q=72" },
-  { id: "din-rehearsal", name: "Stone Garden rehearsal dinner",
+  { id: "din-rehearsal", name: "Oceanfront Terrace rehearsal dinner",
     loc: "Friday · 6:30 PM (invite only)", priceUSD: 0, soldOut: true,
     desc: "Family + bridal party only — invite required. We'll let you know if a seat opens up.",
     bullets: ["By invitation", "Family + bridal party", "Auto-added if invited"],
@@ -1802,7 +1810,7 @@ function renderLogin() {
         <p class="login__eyebrow">Guest Portal · Sign in</p>
         <h1 class="login__title">You're invited to <em>Aria &amp; Marcus</em>'s wedding.</h1>
         <p class="login__sub">
-          March 14, 2026 at Nobu Hotel Los Cabos. Use this portal to book your room block, browse on-property spa, excursions, and dinners — every line item carries the wedding-block discount.
+          March 14, 2026 at AVA Resort Cancún. Use this portal to book your room block, browse on-property spa, excursions, and dinners — every line item carries the wedding-block discount.
         </p>
       </div>
       <form class="login__form" id="login-form">
@@ -2003,16 +2011,16 @@ function renderHome() {
       badge: hasRoom ? "Held ✓" : "−27% off published",
       badgeStyle: hasRoom ? "" : "copper",
       icon: `<path d="M3 12h18v8H3v-8z M5 12V8a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v4 M9 12V8h6v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
-    { id: "spa", title: "Esencia Spa — wedding rates",
+    { id: "spa", title: "The Spa at AVA — wedding rates",
       desc: spaCount > 0 ? `${spaCount} treatment${spaCount > 1 ? "s" : ""} added.` : `Massages, facials, and the rooftop soak — every treatment 15% off for guests in the block.`,
       badge: "−15% wedding rate", badgeStyle: "copper",
       icon: `<path d="M12 22c-4.5-3-8-7-8-12a4 4 0 0 1 8-2 4 4 0 0 1 8 2c0 5-3.5 9-8 12z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
     { id: "excursions", title: "Excursions",
-      desc: excCount > 0 ? `${excCount} excursion${excCount > 1 ? "s" : ""} on your itinerary.` : `Whale watching, the Cabo Arch, ATV in the dunes — all bookable on the block.`,
+      desc: excCount > 0 ? `${excCount} excursion${excCount > 1 ? "s" : ""} on your itinerary.` : `Isla Mujeres catamaran, Tulum ruins, ATV through the jungle — all bookable on the block.`,
       badge: `${EXC.length} options`, badgeStyle: "",
       icon: `<path d="M3 19l4-9 5 5 4-7 5 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
     { id: "dining", title: "Dining on property",
-      desc: dinCount > 0 ? `${dinCount} reservation${dinCount > 1 ? "s" : ""} confirmed.` : `Cocina Nobu, Malta, late-night omakase — pre-pay your seat now and skip the wait list.`,
+      desc: dinCount > 0 ? `${dinCount} reservation${dinCount > 1 ? "s" : ""} confirmed.` : `Cocina del Mar, Brava Steakhouse, late-night tasting — pre-pay your seat now and skip the wait list.`,
       badge: `Reservations open`, badgeStyle: "",
       icon: `<path d="M6 3v18 M9 3v8a3 3 0 0 1-3 3 M18 3c-2 0-3 2-3 5s1 5 3 5v8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
   ];
@@ -2066,7 +2074,7 @@ function renderHome() {
 
     <section class="stats">
       <div class="stat-pill"><span class="stat-pill__lbl">Wedding date</span><span class="stat-pill__val">${escapeHtml(WEDDING.dateLong.replace(", 2026", ""))}</span></div>
-      <div class="stat-pill"><span class="stat-pill__lbl">Venue</span><span class="stat-pill__val">${escapeHtml(WEDDING.venue.replace("Nobu Hotel ", "Nobu · "))}</span></div>
+      <div class="stat-pill"><span class="stat-pill__lbl">Venue</span><span class="stat-pill__val">${escapeHtml(WEDDING.venue)}</span></div>
       <div class="stat-pill"><span class="stat-pill__lbl">Forecast</span><span class="stat-pill__val">${escapeHtml(WEDDING.weather)}</span></div>
       <div class="stat-pill"><span class="stat-pill__lbl">Allie's picks</span><span class="stat-pill__val">${allieAdded} of ${allieTotal} added</span></div>
     </section>
@@ -2103,7 +2111,7 @@ function renderRsvpCard() {
   return `
     <section class="rsvp" style="margin: 0 22px 32px;">
       <p class="section__eyebrow">RSVP</p>
-      <h2 class="section__title" style="font-size:30px;">Will we see you in <em>Cabo</em>?</h2>
+      <h2 class="section__title" style="font-size:30px;">Will we see you in <em>Cancún</em>?</h2>
       <p class="section__sub">We need a final headcount by January 14, 2026 — but Aria says the sooner the better.</p>
       <div class="rsvp__row">
         <button class="pill pill--sage"   data-rsvp="yes"   data-selected="${r === "yes"   ? "true" : "false"}">Yes — wouldn't miss it</button>
@@ -2128,7 +2136,7 @@ function attachRsvp() {
       renderHome();
       showToast(state.rsvp === "yes" ? "Aria is so happy you're coming!" :
                 state.rsvp === "maybe" ? "Penciled in — we'll check back soon" :
-                "We'll miss you in Cabo");
+                "We'll miss you in Cancún");
     });
   });
   document.querySelectorAll("[data-attending]").forEach(btn => {
@@ -2159,7 +2167,7 @@ function renderStay() {
       <article class="card">
         <div class="card__photo" style="background-image:url('${r.photo}')">
           <span class="card__pricetag"><s>${usd(r.listUSD)}</s><em>${usd(r.blockUSD)}</em>/nt</span>
-          ${popular ? `<span class="card__pricetag" style="left:12px;right:auto;top:12px;background:var(--sage);color:#fff;">Most booked</span>` : ""}
+          ${popular ? `<span class="card__pricetag" style="left:12px;right:auto;top:12px;background:var(--brand);color:#fff;">Most booked</span>` : ""}
         </div>
         <div class="card__body">
           <span class="card__eyebrow">${escapeHtml(r.name)} · sleeps ${escapeHtml(r.occ)}</span>
@@ -2196,7 +2204,7 @@ function renderStay() {
       <p class="section__eyebrow">Stay · Room block</p>
       <h1 class="section__title">Where you'll <em>sleep</em>.</h1>
       <p class="section__sub">
-        Aria and Marcus held a room block at Nobu Hotel Los Cabos through <strong>Feb 13, 2026</strong>. Block rates are <strong>up to 27% off</strong> Nobu's published nightly rate, with the resort fee waived. Two-night minimum.
+        Aria and Marcus held a room block at AVA Resort Cancún through <strong>Feb 13, 2026</strong>. Block rates are <strong>up to 27% off</strong> AVA's published all-inclusive nightly rate, with the resort fee waived. Two-night minimum.
       </p>
 
       <div class="stay-banner">
@@ -2281,8 +2289,8 @@ function renderAddons({ section, eyebrow, title, sub, items, stateKey }) {
     return `
       <article class="card">
         <div class="card__photo" style="background-image:url('${it.photo}')">
-          ${it.allieRec ? `<span class="card__pricetag" style="left:12px;right:auto;top:12px;background:var(--sage-darker);color:var(--sage-glow);letter-spacing:0.16em;">★ Allie's pick</span>` : ""}
-          ${it.popular  && !it.allieRec ? `<span class="card__pricetag" style="background:var(--sage);color:#fff;">Most booked</span>` : ""}
+          ${it.allieRec ? `<span class="card__pricetag" style="left:12px;right:auto;top:12px;background:var(--brand-darker);color:var(--brand-glow);letter-spacing:0.16em;">★ Allie's pick</span>` : ""}
+          ${it.popular  && !it.allieRec ? `<span class="card__pricetag" style="background:var(--brand);color:#fff;">Most booked</span>` : ""}
           ${it.soldOut  ? `<span class="card__pricetag" style="background:rgba(43,43,39,0.92);color:#fff;">Invite only</span>` : ""}
         </div>
         <div class="card__body">
@@ -2353,9 +2361,9 @@ function renderAddons({ section, eyebrow, title, sub, items, stateKey }) {
 function renderSpa() {
   return renderAddons({
     section: "spa",
-    eyebrow: "Spa · Esencia at Nobu",
+    eyebrow: "Spa · The Spa at AVA",
     title: `Make the days <em>feel</em> long.`,
-    sub: `Esencia spa is built into Nobu Cabos — basalt onsen pools, ocean-view treatment suites, the same therapists Aria booked for the wedding party. Every booking carries a 15% wedding-rate.`,
+    sub: `The Spa at AVA is the resort's signature wellness wing — thermal hydrotherapy circuit, oceanfront treatment suites, the same therapists Aria booked for the wedding party. Every booking carries a 15% wedding rate.`,
     items: SPA,
     stateKey: "spa",
   });
@@ -2377,7 +2385,7 @@ function renderDining() {
     section: "dining",
     eyebrow: "Dining · On property",
     title: `Reserve your <em>dinners</em>.`,
-    sub: `Cocina Nobu, Malta, Esencia Garden. Pre-pay your seat and skip the wait list — the wedding-block desk handles the seating chart with the wedding planner.`,
+    sub: `Cocina del Mar, Brava Steakhouse, Coral Garden. Pre-pay your seat and skip the wait list — the wedding-block desk handles the seating chart with the wedding planner.`,
     items: DINING,
     stateKey: "dining",
   });
@@ -2400,7 +2408,7 @@ function renderSchedule() {
       </div>
       <p class="section__eyebrow">Schedule · Mar 13–15, 2026</p>
       <h1 class="section__title">The whole <em>weekend</em>, on one page.</h1>
-      <p class="section__sub">All times in Mountain Standard (MST · UTC-7). The plain rows below are Aria's locked events; the card rows are Allie's recommended add-ons with All-In wedding-block pricing — tap to add or remove anytime.</p>
+      <p class="section__sub">All times in Eastern Standard (EST · UTC-5 · Cancún time, no DST). The plain rows below are Aria's locked events; the card rows are Allie's recommended add-ons with All-In wedding-block pricing — tap to add or remove anytime.</p>
     </main>
 
     ${renderTimeline()}
@@ -2410,9 +2418,9 @@ function renderSchedule() {
         <p class="section__eyebrow">Logistics</p>
         <h2 class="section__title" style="font-size:26px;">Need-to-know.</h2>
         <ul style="margin:14px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; font-size:13px; color:var(--ink-soft); line-height:1.55;">
-          <li><strong style="color:var(--ink);">Airport:</strong> San José del Cabo (SJD), 35 minutes from the resort. Hotel shuttle included with the room block — book through the Stay tab.</li>
+          <li><strong style="color:var(--ink);">Airport:</strong> Cancún International (CUN), 25 minutes from the resort. Hotel shuttle included with the room block — book through the Stay tab.</li>
           <li><strong style="color:var(--ink);">Currency:</strong> US dollars accepted everywhere on property. Tip in either USD or pesos — both happily.</li>
-          <li><strong style="color:var(--ink);">Weather:</strong> mid-70s, low humidity. Pack a light layer for the 7 PM reception.</li>
+          <li><strong style="color:var(--ink);">Weather:</strong> low-80s, light Caribbean breeze. Pack a light layer for the 7 PM AVA Salon Ballroom reception.</li>
           <li><strong style="color:var(--ink);">Hashtag:</strong> ${escapeHtml(WEDDING.hashtag)} — Aria is collecting everyone's photos here for the wedding album.</li>
           <li><strong style="color:var(--ink);">Questions:</strong> reply to the email this portal came from and your concierge (Allie) will jump in within 24 hrs.</li>
         </ul>

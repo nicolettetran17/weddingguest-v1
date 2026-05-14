@@ -1,6 +1,6 @@
 # weddingguest-v1
 
-A standalone **guest portal** for Aria & Marcus's destination wedding at Nobu Hotel Los Cabos. Spinoff of the All-In Weddings bride-side Wedding Portal — same design DNA, sage-anchored color palette, and an itinerary-first home that surfaces Allie's recommended weekend upsells (spa day, sunrise tee time, dolphin encounter) inline with the locked-in wedding events.
+A standalone **guest portal** for Aria & Marcus's destination wedding at AVA Resort Cancún. Spinoff of the All-In Weddings bride-side Wedding Portal — re-skinned to AVA's brand language (magenta primary, sunset coral, sandy-cream neutrals, Cormorant + Montserrat typography) and an itinerary-first home that surfaces Allie's recommended weekend upsells (pre-wedding spa morning, sunrise tee time at Riviera Maya Golf, dolphin encounter at Isla Mujeres) inline with the locked-in wedding events.
 
 ## What's in here
 
@@ -31,10 +31,10 @@ The repo is configured for Vercel out of the box. Connect on [vercel.com/new](ht
 
 - `/` — Login (or, if a guest is already signed in via `localStorage`, the home timeline)
 - **Home** — Hero countdown + the wedding-weekend timeline as the page anchor, with three Allie-recommended upsell cards spliced in chronologically
-- **Stay** — Discounted room block at Nobu Cabos (5 room types, group-code chip, live night recalculation)
-- **Spa** — Esencia Spa wedding rates
-- **Excursions** — Off-property tours (golf, Cabo Arch, whale watching, dolphin, ATV, etc.)
-- **Dining** — On-property dinner reservations
+- **Stay** — Discounted room block at AVA Resort Cancún (5 room types, every room oceanfront per AVA's Oceanfront Promise™, group-code chip, live night recalculation)
+- **Spa** — The Spa at AVA wedding rates
+- **Excursions** — Off-property tours (Riviera Maya golf, Isla Mujeres catamaran, whale-shark snorkel, Tulum ruins, MUSA underwater museum, ATV + zipline, etc.)
+- **Dining** — On-property dinner reservations (Cocina del Mar, Brava Steakhouse, Coral Garden brunch, Atrium Counter late tasting, Sand Bar)
 - **Schedule** — Full timeline + logistics
 
 A floating itinerary drawer collects everything and rolls up to a confirm-everything CTA.
