@@ -978,16 +978,49 @@
     }
     .card__pricetag {
       position: absolute; right: 12px; top: 12px;
-      padding: 6px 10px;
-      border-radius: 9999px;
-      background: rgba(255,255,255,0.92);
+      padding: 7px 11px 8px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.96);
       backdrop-filter: blur(8px);
-      font-size: 11px; font-weight: 700;
       color: var(--ink);
-      letter-spacing: 0.04em;
+      box-shadow: 0 8px 16px -10px rgba(26,26,26,0.35);
+      display: flex; flex-direction: column; align-items: flex-end; gap: 1px;
+      line-height: 1.1;
     }
-    .card__pricetag s { color: var(--ink-faint); margin-right: 4px; font-weight: 500; }
-    .card__pricetag em { color: var(--brand-deep); font-style: normal; }
+    .card__pricetag__label {
+      font-size: 9px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--brand-deep);
+    }
+    .card__pricetag__row {
+      display: inline-flex; align-items: baseline; gap: 5px;
+      font-size: 11px;
+      font-feature-settings: "tnum" 1;
+    }
+    .card__pricetag__row s {
+      color: var(--ink-faint);
+      font-weight: 500;
+    }
+    .card__pricetag__row strong {
+      color: var(--ink);
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .card__pricetag__row span {
+      font-size: 10px; font-weight: 600;
+      color: var(--ink-muted);
+      letter-spacing: 0.02em;
+    }
+    /* Legacy single-line pricetag (for the "Most booked" badge) keeps the
+       old simple styling so its left-positioned override still reads well. */
+    .card__pricetag--solid {
+      display: inline-block;
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
     .card__body {
       padding: 18px 20px 20px;
       display: flex; flex-direction: column; gap: 8px; flex: 1;
@@ -1037,23 +1070,52 @@
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
     .card__price {
-      display: flex; flex-direction: column; gap: 0;
+      display: flex; flex-direction: column; gap: 4px;
       font-size: 11px; color: var(--ink-faint); letter-spacing: 0.04em;
     }
-    .card__price strong {
-      font-family: var(--serif);
-      font-size: 22px; font-weight: 500;
-      color: var(--ink);
-      line-height: 1;
-      letter-spacing: -0.2px;
-    }
-    .card__price s { color: var(--ink-faint); margin-right: 6px; font-weight: 400; }
-    .card__price .save {
-      display: inline-block;
-      font-size: 10.5px; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase;
+    .card__price__label {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 9.5px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
       color: var(--brand-deep);
-      margin-top: 4px;
+    }
+    .card__price__label .card__price__off {
+      padding: 2px 7px;
+      border-radius: 9999px;
+      background: var(--brand);
+      color: #fff;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+    }
+    .card__price__row {
+      display: inline-flex; align-items: baseline; gap: 8px;
+      font-feature-settings: "tnum" 1;
+    }
+    .card__price__row s {
+      color: var(--ink-faint);
+      font-weight: 500;
+      font-size: 13px;
+    }
+    .card__price__row strong {
+      font-family: var(--serif);
+      font-size: 24px; font-weight: 500;
+      color: var(--brand-deep);
+      line-height: 1;
+      letter-spacing: -0.3px;
+    }
+    .card__price__meta {
+      font-size: 11px;
+      color: var(--ink-muted);
+      letter-spacing: 0.02em;
+      line-height: 1.4;
+    }
+    .card__price__meta strong {
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: 11px;
+      color: var(--brand-deep);
+      letter-spacing: 0.04em;
     }
     .btn {
       display: inline-flex; align-items: center; gap: 6px;
@@ -2096,10 +2158,12 @@ function cartLines() {
     const r = ROOMS.find(x => x.id === state.room.roomId);
     if (r) {
       const nights = countNights(state.room.checkIn, state.room.checkOut) || 2;
+      const savings = (r.listUSD - r.blockUSD) * nights;
+      const discountPct = Math.round((r.listUSD - r.blockUSD) / r.listUSD * 100);
       lines.push({
         kind: "Stay",
         title: `${r.name} · ${nights} ${nights === 1 ? "night" : "nights"}`,
-        sub: `${state.room.checkIn} → ${state.room.checkOut} · ${state.room.guests} guest${state.room.guests > 1 ? "s" : ""}`,
+        sub: `${state.room.checkIn} → ${state.room.checkOut} · ${state.room.guests} guest${state.room.guests > 1 ? "s" : ""} · ${discountPct}% block discount · save ${usd(savings)}`,
         price: r.blockUSD * nights,
         remove: () => { state.room = null; saveState(); renderCart(); rerenderActive(); },
       });
@@ -2607,7 +2671,7 @@ function renderHome() {
     { id: "stay", title: hasRoom ? "Your room is held" : "Book your room block",
       desc: hasRoom
         ? `${ROOMS.find(r => r.id === state.room.roomId)?.name} — ${state.room.checkIn} → ${state.room.checkOut}. Manage or change anytime.`
-        : `Group rates from $540/night, locked through Feb 13. Two-night minimum, three-night recommended for the full wedding weekend.`,
+        : `Block rates from $540/night (rack $745, already 27% off), locked through Feb 13. Two-night minimum, three-night recommended for the full wedding weekend.`,
       badge: hasRoom ? "Held ✓" : "−27% off published",
       badgeStyle: hasRoom ? "" : "copper",
       icon: `<path d="M3 12h18v8H3v-8z M5 12V8a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v4 M9 12V8h6v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
@@ -2758,12 +2822,20 @@ function renderStay() {
     const nights = countNights(checkIn, checkOut) || 2;
     const stayTotal = r.blockUSD * nights;
     const savings = (r.listUSD - r.blockUSD) * nights;
+    const discountPct = Math.round((r.listUSD - r.blockUSD) / r.listUSD * 100);
     const popular = r.popular;
     return `
       <article class="card">
         <div class="card__photo" style="background-image:url('${r.photo}')">
-          <span class="card__pricetag"><s>${usd(r.listUSD)}</s><em>${usd(r.blockUSD)}</em>/nt</span>
-          ${popular ? `<span class="card__pricetag" style="left:12px;right:auto;top:12px;background:var(--brand);color:#fff;">Most booked</span>` : ""}
+          <span class="card__pricetag" title="Wedding block rate, ${discountPct}% off rack">
+            <span class="card__pricetag__label">Block · −${discountPct}%</span>
+            <span class="card__pricetag__row">
+              <s>${usd(r.listUSD)}</s>
+              <strong>${usd(r.blockUSD)}</strong>
+              <span>/nt</span>
+            </span>
+          </span>
+          ${popular ? `<span class="card__pricetag card__pricetag--solid" style="left:12px;right:auto;top:12px;background:var(--brand);color:#fff;">Most booked</span>` : ""}
         </div>
         <div class="card__body">
           <span class="card__eyebrow">${escapeHtml(r.name)} · sleeps ${escapeHtml(r.occ)}</span>
@@ -2775,9 +2847,17 @@ function renderStay() {
         </div>
         <div class="card__foot">
           <div class="card__price">
-            <span><s>${usd(r.listUSD * nights)}</s></span>
-            <strong>${usd(stayTotal)}</strong>
-            <span>${nights} night${nights === 1 ? "" : "s"} · save ${usd(savings)}</span>
+            <span class="card__price__label">
+              Wedding block rate
+              <span class="card__price__off">−${discountPct}% off</span>
+            </span>
+            <span class="card__price__row">
+              <s>${usd(r.listUSD * nights)}</s>
+              <strong>${usd(stayTotal)}</strong>
+            </span>
+            <span class="card__price__meta">
+              ${usd(r.blockUSD)}/nt × ${nights} night${nights === 1 ? "" : "s"} · <strong>you save ${usd(savings)}</strong>
+            </span>
           </div>
           <button class="btn ${isBooked ? "btn--added" : "btn--copper"}" data-book-room="${r.id}">
             ${isBooked ? "Held" : "Hold this room"}
