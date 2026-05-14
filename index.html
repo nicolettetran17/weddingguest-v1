@@ -1414,6 +1414,194 @@
     }
 
     /* ============================================================
+       Registry — gift the couple
+       — Top progress banner shows how many experiences have been
+       claimed and how full the shared honeymoon fund is. Cards
+       below reuse .card / .card-grid; gifted experiences get a
+       desaturated photo + "Already gifted" pricetag. The
+       honeymoon-fund card is unique: it carries a progress bar
+       and a contribution input row that lets the guest type in
+       any amount (with quick-pick chips for common values).
+       ============================================================ */
+    .registry-banner {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      padding: 18px 22px;
+      margin: 0 22px 18px;
+      background:
+        radial-gradient(440px 220px at 100% 0%, rgba(200,48,122,0.20), transparent 60%),
+        linear-gradient(135deg, rgba(200,48,122,0.10) 0%, rgba(231,111,81,0.10) 100%);
+      border: 1px solid rgba(200,48,122,0.28);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .registry-banner::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, var(--brand) 0%, var(--coral) 100%);
+    }
+    .registry-banner__chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      align-self: flex-start;
+      padding: 4px 9px;
+      background: var(--brand);
+      color: #fff;
+      border-radius: 9999px;
+      font-size: 10.5px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .registry-banner__title {
+      font-family: var(--serif);
+      font-size: 22px; line-height: 1.15;
+      color: var(--ink);
+      margin: 0;
+      letter-spacing: -0.2px;
+      font-weight: 500;
+    }
+    .registry-banner__title em {
+      font-style: italic;
+      color: var(--brand-deep);
+    }
+    .registry-banner__sub {
+      margin: 6px 0 0;
+      font-size: 12.5px; line-height: 1.5;
+      color: var(--ink-soft);
+      max-width: 64ch;
+    }
+    .registry-banner__progress {
+      position: relative;
+      height: 8px;
+      background: rgba(28,28,28,0.08);
+      border-radius: 9999px;
+      overflow: hidden;
+      margin-top: 4px;
+      max-width: 480px;
+    }
+    .registry-banner__progress > span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--brand) 0%, var(--coral) 100%);
+      border-radius: 9999px;
+      transition: width 320ms ease;
+    }
+    .registry-banner__meta {
+      margin: 2px 0 0;
+      font-size: 11.5px;
+      color: var(--ink-soft);
+      letter-spacing: 0.01em;
+    }
+    .registry-banner__meta strong { color: var(--ink); font-weight: 600; }
+
+    /* Card variants — gifted / your-gift state */
+    .card--gifted .card__photo {
+      filter: saturate(0.65) brightness(0.88);
+    }
+    .card--gifted .card__title,
+    .card--gifted .card__desc {
+      color: var(--ink-muted);
+    }
+    .card--yours {
+      border-color: rgba(200,48,122,0.45);
+      box-shadow: 0 0 0 1px rgba(200,48,122,0.12), 0 14px 32px -22px rgba(200,48,122,0.45);
+    }
+
+    /* Honeymoon-fund progress bar inside the fund card */
+    .fund-bar {
+      position: relative;
+      width: 100%;
+      height: 7px;
+      background: rgba(28,28,28,0.08);
+      border-radius: 9999px;
+      overflow: hidden;
+      margin: 4px 0 2px;
+    }
+    .fund-bar > span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--brand) 0%, var(--coral) 100%);
+      transition: width 320ms ease;
+    }
+    .fund-meta {
+      display: flex; justify-content: space-between;
+      font-size: 11.5px; color: var(--ink-soft);
+      margin: 10px 0 2px;
+      letter-spacing: 0.01em;
+    }
+    .fund-meta strong { color: var(--brand-deep); font-weight: 600; }
+
+    .contribute-row {
+      display: flex; gap: 10px; align-items: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .contribute-row .amount-label {
+      font-size: 11px; color: var(--ink-soft);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      font-weight: 600;
+    }
+    .amount-input {
+      position: relative;
+      display: inline-flex;
+    }
+    .amount-input input {
+      width: 108px;
+      padding: 9px 12px 9px 24px;
+      border: 1px solid rgba(28,28,28,0.14);
+      border-radius: 9px;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      background: #fff;
+      font-variant-numeric: tabular-nums;
+    }
+    .amount-input input:focus {
+      outline: 0;
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(200,48,122,0.16);
+    }
+    .amount-input::before {
+      content: "$";
+      position: absolute; left: 10px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 13px; color: var(--ink-soft);
+      font-weight: 600;
+      pointer-events: none;
+    }
+    .contribute-row .quick {
+      display: flex; gap: 5px; flex-wrap: wrap;
+    }
+    .contribute-row .quick button {
+      appearance: none; -webkit-appearance: none;
+      background: transparent;
+      border: 1px solid rgba(28,28,28,0.14);
+      padding: 6px 11px;
+      font-size: 11.5px;
+      font-weight: 600;
+      border-radius: 9999px;
+      color: var(--ink-soft);
+      cursor: pointer;
+      transition: border-color 120ms ease, color 120ms ease, background 120ms ease;
+      font-variant-numeric: tabular-nums;
+    }
+    .contribute-row .quick button:hover {
+      border-color: var(--brand);
+      color: var(--brand-deep);
+      background: var(--brand-bg);
+    }
+    @media (max-width: 640px) {
+      .registry-banner { margin: 0 16px 14px; padding: 16px 18px; }
+      .amount-input input { width: 100%; min-width: 0; }
+      .contribute-row { width: 100%; }
+      .contribute-row > label { flex: 1 1 100%; }
+    }
+
+    /* ============================================================
        Itinerary drawer (sticky bottom)
        ============================================================ */
     .cart {
@@ -2054,6 +2242,102 @@ const ALLIE_PICKS = [
 ];
 
 /* ============================================================
+   REGISTRY — "wedding extras" that guests can buy as gifts
+   for Aria & Marcus. Two shapes:
+     - type: "full"   — single-claim experience; one guest pays
+                        the priceUSD in full and the item is
+                        marked as gifted. `claimedBy` seeds a
+                        few items as already-claimed by other
+                        guests so the registry feels lived-in.
+     - type: "fund"   — pooled honeymoon fund; any number of
+                        guests contribute any amount toward
+                        a shared goalUSD. `raisedUSD` is the
+                        baseline raised by other guests before
+                        Sofía opens the portal.
+   The current guest's contributions are tracked in
+   state.registryGifts as [{ id, amount, type }].
+   ============================================================ */
+const REGISTRY = [
+  {
+    id: "gift-suite-upgrade",
+    name: "Honeymoon Suite Upgrade",
+    type: "full",
+    priceUSD: 400,
+    eyebrow: "On-property · 3 nights",
+    desc: "Bump Aria & Marcus up to the Presidential Honeymoon Suite for the first three nights of their stay — corner balcony, plunge pool, sunrise straight over the Caribbean.",
+    bullets: ["3 nights · Mon–Wed", "Plunge pool + corner terrace", "VIP butler service"],
+    photo: "https://images.unsplash.com/photo-1566073771259-2a04524b2bcb?auto=format&fit=crop&w=900&q=72",
+    claimedBy: null,
+  },
+  {
+    id: "gift-private-dinner",
+    name: "Private Oceanfront Dinner",
+    type: "full",
+    priceUSD: 620,
+    eyebrow: "On-property · Romantic",
+    desc: "A candlelit beachfront dinner for two — personal chef, six-course tasting, mariachi serenade, and a bottle of Aria's favorite Veuve under the stars.",
+    bullets: ["For 2 · 3 hrs", "Personal chef + server", "Champagne + mariachi"],
+    photo: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=72",
+    claimedBy: "Priya & Dev Mehta",
+  },
+  {
+    id: "gift-spa-day",
+    name: "Couples Spa Day",
+    type: "full",
+    priceUSD: 480,
+    eyebrow: "On-property · The Spa at AVA",
+    desc: "A full-day couples ritual at The Spa at AVA — side-by-side massages, the hydrotherapy circuit, and a private terrace lunch.",
+    bullets: ["For 2 · 5 hrs", "Hydro + terrace lunch", "Same therapists as the wedding party"],
+    photo: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=72",
+    claimedBy: null,
+  },
+  {
+    id: "gift-catamaran",
+    name: "Sunset Catamaran Charter",
+    type: "full",
+    priceUSD: 850,
+    eyebrow: "Excursion · For the couple",
+    desc: "A private sunset charter for two — catamaran, captain, champagne, and three hours along the Cancún coastline. Allie packs a hand-written note from the wedding party.",
+    bullets: ["For 2 · 3 hrs", "Private vessel + captain", "Champagne + canapés"],
+    photo: "https://images.unsplash.com/photo-1543721090-3170be3ad8a9?auto=format&fit=crop&w=900&q=72",
+    claimedBy: null,
+  },
+  {
+    id: "gift-breakfast",
+    name: "In-Suite Breakfast · 3 mornings",
+    type: "full",
+    priceUSD: 145,
+    eyebrow: "On-property · Mornings",
+    desc: "Breakfast in bed every morning of the honeymoon week — fresh fruit, eggs benedict, pastries, fresh-pressed juice, and a single rose on the tray.",
+    bullets: ["3 mornings", "Delivered to the suite", "Roses + fresh-pressed juice"],
+    photo: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=900&q=72",
+    claimedBy: "Margot Reyes",
+  },
+  {
+    id: "gift-photoshoot",
+    name: "Golden-Hour Photo Session",
+    type: "full",
+    priceUSD: 720,
+    eyebrow: "On-property · 2 hrs",
+    desc: "A private two-hour photoshoot at golden hour with AVA's resort photographer. Edited digital album in their inbox within seven days — separate from the wedding album.",
+    bullets: ["2 hrs · golden hour", "Digital album in 7 days", "Private locations on property"],
+    photo: "https://images.unsplash.com/photo-1522335789203-aaa11d4f4d7d?auto=format&fit=crop&w=900&q=72",
+    claimedBy: null,
+  },
+  {
+    id: "gift-fund",
+    name: "Honeymoon Fund",
+    type: "fund",
+    goalUSD: 2400,
+    raisedUSD: 1380,
+    eyebrow: "Group gift · Pool together",
+    desc: "Toward all the extras Aria & Marcus will dream up during the honeymoon week — sunset cocktails on the terrace, the last-minute Tulum day-trip, the second bottle of mezcal. Give any amount.",
+    bullets: ["Contribute any amount", "100% goes to the couple", "Combined with everyone else's gifts"],
+    photo: "https://images.unsplash.com/photo-1467810563316-b5476525c0f9?auto=format&fit=crop&w=900&q=72",
+  },
+];
+
+/* ============================================================
    STATE — held in localStorage so reloads keep itinerary
    ============================================================ */
 
@@ -2074,6 +2358,7 @@ const defaultState = {
   exc: [],
   transport: null,            // { booked: true, priceUSD, kind } | null
   recovery: null,             // { booked: true, massageUSD, extendedNight: bool } | null
+  registryGifts: [],          // [{ id, amount, type: "full"|"fund" }]
 };
 
 let state = loadState();
@@ -2197,6 +2482,26 @@ function cartLines() {
       remove: () => { state.recovery = null; saveState(); renderCart(); rerenderActive(); },
     });
   }
+  (state.registryGifts || []).forEach(g => {
+    const item = REGISTRY.find(x => x.id === g.id);
+    if (!item) return;
+    lines.push({
+      kind: "Wedding gift",
+      title: item.type === "fund"
+        ? `Honeymoon fund · gift for Aria & Marcus`
+        : `${item.name} · gift for Aria & Marcus`,
+      sub: item.type === "fund"
+        ? "Pooled honeymoon contribution · charged at check-in"
+        : `${item.eyebrow} · charged at check-in`,
+      price: g.amount || 0,
+      remove: () => {
+        state.registryGifts = state.registryGifts.filter(x => x.id !== g.id);
+        saveState();
+        renderCart();
+        rerenderActive();
+      },
+    });
+  });
   return lines;
 }
 
@@ -2296,6 +2601,8 @@ function renderNav(active) {
       icon: `<path d="M3 19l4-9 5 5 4-7 5 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
     { id: "schedule",   label: "Schedule",
       icon: `<rect x="3.5" y="5" width="17" height="15" rx="2" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M3.5 9h17 M8 3v4 M16 3v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>` },
+    { id: "registry",   label: "Registry",
+      icon: `<rect x="3.5" y="9" width="17" height="11" rx="1.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M3.5 9h17 M12 9v11 M7.5 9c-1.5 0-2.5-1-2.5-2.2 0-1.6 1.8-2.4 3.3-1.5C9.5 6.2 12 9 12 9s2.5-2.8 3.7-3.7c1.5-.9 3.3-.1 3.3 1.5 0 1.2-1 2.2-2.5 2.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
   ];
   return `
     <nav class="nav" role="tablist" aria-label="Guest portal sections">
@@ -2346,6 +2653,7 @@ function route() {
     case "spa":        return renderSpa();
     case "excursions": return renderExc();
     case "schedule":   return renderSchedule();
+    case "registry":   return renderRegistry();
     case "home":
     default:           return renderHome();
   }
@@ -2683,6 +2991,12 @@ function renderHome() {
       desc: excCount > 0 ? `${excCount} excursion${excCount > 1 ? "s" : ""} on your itinerary.` : `Isla Mujeres catamaran, Tulum ruins, ATV through the jungle — all bookable on the block.`,
       badge: `${EXC.length} options`, badgeStyle: "",
       icon: `<path d="M3 19l4-9 5 5 4-7 5 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
+    { id: "registry", title: "Wedding extras — gift the couple",
+      desc: (state.registryGifts && state.registryGifts.length > 0)
+        ? `${state.registryGifts.length} gift${state.registryGifts.length > 1 ? "s" : ""} added · ${usd(state.registryGifts.reduce((s,g)=>s+(g.amount||0),0))} for Aria & Marcus.`
+        : `Skip the toaster. Gift a private oceanfront dinner, a couples spa day, a sunset sail — or contribute any amount to their honeymoon fund.`,
+      badge: "Wedding gift", badgeStyle: "copper",
+      icon: `<rect x="3.5" y="9" width="17" height="11" rx="1.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M3.5 9h17 M12 9v11 M7.5 9c-1.5 0-2.5-1-2.5-2.2 0-1.6 1.8-2.4 3.3-1.5C9.5 6.2 12 9 12 9s2.5-2.8 3.7-3.7c1.5-.9 3.3-.1 3.3 1.5 0 1.2-1 2.2-2.5 2.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
   ];
 
   const actionsHtml = actions.map(a => `
@@ -3054,6 +3368,258 @@ function renderExc() {
     items: EXC,
     stateKey: "exc",
   });
+}
+
+/* ============================================================
+   REGISTRY — guest-side gift registry
+   — "Wedding extras" the couple has put on a registry. Two
+   shapes (see REGISTRY data block at top of script):
+     - "full" cards: one guest pays the listed price in full
+       and the experience is marked "Gifted by you" / "Already
+       gifted" so it can't be double-claimed.
+     - "fund" card: pooled honeymoon contribution. The guest
+       can type any amount; quick-pick chips populate the input.
+   Each gift the guest makes is stored in state.registryGifts
+   and shows up as a "Wedding gift" line in the cart drawer.
+   ============================================================ */
+
+function renderRegistry() {
+  /* Fund stats — the displayed `raised` includes the seed
+     `raisedUSD` from data plus the current guest's contribution
+     (if any). This gives the guest immediate visual feedback
+     when they add to the fund. */
+  const fundItem = REGISTRY.find(r => r.type === "fund");
+  const yourContribution = state.registryGifts.find(g => g.id === fundItem?.id)?.amount || 0;
+  const fundRaised = (fundItem?.raisedUSD || 0) + yourContribution;
+  const fundGoal   = fundItem?.goalUSD || 0;
+  const fundPct    = fundGoal ? Math.min(100, Math.round(fundRaised / fundGoal * 100)) : 0;
+
+  /* Experience-claim stats — "X of Y experiences claimed".
+     Counts experiences either pre-claimed (claimedBy seeded in
+     data) or gifted by the current guest in this session. */
+  const fullItems  = REGISTRY.filter(r => r.type === "full");
+  const claimedByOthers = fullItems.filter(r => r.claimedBy).length;
+  const claimedByYou    = state.registryGifts.filter(g => {
+    const it = REGISTRY.find(r => r.id === g.id);
+    return it && it.type === "full";
+  }).length;
+  const claimedTotal = claimedByOthers + claimedByYou;
+  const totalFull    = fullItems.length;
+
+  const cardsHtml = REGISTRY.map(item => {
+    if (item.type === "fund") {
+      return renderRegistryFundCard(item, yourContribution, fundRaised, fundGoal, fundPct);
+    }
+    return renderRegistryFullCard(item);
+  }).join("");
+
+  setApp(`
+    ${renderBar()}
+    ${renderNav("registry")}
+    <main class="section">
+      <div class="section__head">
+        <button type="button" class="section__back" data-section="home">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Back
+        </button>
+      </div>
+      <p class="section__eyebrow">Registry · Wedding extras</p>
+      <h1 class="section__title">Give the couple something they'll <em>actually</em> remember.</h1>
+      <p class="section__sub">Aria &amp; Marcus skipped the toaster registry — instead they've put together a handful of on-property experiences and one shared honeymoon fund. Pick an experience to gift in full, or contribute any amount to the fund. Gifts ride along with the rest of your weekend itinerary below, and nothing is charged until you arrive at AVA.</p>
+    </main>
+
+    <section class="registry-banner" aria-label="Registry progress">
+      <div class="registry-banner__body">
+        <span class="registry-banner__chip">Wedding extras · gift the couple</span>
+        <h3 class="registry-banner__title">${claimedTotal} of ${totalFull} experiences claimed · <em>${usd(fundRaised)}</em> in the honeymoon fund</h3>
+        <p class="registry-banner__sub">Allie handles all the logistics behind the scenes — Aria &amp; Marcus only see the gifters' names on the card waiting in their suite. Each experience can be claimed by one guest; the honeymoon fund pools contributions from everyone.</p>
+        <div class="registry-banner__progress" aria-hidden="true">
+          <span style="width:${fundPct}%"></span>
+        </div>
+        <p class="registry-banner__meta"><strong>${usd(fundRaised)}</strong> raised of ${usd(fundGoal)} goal · ${fundPct}% to target${yourContribution > 0 ? ` · including <strong>${usd(yourContribution)}</strong> from you` : ""}</p>
+      </div>
+    </section>
+
+    <main class="section" style="padding-top:6px;">
+      <div class="card-grid card-grid--3">${cardsHtml}</div>
+    </main>
+  `);
+  attachChrome();
+  attachRegistry();
+  renderCart();
+}
+
+function renderRegistryFullCard(item) {
+  const youGifted = state.registryGifts.some(g => g.id === item.id);
+  const otherClaim = item.claimedBy && !youGifted ? item.claimedBy : null;
+  const isClaimed = youGifted || !!otherClaim;
+  const cardClass = `card${isClaimed ? " card--gifted" : ""}${youGifted ? " card--yours" : ""}`;
+  return `
+    <article class="${cardClass}" data-registry-card="${item.id}">
+      <div class="card__photo" style="background-image:url('${item.photo}')">
+        <span class="card__pricetag card__pricetag--solid" style="background:var(--brand);color:#fff;letter-spacing:0.12em;">${usd(item.priceUSD)} · Gift</span>
+        ${otherClaim ? `<span class="card__pricetag card__pricetag--solid" style="left:12px;right:auto;top:12px;background:rgba(43,43,39,0.92);color:#fff;letter-spacing:0.12em;">Gifted by ${escapeHtml(otherClaim)}</span>` : ""}
+        ${youGifted ? `<span class="card__pricetag card__pricetag--solid" style="left:12px;right:auto;top:12px;background:var(--brand-darker);color:var(--brand-glow);letter-spacing:0.12em;">★ You gifted this</span>` : ""}
+      </div>
+      <div class="card__body">
+        <span class="card__eyebrow">${escapeHtml(item.eyebrow)}</span>
+        <h3 class="card__title">${escapeHtml(item.name)}</h3>
+        <p class="card__desc">${escapeHtml(item.desc)}</p>
+        <ul class="card__bullets">
+          ${item.bullets.map(b => `<li>${escapeHtml(b)}</li>`).join("")}
+        </ul>
+      </div>
+      <div class="card__foot">
+        <div class="card__price">
+          <strong>${usd(item.priceUSD)}</strong>
+          <span>${otherClaim ? "Already claimed" : youGifted ? "Your gift · charged at check-in" : "Gift in full · for the couple"}</span>
+        </div>
+        ${otherClaim
+          ? `<button class="btn btn--ghost" disabled style="opacity:0.55;cursor:not-allowed;">Already gifted</button>`
+          : youGifted
+            ? `<button class="btn btn--added" data-gift-toggle="${item.id}">Gifted</button>`
+            : `<button class="btn" data-gift-toggle="${item.id}">Gift this experience</button>`}
+      </div>
+    </article>
+  `;
+}
+
+function renderRegistryFundCard(item, yourContribution, raised, goal, pct) {
+  const quick = [50, 100, 250, 500];
+  const giftedAny = yourContribution > 0;
+  const cardClass = `card${giftedAny ? " card--yours" : ""}`;
+  const inputDefault = yourContribution || 100;
+  return `
+    <article class="${cardClass}" data-registry-card="${item.id}">
+      <div class="card__photo" style="background-image:url('${item.photo}')">
+        <span class="card__pricetag card__pricetag--solid" style="background:var(--coral);color:#fff;letter-spacing:0.12em;">Honeymoon fund</span>
+        ${giftedAny ? `<span class="card__pricetag card__pricetag--solid" style="left:12px;right:auto;top:12px;background:var(--brand-darker);color:var(--brand-glow);letter-spacing:0.12em;">★ You added ${usd(yourContribution)}</span>` : ""}
+      </div>
+      <div class="card__body">
+        <span class="card__eyebrow">${escapeHtml(item.eyebrow)}</span>
+        <h3 class="card__title">${escapeHtml(item.name)}</h3>
+        <p class="card__desc">${escapeHtml(item.desc)}</p>
+
+        <div class="fund-meta">
+          <span><strong>${usd(raised)}</strong> raised</span>
+          <span>${usd(goal)} goal · ${pct}%</span>
+        </div>
+        <div class="fund-bar" aria-hidden="true"><span style="width:${pct}%"></span></div>
+
+        <div class="contribute-row">
+          <label class="amount-label" for="reg-fund-input">Contribute</label>
+          <span class="amount-input">
+            <input type="number" min="0" step="10" id="reg-fund-input"
+                   value="${inputDefault}"
+                   aria-label="Contribution amount in dollars" />
+          </span>
+          <div class="quick" role="group" aria-label="Quick amounts">
+            ${quick.map(a => `<button type="button" data-fund-quick="${a}">$${a}</button>`).join("")}
+          </div>
+        </div>
+      </div>
+      <div class="card__foot">
+        <div class="card__price">
+          ${giftedAny
+            ? `<strong>${usd(yourContribution)}</strong><span>Your contribution · combined with others</span>`
+            : `<strong>Any amount</strong><span>100% goes to Aria &amp; Marcus</span>`}
+        </div>
+        ${giftedAny
+          ? `<button class="btn btn--added" data-fund-update>Contribution added</button>`
+          : `<button class="btn" data-fund-add>Add to itinerary</button>`}
+      </div>
+    </article>
+  `;
+}
+
+function attachRegistry() {
+  /* Full experience: gift in full / remove gift */
+  document.querySelectorAll("[data-gift-toggle]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.getAttribute("data-gift-toggle");
+      const item = REGISTRY.find(r => r.id === id);
+      if (!item) return;
+      const has = state.registryGifts.some(g => g.id === id);
+      if (has) {
+        state.registryGifts = state.registryGifts.filter(g => g.id !== id);
+        showToast(`Gift removed · ${item.name}`);
+      } else {
+        state.registryGifts = [
+          ...state.registryGifts,
+          { id, amount: item.priceUSD, type: "full" },
+        ];
+        state.cartOpen = true;
+        showToast(`Gifted ${item.name} for Aria & Marcus`);
+      }
+      saveState();
+      route();
+    });
+  });
+
+  /* Fund card — quick-pick chips just populate the input;
+     they don't commit until the guest hits Add / Update. */
+  const fundItem = REGISTRY.find(r => r.type === "fund");
+  if (!fundItem) return;
+  const input = document.getElementById("reg-fund-input");
+
+  document.querySelectorAll("[data-fund-quick]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (input) {
+        input.value = btn.getAttribute("data-fund-quick");
+        input.focus();
+      }
+    });
+  });
+
+  function commitFund(amount, isUpdate) {
+    if (!Number.isFinite(amount) || amount <= 0) {
+      showToast("Pick an amount to contribute");
+      return;
+    }
+    state.registryGifts = [
+      ...state.registryGifts.filter(g => g.id !== fundItem.id),
+      { id: fundItem.id, amount, type: "fund" },
+    ];
+    state.cartOpen = true;
+    saveState();
+    showToast(isUpdate
+      ? `Honeymoon fund updated · ${usd(amount)}`
+      : `${usd(amount)} added to Aria & Marcus's honeymoon fund`);
+    route();
+  }
+
+  document.querySelectorAll("[data-fund-add]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const amount = Math.max(0, Math.round(Number(input?.value) || 0));
+      commitFund(amount, false);
+    });
+  });
+
+  /* When the contribution is already added, the same button
+     becomes an "update" affordance — committing whatever's in
+     the input now. We also commit on blur of the input so the
+     amount stays in sync if the guest just edits the number. */
+  document.querySelectorAll("[data-fund-update]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const amount = Math.max(0, Math.round(Number(input?.value) || 0));
+      if (amount === 0) {
+        state.registryGifts = state.registryGifts.filter(g => g.id !== fundItem.id);
+        saveState();
+        showToast("Honeymoon contribution removed");
+        route();
+        return;
+      }
+      commitFund(amount, true);
+    });
+  });
+
+  if (input) {
+    input.addEventListener("change", () => {
+      if (!state.registryGifts.some(g => g.id === fundItem.id)) return;
+      const amount = Math.max(0, Math.round(Number(input.value) || 0));
+      if (amount > 0) commitFund(amount, true);
+    });
+  }
 }
 
 /* ============================================================
