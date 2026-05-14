@@ -1247,6 +1247,111 @@
     }
 
     /* ============================================================
+       Recovery-bundle banner (Schedule page, below timeline)
+       — Coral / sunset variant of the extend banner. Bundles +1
+       hotel night and a 20%-off massage as a single one-click
+       "recover post-wedding" offer.
+       ============================================================ */
+    .recovery-banner {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 18px;
+      padding: 18px 22px;
+      margin: 18px 22px 4px;
+      background:
+        radial-gradient(420px 200px at 100% 0%, rgba(231,111,81,0.22), transparent 60%),
+        linear-gradient(135deg, rgba(231,111,81,0.14) 0%, rgba(200,48,122,0.10) 100%);
+      border: 1px solid rgba(231,111,81,0.32);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .recovery-banner::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, var(--coral) 0%, var(--brand) 100%);
+    }
+    .recovery-banner__chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      align-self: flex-start;
+      padding: 4px 9px;
+      background: var(--coral);
+      color: #fff;
+      border-radius: 9999px;
+      font-size: 10.5px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .recovery-banner__body { min-width: 0; }
+    .recovery-banner__title {
+      font-family: var(--serif);
+      font-size: 22px; line-height: 1.15;
+      color: var(--ink);
+      margin: 0;
+      letter-spacing: -0.2px;
+    }
+    .recovery-banner__title em {
+      font-style: italic;
+      color: var(--coral);
+    }
+    .recovery-banner__sub {
+      margin: 6px 0 0;
+      font-size: 12.5px; line-height: 1.5;
+      color: var(--ink-soft);
+      max-width: 60ch;
+    }
+    .recovery-banner__bullets {
+      list-style: none; padding: 0;
+      margin: 10px 0 0;
+      display: flex; flex-wrap: wrap; gap: 14px;
+      font-size: 11.5px; color: var(--ink-soft);
+    }
+    .recovery-banner__bullets li {
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .recovery-banner__bullets li::before {
+      content: "";
+      width: 5px; height: 5px;
+      border-radius: 9999px;
+      background: var(--coral);
+    }
+    .recovery-banner__cta {
+      align-self: center;
+      white-space: nowrap;
+      padding: 11px 18px;
+      font-size: 12.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+      background: var(--coral);
+      color: #fff;
+      border: 0;
+      border-radius: 9999px;
+      box-shadow: 0 6px 16px -10px rgba(231,111,81,0.55);
+      transition: background 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+    }
+    .recovery-banner__cta:hover {
+      background: #c8532d;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px -12px rgba(231,111,81,0.65);
+    }
+    .recovery-banner--booked { border-color: rgba(231,111,81,0.65); }
+    .recovery-banner--booked .recovery-banner__cta { background: #9c3a1c; }
+    .recovery-banner--booked .recovery-banner__cta::before {
+      content: "✓";
+      margin-right: 4px;
+    }
+    @media (max-width: 640px) {
+      .recovery-banner {
+        grid-template-columns: 1fr;
+      }
+      .recovery-banner__cta { justify-self: stretch; text-align: center; }
+    }
+
+    /* ============================================================
        Itinerary drawer (sticky bottom)
        ============================================================ */
     .cart {
@@ -1720,6 +1825,7 @@ const defaultState = {
   spa: [],                    // [ id, ... ]
   exc: [],
   transport: null,            // { booked: true, priceUSD, kind } | null
+  recovery: null,             // { booked: true, massageUSD, extendedNight: bool } | null
 };
 
 let state = loadState();
@@ -1830,6 +1936,15 @@ function cartLines() {
       sub: "Round-trip CUN + on-call weekend rides",
       price: state.transport.priceUSD,
       remove: () => { state.transport = null; saveState(); renderCart(); rerenderActive(); },
+    });
+  }
+  if (state.recovery?.booked) {
+    lines.push({
+      kind: "Recovery",
+      title: "Post-wedding recovery massage",
+      sub: "Hot Stones & Hydrotherapy · The Spa at AVA · −20%",
+      price: state.recovery.massageUSD,
+      remove: () => { state.recovery = null; saveState(); renderCart(); rerenderActive(); },
     });
   }
   return lines;
@@ -2639,6 +2754,8 @@ function renderSchedule() {
 
     ${renderTimeline({ showTransport: true })}
 
+    ${renderRecoveryBundle()}
+
     <main class="section" style="padding-top:0;">
       <section class="rsvp" style="margin-top:8px;">
         <p class="section__eyebrow">Logistics</p>
@@ -2656,6 +2773,7 @@ function renderSchedule() {
   attachChrome();
   attachTimeline();
   attachExtendStay();
+  attachRecoveryBundle();
   renderCart();
 }
 
@@ -2720,6 +2838,81 @@ function attachExtendStay() {
       saveState();
       renderSchedule();
       showToast(`Extra night added — checking out ${next}`);
+    });
+  });
+}
+
+/* ============================================================
+   Recovery-bundle helpers
+   — Post-wedding bundle: +1 hotel night and a 20%-off massage.
+   The massage is the discounted Hot Stones & Hydrotherapy ritual
+   from The Spa at AVA. Booking this also extends state.room.checkOut
+   by one day (if there's headroom on the block).
+   ============================================================ */
+const RECOVERY_BASE_MASSAGE_USD = 240;   // Hot Stones & Hydrotherapy rack rate
+const RECOVERY_MASSAGE_USD      = Math.round(RECOVERY_BASE_MASSAGE_USD * 0.8); // 192
+
+function renderRecoveryBundle() {
+  const booked = !!state.recovery?.booked;
+  const title  = booked
+    ? "Recovery bundle is in"
+    : "Need some time to <em>recover</em> post-wedding?";
+  const sub    = booked
+    ? "Extra night added at AVA, plus a 20% off Hot Stones & Hydrotherapy massage at The Spa. Allie will text Sunday morning to confirm the massage time."
+    : "Add an extra night at AVA and a 20% off massage. The wedding's over, the dance floor took its toll, and you've got nowhere to be — slow Monday morning, oceanfront balcony, then ease in with hot stones at The Spa.";
+  const cta    = booked ? "Booked — manage" : "Add my recovery bundle →";
+  return `
+    <section class="recovery-banner ${booked ? "recovery-banner--booked" : ""}" aria-label="Post-wedding recovery bundle">
+      <div class="recovery-banner__body">
+        <span class="recovery-banner__chip">−20% massage · +1 night</span>
+        <h3 class="recovery-banner__title">${title}</h3>
+        <p class="recovery-banner__sub">${sub}</p>
+        <ul class="recovery-banner__bullets">
+          <li>Extra night at the block rate</li>
+          <li>Hot Stones &amp; Hydrotherapy · 60 min</li>
+          <li>Late checkout · 2 PM</li>
+        </ul>
+      </div>
+      <button type="button" class="recovery-banner__cta" data-book-recovery>
+        ${cta}
+      </button>
+    </section>
+  `;
+}
+
+function attachRecoveryBundle() {
+  document.querySelectorAll("[data-book-recovery]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (state.recovery?.booked) {
+        state.recovery = null;
+        saveState();
+        renderSchedule();
+        showToast("Recovery bundle removed");
+        return;
+      }
+      let extendedNight = false;
+      if (state.room) {
+        const next = addOneNight(state.room.checkOut);
+        if (next <= EXTEND_MAX_CHECKOUT) {
+          state.room = { ...state.room, checkOut: next };
+          extendedNight = true;
+        }
+      }
+      state.recovery = {
+        booked: true,
+        massageUSD: RECOVERY_MASSAGE_USD,
+        extendedNight,
+      };
+      state.cartOpen = true;
+      saveState();
+      renderSchedule();
+      if (!state.room) {
+        showToast("Massage added at −20% · pick a room to lock the extra night");
+      } else if (extendedNight) {
+        showToast(`Recovery bundle added · extra night + massage at ${usd(RECOVERY_MASSAGE_USD)}`);
+      } else {
+        showToast("Massage added at −20% · stay already at the max extension");
+      }
     });
   });
 }
