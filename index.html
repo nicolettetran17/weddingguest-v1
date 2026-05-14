@@ -1546,6 +1546,191 @@
       border-color: var(--brand-deep);
     }
 
+    /* ============================================================
+       Email preview (pre-login)
+       — Simulated inbox view: the guest opens an email from Allie
+       inviting them to the portal. Clicking the CTA flips
+       state.emailClicked and routes onward to the sign-in screen.
+       ============================================================ */
+    .email-page {
+      min-height: 100vh;
+      background: var(--canvas);
+      padding: 32px 22px 60px;
+      display: flex; flex-direction: column;
+      align-items: center;
+    }
+    .email-page__chrome {
+      width: 100%;
+      max-width: 640px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 4px 18px;
+      color: var(--ink-muted);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .email-page__brand {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-weight: 600;
+      color: var(--ink-soft);
+    }
+    .email-page__brand-mark {
+      display: grid; place-items: center;
+      width: 22px; height: 22px;
+      border-radius: 5px;
+      background: linear-gradient(135deg, var(--brand-darker) 0%, var(--brand-deep) 100%);
+      color: #fff;
+    }
+    .email-page__time { font-variant-numeric: tabular-nums; }
+
+    .mail {
+      width: 100%;
+      max-width: 640px;
+      background: var(--paper);
+      border-radius: 14px;
+      border: 1px solid var(--rule);
+      box-shadow: 0 24px 60px -32px rgba(26,26,26,0.30),
+                  0 0 0 1px var(--rule-soft);
+      overflow: hidden;
+      position: relative;
+    }
+    .mail::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, var(--brand) 0%, var(--coral) 100%);
+    }
+    .mail__head {
+      padding: 22px 28px 18px;
+      border-bottom: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto;
+      gap: 4px 14px;
+    }
+    .mail__avatar {
+      grid-row: 1 / 3;
+      width: 44px; height: 44px;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-deep) 100%);
+      color: #fff;
+      display: grid; place-items: center;
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 500;
+      box-shadow: 0 0 0 3px rgba(200,48,122,0.15);
+    }
+    .mail__sender { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+    .mail__from {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .mail__from span {
+      font-weight: 400;
+      color: var(--ink-faint);
+      margin-left: 4px;
+    }
+    .mail__to {
+      margin: 0;
+      font-size: 11.5px;
+      color: var(--ink-muted);
+    }
+    .mail__to em {
+      font-style: normal;
+      color: var(--ink-faint);
+      margin-left: 4px;
+    }
+    .mail__subject {
+      grid-column: 1 / 3;
+      margin: 8px 0 0;
+      font-family: var(--serif);
+      font-size: 22px;
+      line-height: 1.2;
+      color: var(--ink);
+      letter-spacing: -0.2px;
+      font-weight: 500;
+    }
+    .mail__body {
+      padding: 22px 28px 8px;
+      font-size: 14.5px;
+      line-height: 1.65;
+      color: var(--ink-soft);
+    }
+    .mail__body p { margin: 0 0 14px; }
+    .mail__greeting {
+      font-family: var(--serif);
+      font-size: 18px;
+      color: var(--ink);
+      margin-bottom: 14px !important;
+    }
+    .mail__body strong { color: var(--ink); }
+    .mail__cta-row {
+      display: flex;
+      margin: 22px 0 18px !important;
+    }
+    .mail__cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 22px;
+      background: var(--brand);
+      color: #fff;
+      border: 0;
+      border-radius: 9999px;
+      font-family: var(--sans);
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 12px 24px -14px rgba(200,48,122,0.55);
+      transition: background 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+    }
+    .mail__cta:hover {
+      background: var(--brand-deep);
+      transform: translateY(-1px);
+      box-shadow: 0 16px 28px -14px rgba(200,48,122,0.65);
+    }
+    .mail__sig {
+      margin: 18px 0 0 !important;
+      font-size: 13.5px;
+      color: var(--ink-soft);
+    }
+    .mail__sig em {
+      display: block;
+      font-style: italic;
+      font-size: 12px;
+      color: var(--ink-faint);
+      margin-top: 2px;
+    }
+    .mail__foot {
+      padding: 14px 28px;
+      background: var(--paper-warm);
+      border-top: 1px solid var(--rule-soft);
+      font-size: 10.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      text-align: center;
+    }
+    .email-page__hint {
+      margin: 22px 0 0;
+      max-width: 640px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      text-align: center;
+    }
+
+    @media (max-width: 540px) {
+      .email-page { padding: 22px 14px 48px; }
+      .mail__head, .mail__body { padding-left: 20px; padding-right: 20px; }
+      .mail__foot { padding-left: 18px; padding-right: 18px; }
+      .mail__subject { font-size: 19px; }
+      .mail__cta { width: 100%; justify-content: center; }
+    }
+
     /* Login screen */
     .login__hero {
       padding: 36px 28px 8px;
@@ -1814,6 +1999,7 @@ const STORE_KEY = "aiw_guest_portal_v1";
 
 const defaultState = {
   guest: { name: "", email: "" },
+  emailClicked: false,         // simulated invite-email screen on first visit
   loggedIn: false,
   section: "home",
   rsvp: null,                 // "yes" | "maybe" | "no"
@@ -2083,6 +2269,13 @@ function attachChrome() {
 
 function route() {
   stopCountdown();
+  /* Migration: if the user was already logged in from a prior session,
+     skip the new email-preview gate. */
+  if (state.loggedIn && !state.emailClicked) {
+    state.emailClicked = true;
+    saveState();
+  }
+  if (!state.emailClicked) return renderEmail();
   if (!state.loggedIn) return renderLogin();
   switch (state.section) {
     case "stay":       return renderStay();
@@ -2095,6 +2288,70 @@ function route() {
 }
 
 function rerenderActive() { route(); }
+
+/* ============================================================
+   EMAIL PREVIEW (pre-login)
+   — First-touch screen that simulates the invite email landing
+   in Sofía's inbox. CTA flips state.emailClicked so subsequent
+   routes go straight to the sign-in screen.
+   ============================================================ */
+
+function renderEmail() {
+  const greetName = (state.guest.name || DEFAULT_GUEST.name).split(/\s+/)[0] || "Sofía";
+  setApp(`
+    <div class="email-page">
+      <header class="email-page__chrome">
+        <span class="email-page__brand">
+          <span class="email-page__brand-mark" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2l4 8h-8l4-8zM4 10h16l-8 12L4 10z" fill="currentColor"/>
+            </svg>
+          </span>
+          All-In Weddings · Mail
+        </span>
+        <span class="email-page__time">9:14 AM · Today</span>
+      </header>
+
+      <article class="mail" role="article" aria-label="Wedding invitation email">
+        <header class="mail__head">
+          <div class="mail__avatar" aria-hidden="true">A</div>
+          <div class="mail__sender">
+            <p class="mail__from">Allie · All-In Weddings <span>&lt;allie@allinweddings.com&gt;</span></p>
+            <p class="mail__to">to ${escapeHtml(state.guest.name || DEFAULT_GUEST.name)} <em>&lt;${escapeHtml(state.guest.email || DEFAULT_GUEST.email)}&gt;</em></p>
+          </div>
+          <h2 class="mail__subject">You're invited to Aria &amp; Marcus's wedding</h2>
+        </header>
+
+        <section class="mail__body">
+          <p class="mail__greeting">Hi ${escapeHtml(greetName)},</p>
+          <p>You're invited to join <strong>Aria &amp; Marcus's</strong> wedding at AVA Resort Cancún on <strong>March 14, 2026</strong>.</p>
+          <p>I've put together your private guest portal — review the full weekend itinerary, book your room at the discounted block rate, browse the spa &amp; excursion add-ons we curated for the wedding party, and arrange your weekend transportation in one place.</p>
+          <p class="mail__cta-row">
+            <button type="button" class="mail__cta" data-open-portal>
+              Click here to see your wedding itinerary →
+            </button>
+          </p>
+          <p class="mail__sig">
+            With love,<br/>
+            Allie
+            <em>Your All-In Weddings concierge for the weekend</em>
+          </p>
+        </section>
+
+        <footer class="mail__foot">
+          All-In Weddings · Aria &amp; Marcus · March 14, 2026 · AVA Resort Cancún
+        </footer>
+      </article>
+
+      <p class="email-page__hint">↑ Simulated invitation email · tap the button to open the guest portal</p>
+    </div>
+  `);
+  document.querySelector("[data-open-portal]")?.addEventListener("click", () => {
+    state.emailClicked = true;
+    saveState();
+    route();
+  });
+}
 
 /* ============================================================
    LOGIN
