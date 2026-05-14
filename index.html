@@ -810,7 +810,7 @@
     }
 
     /* ============================================================
-       Cards: Room block / Spa / Excursions / Dining
+       Cards: Room block / Spa / Excursions
        ============================================================ */
     .card-grid {
       display: grid;
@@ -1485,40 +1485,6 @@ const ALLIE_PICKS = [
     why: "Last-day sweetness — ferry across to Isla Mujeres at sunrise. Wraps with 30 minutes to spare before the 10:30 farewell brunch — and the photos make the album." },
 ];
 
-/* On-property dinner reservations (AVA Resort Cancún signature venues) */
-const DINING = [
-  { id: "din-cocina-fri", name: "Cocina del Mar — Welcome eve",
-    loc: "Friday · 8:00 PM", priceUSD: 145,
-    desc: "AVA's oceanfront signature seafood tasting menu. Tables of 4 — let us know who you'd like to sit with at checkout.",
-    bullets: ["Per person · 5 courses", "Wine pairing optional (+$80)", "Vegetarian menu available"],
-    photo: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=72", popular: true },
-  { id: "din-malta",     name: "Brava Steakhouse — Private cellar",
-    loc: "Friday or Sunday · 7:30 PM", priceUSD: 195,
-    desc: "Eight-seat private cellar at Brava steakhouse. Premium cuts, magnums, low lighting, late dessert.",
-    bullets: ["Per person · 4 courses", "Sommelier-led wine flight (+$95)", "Capped at 8 guests per night"],
-    photo: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=72" },
-  { id: "din-esencia-sun", name: "Coral Garden — Farewell brunch",
-    loc: "Sunday · 10:30 AM", priceUSD: 85,
-    desc: "Mezcal mimosas, taquería bar, casual. Set up so you can drift in and out before your transfer.",
-    bullets: ["Per person · 2 hrs", "Open chef's stations", "Mezcal & espresso bar included"],
-    photo: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=900&q=72" },
-  { id: "din-omakase",  name: "Atrium Counter — Late tasting",
-    loc: "Sat post-wedding · midnight", priceUSD: 240,
-    desc: "Reserved for night-owls. Six-seat counter at the chef's pass — late, quiet, perfect after the dance floor.",
-    bullets: ["Per person · 60 min", "12-course chef's choice", "Wine flight included"],
-    photo: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=900&q=72" },
-  { id: "din-pool",     name: "Sand Bar — Daytime cabana",
-    loc: "Friday or Saturday afternoon", priceUSD: 60,
-    desc: "Pre-paid cabana at the Sand Bar pool: shade, towel service, ceviche, two cocktails per person.",
-    bullets: ["Per person · 4 hrs", "Two cocktails included", "Light bites menu"],
-    photo: "https://images.unsplash.com/photo-1604147495798-57beb5d6af73?auto=format&fit=crop&w=900&q=72" },
-  { id: "din-rehearsal", name: "Oceanfront Terrace rehearsal dinner",
-    loc: "Friday · 6:30 PM (invite only)", priceUSD: 0, soldOut: true,
-    desc: "Family + bridal party only — invite required. We'll let you know if a seat opens up.",
-    bullets: ["By invitation", "Family + bridal party", "Auto-added if invited"],
-    photo: "https://images.unsplash.com/photo-1467810563316-b5476525c0f9?auto=format&fit=crop&w=900&q=72" },
-];
-
 /* ============================================================
    STATE — held in localStorage so reloads keep itinerary
    ============================================================ */
@@ -1537,7 +1503,6 @@ const defaultState = {
   room: null,                 // { roomId, checkIn, checkOut, guests }
   spa: [],                    // [ id, ... ]
   exc: [],
-  dining: [],
 };
 
 let state = loadState();
@@ -1641,11 +1606,6 @@ function cartLines() {
     if (s) lines.push({ kind: "Excursion", title: s.name, sub: s.loc, price: s.priceUSD,
       remove: () => { state.exc = state.exc.filter(x => x !== id); saveState(); renderCart(); rerenderActive(); }});
   });
-  state.dining.forEach(id => {
-    const s = DINING.find(x => x.id === id);
-    if (s) lines.push({ kind: "Dining", title: s.name, sub: s.loc, price: s.priceUSD,
-      remove: () => { state.dining = state.dining.filter(x => x !== id); saveState(); renderCart(); rerenderActive(); }});
-  });
   return lines;
 }
 
@@ -1743,8 +1703,6 @@ function renderNav(active) {
       icon: `<path d="M12 22c-4.5-3-8-7-8-12a4 4 0 0 1 8-2 4 4 0 0 1 8 2c0 5-3.5 9-8 12z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
     { id: "excursions", label: "Excursions",
       icon: `<path d="M3 19l4-9 5 5 4-7 5 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
-    { id: "dining",     label: "Dining",
-      icon: `<path d="M6 3v18 M9 3v8a3 3 0 0 1-3 3 M18 3c-2 0-3 2-3 5s1 5 3 5v8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
     { id: "schedule",   label: "Schedule",
       icon: `<rect x="3.5" y="5" width="17" height="15" rx="2" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M3.5 9h17 M8 3v4 M16 3v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>` },
   ];
@@ -1789,7 +1747,6 @@ function route() {
     case "stay":       return renderStay();
     case "spa":        return renderSpa();
     case "excursions": return renderExc();
-    case "dining":     return renderDining();
     case "schedule":   return renderSchedule();
     case "home":
     default:           return renderHome();
@@ -2000,8 +1957,7 @@ function renderHome() {
   const hasRoom = !!state.room;
   const spaCount = state.spa.length;
   const excCount = state.exc.length;
-  const dinCount = state.dining.length;
-  const totalAdd = spaCount + excCount + dinCount;
+  const totalAdd = spaCount + excCount;
 
   const actions = [
     { id: "stay", title: hasRoom ? "Your room is held" : "Book your room block",
@@ -2019,10 +1975,6 @@ function renderHome() {
       desc: excCount > 0 ? `${excCount} excursion${excCount > 1 ? "s" : ""} on your itinerary.` : `Isla Mujeres catamaran, Tulum ruins, ATV through the jungle — all bookable on the block.`,
       badge: `${EXC.length} options`, badgeStyle: "",
       icon: `<path d="M3 19l4-9 5 5 4-7 5 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
-    { id: "dining", title: "Dining on property",
-      desc: dinCount > 0 ? `${dinCount} reservation${dinCount > 1 ? "s" : ""} confirmed.` : `Cocina del Mar, Brava Steakhouse, late-night tasting — pre-pay your seat now and skip the wait list.`,
-      badge: `Reservations open`, badgeStyle: "",
-      icon: `<path d="M6 3v18 M9 3v8a3 3 0 0 1-3 3 M18 3c-2 0-3 2-3 5s1 5 3 5v8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` },
   ];
 
   const actionsHtml = actions.map(a => `
@@ -2279,7 +2231,7 @@ function renderStay() {
 }
 
 /* ============================================================
-   ADD-ON BROWSE (spa / excursions / dining)
+   ADD-ON BROWSE (spa / excursions)
    ============================================================ */
 
 function renderAddons({ section, eyebrow, title, sub, items, stateKey }) {
@@ -2377,17 +2329,6 @@ function renderExc() {
     sub: `Hotel-arranged transfers, group-block pricing. Most are bookable up to 24 hours before — but the boat trips fill first.`,
     items: EXC,
     stateKey: "exc",
-  });
-}
-
-function renderDining() {
-  return renderAddons({
-    section: "dining",
-    eyebrow: "Dining · On property",
-    title: `Reserve your <em>dinners</em>.`,
-    sub: `Cocina del Mar, Brava Steakhouse, Coral Garden. Pre-pay your seat and skip the wait list — the wedding-block desk handles the seating chart with the wedding planner.`,
-    items: DINING,
-    stateKey: "dining",
   });
 }
 

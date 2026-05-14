@@ -34,7 +34,6 @@ The repo is configured for Vercel out of the box. Connect on [vercel.com/new](ht
 - **Stay** — Discounted room block at AVA Resort Cancún (5 room types, every room oceanfront per AVA's Oceanfront Promise™, group-code chip, live night recalculation)
 - **Spa** — The Spa at AVA wedding rates
 - **Excursions** — Off-property tours (Riviera Maya golf, Isla Mujeres catamaran, whale-shark snorkel, Tulum ruins, MUSA underwater museum, ATV + zipline, etc.)
-- **Dining** — On-property dinner reservations (Cocina del Mar, Brava Steakhouse, Coral Garden brunch, Atrium Counter late tasting, Sand Bar)
 - **Schedule** — Full timeline + logistics
 
 A floating itinerary drawer collects everything and rolls up to a confirm-everything CTA.
